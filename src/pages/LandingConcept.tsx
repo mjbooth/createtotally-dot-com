@@ -62,32 +62,32 @@ const LandingConcept = () => {
     const [currentStep, setCurrentStep] = useState(0);
 
     const integrations = useMemo<Integration[]>(() => shuffleArray([
-        { src: "/src/assets/adroll.svg", text: "AdRoll", colour: "#00aeef" },
-        { src: "/src/assets/aem.svg", text: "AEM", colour: "rgb(238, 126, 55)" },
-        { src: "/src/assets/brandfolder.svg", text: "Brandfolder", colour: "rgb(110, 206, 241)" },
-        { src: "/src/assets/bynder.svg", text: "Bynder", colour: "#126dfe" },
-        { src: "/src/assets/drive.svg", text: "Google Drive", colour: "#4285f4" },
-        { src: "/src/assets/google-ads.svg", text: "Google Ads", colour: "#fbbc05" },
-        { src: "/src/assets/monday-logo-x2.png", text: "Monday.com", colour: "#6161FF" },
-        { src: "/src/assets/powerbi.svg", text: "Power BI", colour: "#f2c811" },
-        { src: "/src/assets/adobe-workfront.png", text: "Adobe Workfront", colour: "#ff0000" },
-        { src: "/src/assets/box.svg", text: "Box", colour: "#2486FC" },
-        { src: "/src/assets/click-up.svg", text: "ClickUp", colour: "rgba(250, 18, 227, 1)" },
-        { src: "/src/assets/aws-s3.svg", text: "Amazon S3", colour: "rgb(232, 146, 56)" },
-        { src: "/src/assets/Sitecore.svg", text: "Sitecore", colour: "#ff1f38" },
-        { src: "/src/assets/mark-gradient-blue-jira.svg", text: "Jira", colour: "#0146B3" },
-        { src: "/src/assets/YouTube.svg", text: "YouTube", colour: "#ff0000" },
-        { src: "/src/assets/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
+        { src: "/adroll.svg", text: "AdRoll", colour: "#00aeef" },
+        { src: "/aem.svg", text: "AEM", colour: "rgb(238, 126, 55)" },
+        { src: "/brandfolder.svg", text: "Brandfolder", colour: "rgb(110, 206, 241)" },
+        { src: "/bynder.svg", text: "Bynder", colour: "#126dfe" },
+        { src: "/drive.svg", text: "Google Drive", colour: "#4285f4" },
+        { src: "/google-ads.svg", text: "Google Ads", colour: "#fbbc05" },
+        { src: "/monday-logo-x2.png", text: "Monday.com", colour: "#6161FF" },
+        { src: "/powerbi.svg", text: "Power BI", colour: "#f2c811" },
+        { src: "/adobe-workfront.png", text: "Adobe Workfront", colour: "#ff0000" },
+        { src: "/box.svg", text: "Box", colour: "#2486FC" },
+        { src: "/click-up.svg", text: "ClickUp", colour: "rgba(250, 18, 227, 1)" },
+        { src: "/aws-s3.svg", text: "Amazon S3", colour: "rgb(232, 146, 56)" },
+        { src: "/Sitecore.svg", text: "Sitecore", colour: "#ff1f38" },
+        { src: "/mark-gradient-blue-jira.svg", text: "Jira", colour: "#0146B3" },
+        { src: "/YouTube.svg", text: "YouTube", colour: "#ff0000" },
+        { src: "/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
     ]), []);
 
     const steps = [
-        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/src/assets/CreateTOTALLY-Master-templates-02-27-2025_04_27_PM.png" },
-        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/src/assets/pink.svg" },
-        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need—sizes, styles, and languages—so everything is just right.", image: "/src/assets/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
-        { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/src/assets/purple.svg" },
-        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/src/assets/CreateTOTALLY-Review-Danish-Master-Mar-1-Create-Soda-Figma--02-27-2025_04_49_PM.png" },
-        { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/src/assets/blue.svg" },
-        { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/src/assets/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
+        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/CreateTOTALLY-Master-templates-02-27-2025_04_27_PM.png" },
+        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/pink.svg" },
+        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need—sizes, styles, and languages—so everything is just right.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
+        { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
+        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/CreateTOTALLY-Review-Danish-Master-Mar-1-Create-Soda-Figma--02-27-2025_04_49_PM.png" },
+        { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
+        { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
     ];
 
     const lineRef = useRef<HTMLDivElement | null>(null);
@@ -198,7 +198,7 @@ const LandingConcept = () => {
             <Box
                 width="100%"
                 height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
-                backgroundImage="url('/src/assets/wave-divider-1.svg')"
+                backgroundImage="url('/wave-divider-1.svg')"
                 backgroundRepeat="no-repeat"
                 backgroundPosition="center"
                 backgroundSize="cover"
@@ -220,16 +220,16 @@ const LandingConcept = () => {
                                 </Text>
                             </GridItem>
                             {[
-                                "/src/assets/bacardi_logo.png",
-                                "/src/assets/vitality-logo.svg",
-                                "/src/assets/Anheuser-Busch_InBev.svg",
-                                "/src/assets/googlelogo_clr_74x24px.svg",
-                                "/src/assets/Logo_NIKE.png",
-                                "/src/assets/miele.svg",
-                                "/src/assets/patek-philippe-sa-1.svg",
-                                "/src/assets/Allwyn-Logo.png",
-                                "/src/assets/AGY_22_Logo_Doner_RGB.png",
-                                "/src/assets/MSC_Cruises_Logo.png"
+                                "/bacardi_logo.png",
+                                "/vitality-logo.svg",
+                                "/Anheuser-Busch_InBev.svg",
+                                "/googlelogo_clr_74x24px.svg",
+                                "/Logo_NIKE.png",
+                                "/miele.svg",
+                                "/patek-philippe-sa-1.svg",
+                                "/Allwyn-Logo.png",
+                                "/AGY_22_Logo_Doner_RGB.png",
+                                "/MSC_Cruises_Logo.png"
                             ].map((src, index) => (
                                 <GridItem key={index} display="flex" alignItems="center" justifyContent="center">
                                     <Box lineHeight="1" mt="2" mb="2" pl="7" pr="7" width="100%" height="100%" position="relative" display="flex" alignItems="center" justifyContent="center">
@@ -252,7 +252,7 @@ const LandingConcept = () => {
             <Box
                 width="100%"
                 height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
-                backgroundImage="url('/src/assets/wave-divider-1.svg')"
+                backgroundImage="url('/wave-divider-1.svg')"
                 backgroundRepeat="no-repeat"
                 backgroundPosition="center"
                 backgroundSize="cover"
@@ -304,7 +304,7 @@ const LandingConcept = () => {
                                 borderWidth="1px"
                                 borderColor="white"
                             >
-                                <Image src="/src/assets/AutomationSuite.svg" alt="All Channels" width="100%" />
+                                <Image src="/AutomationSuite.svg" alt="All Channels" width="100%" />
                             </Box>
                         </Box>
                     </Flex>
@@ -448,7 +448,7 @@ const LandingConcept = () => {
                 <Box
                     width="100%"
                     height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
-                    backgroundImage="url('/src/assets/wave-divider-2.svg')"
+                    backgroundImage="url('/wave-divider-2.svg')"
                     backgroundRepeat="no-repeat"
                     backgroundPosition="center"
                     backgroundSize="cover"
@@ -577,25 +577,25 @@ const LandingConcept = () => {
                                 <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={0}>
                                     {[
                                         {
-                                            image: "/src/assets/white-claw-hard-seltzer-logo-vector.svg",
+                                            image: "/white-claw-hard-seltzer-logo-vector.svg",
                                             title: "White Claw Hard Seltzer",
                                             description: "55% reduction in production cost. 8x faster.",
                                             highlight: ["8x faster.", "55% reduction"]
                                         },
                                         {
-                                            image: "/src/assets/Hasbro_logo.svg",
+                                            image: "/Hasbro_logo.svg",
                                             title: "Hasbro",
                                             description: "Briefing to live in 3 weeks. Sold out in 3 markets.",
                                             highlight: "Briefing to live in 3 weeks."
                                         },
                                         {
-                                            image: "/src/assets/Logo_NIKE.png",
+                                            image: "/Logo_NIKE.png",
                                             title: "Nike",
                                             description: "10x faster to brief, adapt and deliver retail films.",
                                             highlight: "10x faster"
                                         },
                                         {
-                                            image: "/src/assets/TWS-LOGO_PMS485_200mmx200mm_V2.jpg",
+                                            image: "/TWS-LOGO_PMS485_200mmx200mm_V2.jpg",
                                             title: "The Wine Society",
                                             description: "38% reduction in new customer cost per acquisition.",
                                             highlight: "38% reduction"
