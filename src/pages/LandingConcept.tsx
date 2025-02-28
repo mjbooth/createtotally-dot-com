@@ -1,17 +1,11 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
-import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex, Circle } from "@chakra-ui/react"
+import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
 import { AccordionItem, AccordionItemContent, AccordionItemTrigger, AccordionRoot } from "@/components/ui/accordion"
 import { Tag } from "@/components/ui/tag"
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import Vimeo from '@u-wave/react-vimeo';
 import { HiTemplate } from "react-icons/hi";
-import { BsBarChartFill } from "react-icons/bs";
-import { RiShieldFlashFill } from "react-icons/ri";
 import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
-import { MdSecurity } from "react-icons/md";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { FiCloud } from "react-icons/fi";
-import { FaBalanceScale } from "react-icons/fa";
 import { LuCircleCheck } from "react-icons/lu";
 import ReactMarkdown from 'react-markdown';
 import { IoCheckboxOutline } from "react-icons/io5";
@@ -62,13 +56,9 @@ const items = [
 ]
 
 const LandingConcept = () => {
-    const [selectedFeature, setSelectedFeature] = useState('Translation');
     const [hoveredIntegration, setHoveredIntegration] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
-    const boxRef = useRef(null);
-    const containerRef = useRef(null);
-    const lastLabelRef = useRef(null);
     const [currentStep, setCurrentStep] = useState(0);
 
     const integrations = useMemo<Integration[]>(() => shuffleArray([
@@ -100,24 +90,11 @@ const LandingConcept = () => {
         { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/src/assets/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
     ];
 
-    const lineRef = useRef(null);
-    const [lineHeight, setLineHeight] = useState(0);
+    const lineRef = useRef<HTMLDivElement | null>(null);
     const { scrollYProgress } = useScroll({
         target: lineRef,
         offset: ["start center", "end center"]
     })
-
-    const lineHeightMotion = useTransform(
-        scrollYProgress,
-        [0, 1],
-        [0, lineHeight]
-    )
-
-    useEffect(() => {
-        if (lineRef.current) {
-            setLineHeight(lineRef.current.offsetHeight - 60)
-        }
-    }, [])
 
     useEffect(() => {
         if (videoRef.current) {
@@ -139,8 +116,17 @@ const LandingConcept = () => {
         }
     };
 
-    const ParagraphWithPadding = ({ children }) => (
-        <Text as="p" mb={4}>
+    // Add this line to use the togglePlay function
+    useEffect(() => {
+        const video = videoRef.current;
+        if (video) {
+            video.addEventListener('click', togglePlay);
+            return () => video.removeEventListener('click', togglePlay);
+        }
+    }, []);
+
+    const ParagraphWithPadding: React.FC<React.PropsWithChildren<{}>> = ({ children, ...props }) => (
+        <Text as="p" mb={4} {...props}>
             {children}
         </Text>
     );
@@ -319,11 +305,6 @@ const LandingConcept = () => {
                                 borderColor="white"
                             >
                                 <Image src="/src/assets/AutomationSuite.svg" alt="All Channels" width="100%" />
-                                {/* <DotLottiePlayer src="https://lottie.host/9f36406e-511f-4620-99b3-891aab621785/yVarpfwkxX.lottie"
-                                    background="#F4F0EB"
-                                    loop
-                                    autoplay>
-                                </DotLottiePlayer> */}
                             </Box>
                         </Box>
                     </Flex>
@@ -667,7 +648,7 @@ const LandingConcept = () => {
                                                 <AccordionItemContent fontSize="md" fontWeight="regular" mb="6">
                                                     <ReactMarkdown
                                                         components={{
-                                                            p: (props) => <ParagraphWithPadding gap={6} {...props} />
+                                                            p: (props) => <ParagraphWithPadding {...props} />
                                                         }}
                                                     >
                                                         {item.text}

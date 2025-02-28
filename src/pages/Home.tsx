@@ -1,17 +1,15 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react';
-import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight } from "@chakra-ui/react"
+import { useMemo, useState, useRef, useEffect } from 'react';
+import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
+import { AccordionItem, AccordionItemContent, AccordionItemTrigger, AccordionRoot } from "@/components/ui/accordion"
 import { Tag } from "@/components/ui/tag"
-import { DotLottiePlayer } from '@dotlottie/react-player';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import Vimeo from '@u-wave/react-vimeo';
 import { HiTemplate } from "react-icons/hi";
-import { BsBarChartFill } from "react-icons/bs";
-import { RiRobot2Fill, RiShieldFlashFill } from "react-icons/ri";
 import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
-import { MdSecurity } from "react-icons/md";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { FiCloud } from "react-icons/fi";
-import { FaBalanceScale } from "react-icons/fa";
+import { LuCircleCheck } from "react-icons/lu";
+import ReactMarkdown from 'react-markdown';
+import { IoCheckboxOutline } from "react-icons/io5";
+import { DotLottiePlayer } from '@dotlottie/react-player';
 
 // Add the shuffleArray function
 function shuffleArray<T>(array: T[]): T[] {
@@ -29,17 +27,39 @@ interface Integration {
     colour: string;
 }
 
-export default function CreateTotallyHomepage() {
-    const [selectedFeature, setSelectedFeature] = useState('Translation');
+const items = [
+    {
+        "value": "a",
+        "title": "How does the automation actually work?",
+        "text": "Think of CreateTOTALLY as your creative team’s **efficiency powerhouse**. This isn’t AI taking wild guesses, and it’s definitely not another rigid template system.\n\nInstead, we use **intelligent, rule-based automation** that adapts to your exact needs. Here’s the key: we **never** lock down your designs. Unlike other tools, you can **jump in, tweak, and adjust** as needed. No fixed layouts. No loss of creative control. Just **faster, smarter production at scale.**"
+    },
+    {
+        "value": "b",
+        "title": "What types of content does it automate?",
+        "text": "Everything. **Yes, everything.**\n\nSocial ads, display banners, print, video, email—you name it, we automate it.\n\nNeed content localised? **Done.** Upload your own translations, or let our **built-in AI translation engine** handle the heavy lifting. No more manual copy-pasting. No more versioning nightmares. Just **high-speed, high-quality global campaigns.**"
+    },
+    {
+        "value": "c",
+        "title": "How does it fit within an in-house marketing team?",
+        "text": "**We’re not here to replace designers—we’re here to free them up.**\n\nYour team is spending **80% of their time** on repetitive production work. That’s time stolen from strategy, storytelling, and the creative projects that actually move the needle.\n\nWith CreateTOTALLY, resizing, adapting, and duplicating assets happens **instantly**. Your team stays in control—only now, they can **focus on the creative work that actually matters.**"
+    },
+    {
+        "value": "d",
+        "title": "How much creative flexibility does it allow?",
+        "text": "Automation **shouldn’t limit creativity.** And with CreateTOTALLY, it doesn’t.\n\nUnlike other tools that lock you into predefined templates, every output here is **100% editable.** Need to tweak a layout? No problem. Want to make a quick adjustment? Go ahead.\n\n**If you can do it in Adobe or Figma, you can do it here—just 10x faster.**"
+    },
+    {
+        "value": "e",
+        "title": "How complex is the implementation?",
+        "text": "**Most teams are fully operational in 30 days.** No IT headaches, no endless onboarding.\n\nSome integrations are **plug-and-play**, while others need a quick mapping to fit into your existing workflow. Either way, our team guides you every step of the way.\n\nBottom line? **You’ll be automating creative production before your next big campaign launches.**"
+    }
+]
+
+const LandingConcept = () => {
     const [hoveredIntegration, setHoveredIntegration] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    const featureImages = {
-        Translation: "https://placehold.co/1152x720?text=Translation+Feature",
-        "Quality Control": "https://placehold.co/1152x720?text=Quality+Control+Feature",
-        "Auto-Adapt": "https://placehold.co/1152x720?text=Auto-Adapt+Feature"
-    };
+    const [currentStep, setCurrentStep] = useState(0);
 
     const integrations = useMemo<Integration[]>(() => shuffleArray([
         { src: "/src/assets/adroll.svg", text: "AdRoll", colour: "#00aeef" },
@@ -59,6 +79,22 @@ export default function CreateTotallyHomepage() {
         { src: "/src/assets/YouTube.svg", text: "YouTube", colour: "#ff0000" },
         { src: "/src/assets/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
     ]), []);
+
+    const steps = [
+        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/src/assets/CreateTOTALLY-Master-templates-02-27-2025_04_27_PM.png" },
+        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/src/assets/pink.svg" },
+        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need—sizes, styles, and languages—so everything is just right.", image: "/src/assets/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
+        { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/src/assets/purple.svg" },
+        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/src/assets/CreateTOTALLY-Review-Danish-Master-Mar-1-Create-Soda-Figma--02-27-2025_04_49_PM.png" },
+        { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/src/assets/blue.svg" },
+        { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/src/assets/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
+    ];
+
+    const lineRef = useRef<HTMLDivElement | null>(null);
+    const { scrollYProgress } = useScroll({
+        target: lineRef,
+        offset: ["start center", "end center"]
+    })
 
     useEffect(() => {
         if (videoRef.current) {
@@ -80,6 +116,29 @@ export default function CreateTotallyHomepage() {
         }
     };
 
+    // Add this line to use the togglePlay function
+    useEffect(() => {
+        const video = videoRef.current;
+        if (video) {
+            video.addEventListener('click', togglePlay);
+            return () => video.removeEventListener('click', togglePlay);
+        }
+    }, []);
+
+    const ParagraphWithPadding: React.FC<React.PropsWithChildren<{}>> = ({ children, ...props }) => (
+        <Text as="p" mb={4} {...props}>
+            {children}
+        </Text>
+    );
+
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.onChange(v => {
+            const step = Math.floor(v * steps.length);
+            setCurrentStep(Math.min(step, steps.length - 1));
+        });
+        return () => unsubscribe();
+    }, [scrollYProgress]);
+
     return (
         <Box bg="brandNeutral.500">
             <Box pt="54px"> {/* Adjust this value based on the height of your header */}
@@ -87,28 +146,27 @@ export default function CreateTotallyHomepage() {
                     <Container maxW="container.xl" mx="auto">
                         {/* Hero Section */}
                         <VStack
-                            py={16}
+                            pt={16}
                             gap={12}
                             align="center"
                             w="full"
-                            pb="30"
                         >
-                            <Text
-                                fontSize="8xl" 
-                                fontWeight="black" 
-                                lineHeight=".95" 
-                                color='gray.800' 
-                                textAlign="center" 
-                                maxW="4xl" 
+                            <Heading
+                                fontSize="8xl"
+                                fontWeight="black"
+                                lineHeight=".95"
+                                color='gray.800'
+                                textAlign="center"
+                                maxW="6xl"
+                                pt="12"
                             >
-                                Automate without compromise. Keep Adobe, keep Figma, keep control.
+                                Halve Your Creative Production Costs Instantly
+                            </Heading>
+                            <Text fontSize="2xl" color="gray.600" textAlign="center" maxW="3xl" lineHeight="1.2" fontWeight="light" pb="18">
+                                If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 50%. <br />Without sacrificing creative control.
                             </Text>
-                            <Text fontSize="3xl" color="gray.600" textAlign="center" maxW="3xl" lineHeight="1.2" fontWeight="light">
-                                Most automation forces you to ditch Adobe, break Figma workflows, and compromise on creativity. We fixed that.
-                            </Text>
-                            <HStack gap={6}>
-                                <Button colorScheme="blue" size="lg" variant="surface">Get Started</Button>
-                                <Button colorScheme="blue" size="lg" variant="surface">Book a Demo</Button>
+                            <HStack gap={16}>
+                                <Button colorScheme="blue" size="lg" variant="surface">Learn what automation can do for you</Button>
                             </HStack>
                             <Box
                                 w="full"
@@ -118,18 +176,18 @@ export default function CreateTotallyHomepage() {
                                 borderWidth="1px"
                                 borderColor="gray.900/10"
                                 position="relative"
-                                height="auto" // Changed from fixed height
-                                aspectRatio="16/9" // Added aspect ratio
+                                height="auto"
+                                aspectRatio="16/9"
                             >
                                 <Vimeo
                                     video="https://vimeo.com/1054417102"
-                                    responsive={true} // Added responsive prop
-                                    autopause={false} // Added autopause prop
-                                    autoplay={true}
+                                    responsive={true}
+                                    autopause={false}
+                                    autoplay={false}
                                     loop={true}
-                                    controls={false}
+                                    controls={true}
                                     muted={true}
-                                    style={{ width: '100%', height: '100%' }} // Added inline style
+                                    style={{ width: '100%', height: '100%' }}
                                 />
                             </Box>
                         </VStack>
@@ -137,9 +195,19 @@ export default function CreateTotallyHomepage() {
                 </Box>
             </Box>
 
+            <Box
+                width="100%"
+                height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                backgroundImage="url('/src/assets/wave-divider-1.svg')"
+                backgroundRepeat="no-repeat"
+                backgroundPosition="center"
+                backgroundSize="cover"
+                transform={{ base: 'rotate(-180deg)', md: 'rotate(-180deg)' }} // Different rotations for different screen sizes
+            />
+
+            {/* Client Logos Section */}
             <Box bg="white">
-                {/* Client Logos Section */}
-                <Container maxW="container.xl" mx="auto" bg="#white" pt={36} pb={36}>
+                <Container maxW="container.xl" mx="auto" bg="#white" pt={20} pb={20}>
                     <Box>
                         <Grid
                             templateColumns="repeat(8, 1fr)"
@@ -148,7 +216,7 @@ export default function CreateTotallyHomepage() {
                         >
                             <GridItem rowSpan={2} colSpan={3} display="flex" alignItems="flex-start">
                                 <Text alignSelf="flex-start" color="gray.800" fontSize="2xl" fontWeight="bold" textAlign="left">
-                                    The World's biggest brands choose CreateTOTALLY
+                                    The World’s Biggest Brands Choose CreateTOTALLY
                                 </Text>
                             </GridItem>
                             {[
@@ -181,77 +249,224 @@ export default function CreateTotallyHomepage() {
                 </Container>
             </Box>
 
+            <Box
+                width="100%"
+                height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                backgroundImage="url('/src/assets/wave-divider-1.svg')"
+                backgroundRepeat="no-repeat"
+                backgroundPosition="center"
+                backgroundSize="cover"
+                transform={{ base: 'rotate(0deg)', md: 'rotate(0deg)' }} // Different rotations for different screen sizes
+            />
 
             <Box>
                 {/* Built to scale your Figma and Adobe content */}
+                <Container maxW="container.xl" mx="auto" pt={4} pb={20}>
+                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<HiTemplate />} >Template & Content Creation</Tag>
+                    <Flex
+                        direction={{ base: "column", md: "row" }}
+                        gap={8}
+                        alignItems="flex-start"
+                    >
+                        <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+                            <Box>
+                                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Double Your Output.<br /> Zero Trade-offs.</Heading>
+                                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">Your team relies on Figma and Adobe—so we built automation that works with your native tools, not against them.</Text>
+                                <List.Root color="gray.900" fontSize="xl" fontWeight="thin" gap="2" variant="plain" align="center">
+                                    <List.Item>
+                                        <List.Indicator asChild color="green.500">
+                                            <LuCircleCheck />
+                                        </List.Indicator>
+                                        No switching. Keep your existing workflows. No proprietary software.
+                                    </List.Item>
+                                    <List.Item>
+                                        <List.Indicator asChild color="green.500">
+                                            <LuCircleCheck />
+                                        </List.Indicator>
+                                        Full creative control. Set design rules, automate, and approve—without losing the craft.
+                                    </List.Item>
+                                    <List.Item>
+                                        <List.Indicator asChild color="green.500">
+                                            <LuCircleCheck />
+                                        </List.Indicator>
+                                        One-click efficiency. Automate without coding. Handle thousands of assets in minutes.</List.Item>
+                                </List.Root>
+                            </Box>
+                            <Button mt="16" colorScheme="blue" size="lg" variant="surface">Discover Your Brand’s Biggest Bottlenecks</Button>
+                        </Box>
+                        <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+                            <Box
+                                width="100%"
+                                // aspectRatio="1/1"
+                                borderRadius="xl"
+                                overflow="hidden"
+                                p="3"
+                                borderWidth="1px"
+                                borderColor="white"
+                            >
+                                <Image src="/src/assets/AutomationSuite.svg" alt="All Channels" width="100%" />
+                            </Box>
+                        </Box>
+                    </Flex>
+                </Container>
+
+                {/* ALL CHANNELS */}
                 <Box>
-                    <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                        <Grid
-                            templateColumns={{
-                                base: "1fr",
-                                md: "repeat(2, 1fr)"
-                            }}
-                            gap={1}>
-                            <GridItem>
-                                <Box>
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<HiTemplate />} >Template & Content Creation</Tag>
-                                    <Text color="gray.900" fontSize="6xl" fontWeight="bold" textAlign="left" lineHeight={1}>Built to scale your Figma and Adobe content
+                    <Box>
+                        <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
+                            <VStack gap={16} align="center">
+                                <Box textAlign="center" maxW="4xl">
+                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
+                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="center" lineHeight={1} mb="3">How It Works</Heading>
+                                    <Text fontSize="xl" color="gray.600" mt={4}>
+                                        Streamline your content creation process with our powerful automation tools.
                                     </Text>
-                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>40 million creators work in Figma and Adobe Creative Cloud. We enhance these platforms instead of forcing teams to switch tools.</Text>
                                 </Box>
-                            </GridItem>
-                            <GridItem></GridItem>
-                        </Grid>
-                    </Container>
+                                <Box w="full" position="relative" ref={lineRef}>
+                                    <Flex justify="center">
+                                        <Box maxWidth="1200px" width="100%" position="relative">
+                                            <Flex>
+                                                <Box width="35%" position="relative" pr={8}>
+                                                    <Box
+                                                        position="absolute"
+                                                        right="31px"
+                                                        top="8px"
+                                                        bottom="8px"
+                                                        width="2px"
+                                                        bg="gray.200"
+                                                        transform="translateX(50%)"
+                                                    />
+                                                    <motion.div
+                                                        style={{
+                                                            position: 'absolute',
+                                                            right: '30px',
+                                                            top: '8px',
+                                                            bottom: '8px',
+                                                            width: '2px',
+                                                            background: '#CA3FC0',
+                                                            transformOrigin: 'top',
+                                                            scaleY: scrollYProgress,
+                                                            transform: 'translateX(50%)',
+                                                        }}
+                                                    />
+
+                                                    <VStack gap={24} align="stretch">
+                                                        {steps.map((step, index) => (
+                                                            <Flex key={index} align="center">
+                                                                <Box flex="1" pr={4} textAlign="right">
+                                                                    <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
+                                                                        {step.label}
+                                                                    </Text>
+                                                                    <Text fontSize="md" color="gray.600" lineHeight="1.2">
+                                                                        {step.subLabel}
+                                                                    </Text>
+                                                                </Box>
+                                                                <Box
+                                                                    flex="none"
+                                                                    width="60px"
+                                                                    height="60px"
+                                                                    borderRadius="full"
+                                                                    bg="brandFuchsia.500"
+                                                                    display="flex"
+                                                                    alignItems="center"
+                                                                    justifyContent="center"
+                                                                    zIndex={1}
+                                                                    position="relative"
+                                                                    left="30px"
+                                                                >
+                                                                    <step.icon color="white" size="24px" />
+                                                                </Box>
+                                                            </Flex>
+                                                        ))}
+                                                    </VStack>
+                                                </Box>
+                                                <Box width="65%" pl={8}>
+                                                    {steps.map((step, index) => (
+                                                        <Box
+                                                            key={index}
+                                                            width="100%"
+                                                            aspectRatio="16/9"
+                                                            borderRadius="xl"
+                                                            borderWidth="1px"
+                                                            borderColor="gray.500"
+                                                            overflow="hidden"
+                                                            p="1.5"
+                                                            display={index === currentStep ? "block" : "none"}
+                                                        >
+                                                            <Image 
+                                                                src={step.image} 
+                                                                borderRadius="xl"
+                                                                alt={step.label}
+                                                            />
+                                                        </Box>
+                                                    ))}
+                                                </Box>
+                                            </Flex>
+                                        </Box>
+                                    </Flex>
+                                </Box>
+                            </VStack>
+                        </Container>
+                    </Box>
                 </Box>
 
                 {/* Assets Delivered Instantly */}
                 <Box>
-                    <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                        <Grid
-                            templateColumns={{
-                                base: "1fr",
-                                md: "repeat(2, 1fr)"
-                            }}
-                            gap={1}>
-                            <GridItem>
-                                <Box>
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<HiTemplate />} >Template & Content Creation</Tag>
-                                    <Text color="gray.900" fontSize="6xl" fontWeight="bold" textAlign="left" lineHeight={1}>Creative assets delivered instantly
-                                    </Text>
+                    <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
+                        <Flex
+                            direction={{ base: "column", md: "row" }}
+                            justify="space-between"
+                            align="center"
+                            gap={{ base: 8, md: 16 }}
+                        >
+                            <Box flexBasis={{ base: "100%", md: "40%" }}>
+                                <Box
+                                    width="100%"
+                                    aspectRatio="1/1"
+                                    borderRadius="xl"
+                                    borderWidth="1px"
+                                    borderColor="gray.500"
+                                    overflow="hidden"
+                                    p="1.5"
+                                >
+                                    <DotLottiePlayer src="https://lottie.host/8ba66b8d-d104-48f8-851c-3761ece39880/wQMvRDL9o6.lottie"
+                                        background="#F4F0EB"
+                                        loop
+                                        autoplay>
+                                    </DotLottiePlayer>
                                 </Box>
-                            </GridItem>
-                        </Grid>
+                            </Box>
+                            <Box flexBasis={{ base: "100%", md: "55%" }}>
+                                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
+                                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">How Much Are You Overpaying for Repetitive Work?</Heading>
+                                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25}>A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That’s time and budget lost—every single campaign.</Text>
+                            </Box>
+                        </Flex>
                     </Container>
                 </Box>
 
-
+                <Box
+                    width="100%"
+                    height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                    backgroundImage="url('/src/assets/wave-divider-2.svg')"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="center"
+                    backgroundSize="cover"
+                    transform={{ base: 'rotate(-180deg)', md: 'rotate(-180deg)' }} // Different rotations for different screen sizes
+                />
 
                 {/* Integrations Section */}
-                <Box>
-                    <Container maxW="container.xl" mx="auto" pt={12} pb={8} minH="100vh">
-                        <Grid
-                            templateColumns={{
-                                base: "1fr",
-                                md: "repeat(2, 1fr)"
-                            }}
-                            gap={1}>
-                            <GridItem position="relative" height="100vh">
-                                <Box
-                                    position="sticky"
-                                    top="50%"
-                                    transform="translateY(-50%)"
-                                >
+                <Box bg="white">
+                    <Container maxW="container.xl" mx="auto" pt={32} pb={32}>
+                        <Flex
+                            direction={{ base: "column", md: "row" }}
+                            gap={1}
+                        >
+                            <Box flex={{ base: "1 1 100%", md: "1 1 50%" }} position="relative" display="flex" alignItems="center">
+                                <Box>
                                     <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiPlugsFill />} >Integrations</Tag>
-                                    <Text
-                                        color="gray.900"
-                                        fontSize="6xl"
-                                        fontWeight="bold"
-                                        textAlign="left"
-                                        mb={8}
-                                        lineHeight={1}
-                                    >
-                                        Seamless integration with{" "}
+                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">
+                                        Seamless integration<br />with{" "}
                                         <span style={{ display: 'inline-flex', alignItems: 'center', minWidth: '10ch' }}>
                                             <AnimatePresence mode="wait">
                                                 <motion.span
@@ -293,61 +508,46 @@ export default function CreateTotallyHomepage() {
                                                 </motion.span>
                                             </AnimatePresence>
                                         </span>
-                                    </Text>
-
-
+                                    </Heading>
+                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25}>Disconnected tools slow teams down. CreateTOTALLY integrates with your existing tech ensuring everything stays in sync.</Text>
                                 </Box>
-                            </GridItem>
-                            <GridItem>
-                                <Box
-                                    pt="22vh"
-                                    pb="22vh"
+                            </Box>
+                            <Box flex={{ base: "1 1 100%", md: "1 1 50%" }}>
+                                <Flex
+                                    flexWrap="wrap"
+                                    justifyContent="space-between"
                                 >
-                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>Disconnected tools slow teams down. Our platform integrates with your existing systems- DAMs, workflow tools, task management, and BI platforms—to keep everything in sync.</Text>
-                                </Box>
-                                <Box>
-                                    <Grid
-                                        templateColumns={{
-                                            base: "repeat(2, 1fr)",
-                                            sm: "repeat(3, 1fr)",
-                                            md: "repeat(4, 1fr)",
-                                        }}
-                                        gap={0}>
-                                        {integrations.map(({ src, text }: Integration, index: number) => (
-                                            <GridItem
-                                                key={index}
-                                                position="relative"
-                                                display="flex"
-                                                flexDirection="column"
-                                                onMouseEnter={() => setHoveredIntegration(text)}
-                                                onMouseLeave={() => setHoveredIntegration(null)}
-                                            >
-                                                <Box position="relative" width="120%" paddingBottom="calc(100% + 0rem)" >
-                                                    <Box position="absolute" top="0" left="0" right="0" bottom="0" rounded="md" bg="brandNeutral.500" display="flex" flexDirection="column" overflow="hidden" >
-                                                        <Box position="relative" width="100%" paddingBottom="100%" >
-                                                            <Box position="absolute" top="0" left="0" right="0" bottom="0" display="flex" alignItems="center" justifyContent="center" >
-                                                                <Image src={src} alt={`Integration ${index + 1}`} objectFit="contain" maxWidth="50%" maxHeight="50%" />
-                                                            </Box>
+                                    {integrations.map(({ src, text }: Integration, index: number) => (
+                                        <Box
+                                            key={index}
+                                            position="relative"
+                                            width={{ base: "50%", sm: "33.33%", md: "25%" }}
+                                            onMouseEnter={() => setHoveredIntegration(text)}
+                                            onMouseLeave={() => setHoveredIntegration(null)}
+                                        >
+                                            <Box position="relative" width="120%" paddingBottom="calc(100% + 0rem)" >
+                                                <Box position="absolute" top="0" left="0" right="0" bottom="0" rounded="md" bg="white" display="flex" flexDirection="column" overflow="hidden" >
+                                                    <Box position="relative" width="100%" paddingBottom="100%" >
+                                                        <Box position="absolute" top="0" left="0" right="0" bottom="0" display="flex" alignItems="center" justifyContent="center" >
+                                                            <Image src={src} alt={`Integration ${index + 1}`} objectFit="contain" maxWidth="50%" maxHeight="50%" />
                                                         </Box>
                                                     </Box>
                                                 </Box>
-                                            </GridItem>
-                                        ))}
-                                    </Grid>
-                                </Box>
-                            </GridItem>
-                        </Grid>
+                                            </Box>
+                                        </Box>
+                                    ))}
+                                </Flex>
+                            </Box>
+                        </Flex>
                     </Container>
                 </Box>
 
 
+                {/* Effortless Execution */}
                 <Box>
-                    {/* Effortless Execution */}
                     <Box bg="white" py={12} px={8}>
                         <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                            <Grid
-                                templateRows="auto auto"
-                            >
+                            <Grid templateRows="auto auto">
                                 <Grid
                                     templateColumns={{
                                         base: "1fr",
@@ -368,21 +568,10 @@ export default function CreateTotallyHomepage() {
                                     <GridItem>
                                         <Box>
                                             <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
-                                            <Text color="gray.900" fontSize="6xl" fontWeight="bold" textAlign="left" lineHeight={1}>
-                                                Effortless campaign execution
-                                            </Text>
+                                            <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">
+                                                Our Customers Save Big. Here’s Proof.
+                                            </Heading>
                                         </Box>
-                                    </GridItem>
-                                    <GridItem>
-                                        <VStack align="start" gap={4} justify="">
-                                            <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>
-                                                Scaling creative teams is expensive and slow. Hiring takes months. Workloads fluctuate. We help you deliver campaigns at any scale, without worrying about capacity constraints.
-                                            </Text>
-                                            <HStack>
-                                                <Button variant="subtle" bg="brandFuchsia.500" color="white" fontWeight="bold" size="lg" as="a" href="#" target="_blank" rel="noopener noreferrer">Contact sales</Button>
-                                                <Button variant="outline" size="lg" as="a" href="#" target="_blank" color="gray.900" rel="noopener noreferrer">Explore the product</Button>
-                                            </HStack>
-                                        </VStack>
                                     </GridItem>
                                 </Grid>
                                 <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={0}>
@@ -444,175 +633,31 @@ export default function CreateTotallyHomepage() {
                         </Container>
                     </Box>
 
-                    {/* AI */}
+                    {/* Questions & answers */}
                     <Box>
                         <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
                             <VStack gap={8} align="center">
                                 <Box textAlign="center">
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<RiRobot2Fill />} >AI Innovation</Tag>
-                                    <Text color="gray.900" fontSize="6xl" fontWeight="bold" textAlign="center" lineHeight={1}>AI proof your production process</Text>
-                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>Discover how AI and creativity blend seamlessly throughout CreateTOTALLY.</Text>
+                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Questions & answers</Heading>
                                 </Box>
-                                <HStack gap="6">
-                                    <Button
-                                        borderRadius="4xl"
-                                        variant={selectedFeature === 'Translation' ? "solid" : "outline"}
-                                        size="lg"
-                                        color={selectedFeature === 'Translation' ? "white" : "gray.900"}
-                                        bg={selectedFeature === 'Translation' ? "gray.900" : "transparent"}
-                                        fontWeight="bold"
-                                        onClick={() => setSelectedFeature('Translation')}
-                                    >
-                                        Translation
-                                    </Button>
-                                    <Button
-                                        borderRadius="4xl"
-                                        variant={selectedFeature === 'Quality Control' ? "solid" : "outline"}
-                                        size="lg"
-                                        color={selectedFeature === 'Quality Control' ? "white" : "gray.900"}
-                                        bg={selectedFeature === 'Quality Control' ? "gray.900" : "transparent"}
-                                        fontWeight="bold"
-                                        onClick={() => setSelectedFeature('Quality Control')}
-                                    >
-                                        Quality Control
-                                    </Button>
-                                    <Button
-                                        borderRadius="4xl"
-                                        variant={selectedFeature === 'Auto-Adapt' ? "solid" : "outline"}
-                                        size="lg"
-                                        color={selectedFeature === 'Auto-Adapt' ? "white" : "gray.900"}
-                                        bg={selectedFeature === 'Auto-Adapt' ? "gray.900" : "transparent"}
-                                        fontWeight="bold"
-                                        onClick={() => setSelectedFeature('Auto-Adapt')}
-                                    >
-                                        Auto-Adapt
-                                    </Button>
-                                </HStack>
-                                <Box
-                                    width="100%"
-                                    maxWidth="1152px"
-                                    height="720px"
-                                    borderRadius="xl"
-                                    borderWidth="1px"
-                                    borderColor="gray.500"
-                                    overflow="hidden"
-                                    p="1.5"
-                                >
-                                    <Image
-                                        src={featureImages[selectedFeature]}
-                                        alt={`AI ${selectedFeature} feature`}
-                                        width="100%"
-                                        height="100%"
-                                        objectFit="cover"
-                                        borderRadius="xl"
-                                    />
-                                </Box>
-                            </VStack>
-                        </Container>
-                    </Box>
-
-                    {/* DATA + Insights */}
-                    <Box>
-                        <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                            <Grid
-                                templateColumns={{
-                                    base: "1fr",
-                                    md: "1fr 2fr"
-                                }}
-                                gap={24}>
-                                <GridItem>
-                                    <Box>
-                                        <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<BsBarChartFill />}>Performance & Insights</Tag>
-                                        <Text color="gray.900" fontSize="6xl" fontWeight="bold" textAlign="left" lineHeight={1} mb={4}>Data that drives performance</Text>
-                                        <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>Track creative efficiency, optimize assets, and boost ROI with real-time analytics. Made-to-measure dashboards give you full visibility across the production process.</Text>
-                                    </Box>
-                                </GridItem>
-                                <GridItem>
-                                    <Box
-                                        width="100%"
-                                        maxWidth="1152px"
-                                        height="100%"
-                                        borderRadius="xl"
-                                        borderWidth="1px"
-                                        borderColor="gray.500"
-                                        overflow="hidden"
-                                        p="1.5"
-                                    >
-                                        <Box bg="white" borderRadius="xl">
-                                            <DotLottiePlayer
-                                                src="https://lottie.host/b964c8f0-dc96-425f-83cb-e62eee8e7e7e/wIQcbXxkr1.lottie"
-                                                loop
-                                                autoplay
-                                            />
-                                            <DotLottiePlayer src="https://lottie.host/6e08e0f2-8320-4c2b-978a-034174bbabbf/9dET2qVq0K.lottie"
-                                                background="#F4F0EB"
-                                                loop
-                                                autoplay>
-                                            </DotLottiePlayer>
-                                        </Box>
-                                    </Box>
-                                </GridItem>
-                            </Grid>
-                        </Container>
-                    </Box>
-
-
-                    {/* Security */}
-                    <Box bg="white">
-                        <Container maxW="container.xl" mx="auto" py={36}>
-                            <VStack gap={12} align="stretch">
                                 <Box>
-                                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<RiShieldFlashFill />}>Security</Tag>
-                                    <Text color="gray.900" fontSize="6xl" fontWeight="bold" lineHeight={1} mb={4}>
-                                        Secure and Enterprise-ready
-                                    </Text>
-                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.5}>
-                                        Meet security and operational requirements to deliver AI automation to market faster.
-                                    </Text>
+                                    <AccordionRoot width="4xl" multiple defaultValue={["b"]}>
+                                        {items.map((item, index) => (
+                                            <AccordionItem color="gray.900" key={index} value={item.value}>
+                                                <AccordionItemTrigger fontSize="2xl" fontWeight="bold" mt="6" mb="6">{item.title}</AccordionItemTrigger>
+                                                <AccordionItemContent fontSize="md" fontWeight="regular" mb="6">
+                                                    <ReactMarkdown
+                                                        components={{
+                                                            p: (props) => <ParagraphWithPadding {...props} />
+                                                        }}
+                                                    >
+                                                        {item.text}
+                                                    </ReactMarkdown>
+                                                </AccordionItemContent>
+                                            </AccordionItem>
+                                        ))}
+                                    </AccordionRoot>
                                 </Box>
-
-                                <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={16}>
-                                    {[
-                                        {
-                                            icon: <MdSecurity size={36} />,
-                                            title: "Secure",
-                                            description: "Data is encrypted at rest and in transit. Control access to your data with Single Sign-On, Role-Based Access Control, and more."
-                                        },
-                                        {
-                                            icon: <AiOutlineCheckCircle size={36} />,
-                                            title: "Reliable",
-                                            description: "Powering mission-critical applications of all sizes, with support SLAs and observability."
-                                        },
-                                        {
-                                            icon: <FiCloud size={36} />,
-                                            title: "Cloud-native",
-                                            description: "Fully managed AWS cloud in a region of your choice."
-                                        },
-                                        {
-                                            icon: <FaBalanceScale size={36} />,
-                                            title: "Compliant",
-                                            description: "SOC2 Type II certified, and GDPR-ready."
-                                        }
-                                    ].map((item, index) => (
-                                        <VStack key={index} align="start" gap={4}>
-                                            <Box
-                                                bg="brandNeutral.400"
-                                                borderRadius="md"
-                                                p={4}
-                                                fontSize="3xl"
-                                                color="gray.900"
-                                            >
-                                                {item.icon}
-                                            </Box>
-                                            <Text fontSize="2xl" fontWeight="bold" color="gray.900">
-                                                {item.title}
-                                            </Text>
-                                            <Text fontSize="md" color="gray.600">
-                                                {item.description}
-                                            </Text>
-                                        </VStack>
-                                    ))}
-                                </Grid>
                             </VStack>
                         </Container>
                     </Box>
@@ -621,9 +666,9 @@ export default function CreateTotallyHomepage() {
                     <Box bg="#CA3FC0" py={12} px={8}>
                         <VStack spaceY={4} textAlign="center">
                             <Text fontSize="2xl" fontWeight="bold" color="white">
-                                Data that drives performance
+                                See exactly how much you’ll save.
                             </Text>
-                            <Button colorScheme="whiteAlpha" size="lg">Book a Demo</Button>
+                            <Button colorScheme="whiteAlpha" size="lg">Book a demo today</Button>
                         </VStack>
                     </Box>
                 </Box>
@@ -631,3 +676,4 @@ export default function CreateTotallyHomepage() {
         </Box>
     );
 }
+export default LandingConcept;

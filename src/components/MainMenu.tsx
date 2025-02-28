@@ -123,8 +123,8 @@ const MainMenu: React.FC<MainMenuProps> = ({ onExpandChange }) => {
                 fontWeight="light"
                 color="gray.900"
                 onClick={() => item.hasDropdown ? handleMenuClick(item.label) : null}
-                as={item.hasDropdown ? undefined : 'a'}
-                href={item.hasDropdown ? undefined : item.href}
+                as={item.hasDropdown ? undefined : Link}
+                {...(item.hasDropdown ? {} : { href: item.href })}
               >
                 {item.label}
                 {item.hasDropdown && (

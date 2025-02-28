@@ -10,7 +10,6 @@ import LibrariesAssetManagement from './pages/LibrariesAssetManagement';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import PerformanceInsights from './pages/PerformanceInsights';
 import AllFeatures from './pages/AllFeatures';
-import Demo from './pages/demo';
 import LandingJoannaWiebe from './pages/LandingConcept';
 
 interface LayoutWrapperProps {
@@ -56,7 +55,6 @@ function App() {
           <Route path="/workflow-automation" element={<WorkflowAutomation />} />
           <Route path="/performance-insights" element={<PerformanceInsights />} />
           <Route path="/all-features" element={<AllFeatures />} />
-          <Route path="/demo" element={<Demo />} />
           <Route path="/landing-concept" element={<LandingJoannaWiebe />} />
           {/* Add more routes here as you create new pages */}
         </Routes>
