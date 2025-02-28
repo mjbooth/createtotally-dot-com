@@ -60,6 +60,37 @@ const LandingConcept = () => {
     const [isPlaying, setIsPlaying] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
     const [currentStep, setCurrentStep] = useState(0);
+    const imageContainerRef = useRef<HTMLDivElement>(null);
+    const stepsRef = useRef<HTMLDivElement>(null);
+
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (stepsRef.current && imageContainerRef.current) {
+                const stepsRect = stepsRef.current.getBoundingClientRect();
+                const stepHeight = stepsRect.height / steps.length;
+                const scrollPosition = window.scrollY - stepsRect.top + window.innerHeight / 2;
+                const newStep = Math.min(
+                    Math.max(Math.floor(scrollPosition / stepHeight), 0),
+                    steps.length - 1
+                );
+                setCurrentStep(newStep);
+
+                // Check if the last step is in the middle of the viewport
+                const lastStepTop = stepsRect.top + stepHeight * (steps.length - 1);
+                if (lastStepTop <= window.innerHeight / 2) {
+                    imageContainerRef.current.style.position = 'absolute';
+                    imageContainerRef.current.style.top = `${lastStepTop - window.innerHeight / 2}px`;
+                } else {
+                    imageContainerRef.current.style.position = 'sticky';
+                    imageContainerRef.current.style.top = '0';
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const integrations = useMemo<Integration[]>(() => shuffleArray([
         { src: "/adroll.svg", text: "AdRoll", colour: "#00aeef" },
@@ -81,11 +112,11 @@ const LandingConcept = () => {
     ]), []);
 
     const steps = [
-        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/CreateTOTALLY-Master-templates-02-27-2025_04_27_PM.png" },
-        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/pink.svg" },
+        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "src/assets/FigmaPlugin.jpg" },
+        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "src/assets/TemplateDesigner.jpg" },
         { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need—sizes, styles, and languages—so everything is just right.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
         { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
-        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/CreateTOTALLY-Review-Danish-Master-Mar-1-Create-Soda-Figma--02-27-2025_04_49_PM.png" },
+        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "src/assets/TaskNotification.jpg" },
         { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
         { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
     ];
@@ -380,26 +411,43 @@ const LandingConcept = () => {
                                                         ))}
                                                     </VStack>
                                                 </Box>
-                                                <Box width="65%" pl={8}>
-                                                    {steps.map((step, index) => (
+                                                <Box width="65%" pl={8} position="relative" height="auto">
+                                                    <Box
+                                                        ref={imageContainerRef}
+                                                        position="sticky"
+                                                        top="100px"
+                                                        width="100%"
+                                                        paddingTop="56.25%" // This creates a 16:9 aspect ratio
+                                                        display="flex"
+                                                        alignItems="center"
+                                                        justifyContent="center"
+                                                    >
                                                         <Box
-                                                            key={index}
-                                                            width="100%"
-                                                            aspectRatio="16/9"
-                                                            borderRadius="xl"
-                                                            borderWidth="1px"
-                                                            borderColor="gray.500"
+                                                            position="absolute"
+                                                            top="0"
+                                                            left="0"
+                                                            right="0"
+                                                            bottom="0"
                                                             overflow="hidden"
-                                                            p="1.5"
-                                                            display={index === currentStep ? "block" : "none"}
+                                                            borderRadius="xl"
                                                         >
-                                                            <Image 
-                                                                src={step.image} 
-                                                                borderRadius="xl"
-                                                                alt={step.label}
-                                                            />
+                                                            {steps.map((step, index) => (
+                                                                <Image
+                                                                    key={index}
+                                                                    src={step.image}
+                                                                    alt={step.label}
+                                                                    position="absolute"
+                                                                    top="0"
+                                                                    left="0"
+                                                                    width="100%"
+                                                                    height="100%"
+                                                                    objectFit="cover"
+                                                                    opacity={index === currentStep ? 1 : 0}
+                                                                    transition="opacity 0.3s ease-in-out"
+                                                                />
+                                                            ))}
                                                         </Box>
-                                                    ))}
+                                                    </Box>
                                                 </Box>
                                             </Flex>
                                         </Box>
