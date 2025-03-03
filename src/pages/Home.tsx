@@ -9,7 +9,6 @@ import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
 import { LuCircleCheck } from "react-icons/lu";
 import ReactMarkdown from 'react-markdown';
 import { IoCheckboxOutline } from "react-icons/io5";
-import { DotLottiePlayer } from '@dotlottie/react-player';
 
 // Add the shuffleArray function
 function shuffleArray<T>(array: T[]): T[] {
