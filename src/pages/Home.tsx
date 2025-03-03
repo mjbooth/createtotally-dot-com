@@ -1,5 +1,5 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
-import { Container, Box, Text, Button, VStack, HStack, Image, SimpleGrid, Grid, GridItem, Highlight, Heading, List, Flex, useBreakpointValue } from "@chakra-ui/react"
+import { Container, Box, Text, Button, VStack, HStack, Image, SimpleGrid, Grid, GridItem, Highlight, Heading, List, Flex, useBreakpointValue, Link } from "@chakra-ui/react"
 import { AccordionItem, AccordionItemContent, AccordionItemTrigger, AccordionRoot } from "@/components/ui/accordion"
 import { Tag } from "@/components/ui/tag"
 import { motion, useScroll, AnimatePresence, useTransform } from 'framer-motion';
@@ -117,11 +117,11 @@ const LandingConcept = () => {
     const steps = [
         { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/FigmaPlugin.jpg" },
         { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/TemplateDesigner.jpg" },
-        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need—sizes, styles, and languages—so everything is just right.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
-        { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
-        { icon: IoCheckboxOutline, label: "#5 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/TaskNotification.jpg" },
-        { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
-        { icon: IoCheckboxOutline, label: "#7 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
+        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
+        // { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
+        { icon: IoCheckboxOutline, label: "#4 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/TaskNotification.jpg" },
+        // { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
+        { icon: IoCheckboxOutline, label: "#5 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
     ];
 
     const lineRef = useRef<HTMLDivElement | null>(null);
@@ -217,7 +217,7 @@ const LandingConcept = () => {
                             </Text>
                             <HStack gap={{ base: 4, md: 16 }} flexDirection={{ base: "column", md: "row" }}>
                                 <Button bg="#001e44" size="lg" variant="surface" width={{ base: "full", md: "auto" }}>
-                                    Book a Free 1:1 Strategy Call →
+                                    <Link href="mailto:info@createtotally.com?subject=I%27d%20like%20a%20free%201%3A1%20strategy%20call" color="white">Book a Free 1:1 Strategy Call →</Link>
                                 </Button>
                             </HStack>
                             {/* Video container */}
@@ -348,9 +348,10 @@ const LandingConcept = () => {
                                     ))}
                                 </List.Root>
                             </Box>
-                            <Button mt={{ base: 8, md: 12 }} colorScheme="blue" size={{ base: "md", md: "lg" }} variant="surface" width={{ base: "full", md: "auto" }}>
-                                Get a free 1:1 discovery call →
-                            </Button>                        </Box>
+                            {/* <Button mt={{ base: 8, md: 12 }} colorScheme="blue" size={{ base: "md", md: "lg" }} variant="surface" width={{ base: "full", md: "auto" }}>
+                                Book a creative asset audit →
+                            </Button>                         */}
+                        </Box>
                         <Box flex={{ base: "1 1 100%", lg: "2 1 40%" }} mt={{ base: 8, lg: 0 }}>
                             <Box
                                 width="100%"
@@ -415,7 +416,7 @@ const LandingConcept = () => {
                                                         }}
                                                     />
                                                 </Box>
-                                                <VStack gap={{ base: 12, md: 24 }} align="stretch">
+                                                <VStack gap={{ base: 12, md: 36 }} align="stretch">
                                                     {steps.map((step, index) => (
                                                         <Flex key={index} align="center" id={`step-${index}`}>
                                                             <Box flex="1" pr={4} textAlign={{ base: "left", md: "right" }}>
@@ -501,7 +502,7 @@ const LandingConcept = () => {
 
                 {/* Assets Delivered Instantly */}
                 <Box>
-                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 24, lg: 36 }}>
+                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 24, lg: 32 }}>
                         <Flex
                             direction={{ base: "column", lg: "row" }}
                             justify="space-between"
@@ -522,14 +523,16 @@ const LandingConcept = () => {
                                     overflow="hidden"
                                     p={{ base: 1, md: 1.5 }}
                                 >
-                                    <DotLottiePlayer
-                                        src="https://lottie.host/8ba66b8d-d104-48f8-851c-3761ece39880/wQMvRDL9o6.lottie"
-                                        background="#F4F0EB"
-                                        loop
-                                        autoplay
-                                        style={{ width: '100%', height: '100%' }}
-                                    >
-                                    </DotLottiePlayer>
+                                <Vimeo
+                                    video="https://vimeo.com/1062020795"
+                                    responsive={true}
+                                    autopause={false}
+                                    autoplay={true}
+                                    loop={true}
+                                    controls={true}
+                                    muted={true}
+                                    style={{ width: '100%', height: '100%' }}
+                                />  
                                 </Box>
                             </Box>
                             <Box 
@@ -566,12 +569,11 @@ const LandingConcept = () => {
                                     A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That's time and budget lost-every single campaign.
                                 </Text>
                                 <Flex justify={{ base: "center", lg: "flex-start" }}>
-                                    <Button
-                                        colorScheme="blue"
+                                    <Button bg="#001e44"
                                         size={{ base: "md", md: "lg" }}
                                         variant="surface"
                                     >
-                                        Schedule a content audit →
+                                        <Link href="mailto:info@createtotally.com?subject=Schedule%20a%20content%20audit" color="white">Schedule a content audit →</Link>
                                     </Button>
                                 </Flex> 
                             </Box>
@@ -820,13 +822,13 @@ const LandingConcept = () => {
                     </Box>
 
                     {/* Call to Action Section */}
-                    <Box bg="#CA3FC0" py={12} px={8}>
+                    {/* <Box bg="#CA3FC0" py={12} px={8}>
                         <VStack spaceY={4} textAlign="center">
                             <Text fontSize="2xl" fontWeight="bold" color="white">
                                 See exactly how much you’ll save.
                             </Text>
                         </VStack>
-                    </Box>
+                    </Box> */}
                 </Box>
             </Box>
         </Box>
