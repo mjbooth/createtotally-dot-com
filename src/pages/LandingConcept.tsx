@@ -9,7 +9,6 @@ import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
 import { LuCircleCheck } from "react-icons/lu";
 import ReactMarkdown from 'react-markdown';
 import { IoCheckboxOutline } from "react-icons/io5";
-import { DotLottiePlayer } from '@dotlottie/react-player';
 
 // Add the shuffleArray function
 function shuffleArray<T>(array: T[]): T[] {
@@ -429,11 +428,7 @@ const LandingConcept = () => {
                                     overflow="hidden"
                                     p="1.5"
                                 >
-                                    <DotLottiePlayer src="https://lottie.host/8ba66b8d-d104-48f8-851c-3761ece39880/wQMvRDL9o6.lottie"
-                                        background="#F4F0EB"
-                                        loop
-                                        autoplay>
-                                    </DotLottiePlayer>
+
                                 </Box>
                             </Box>
                             <Box flexBasis={{ base: "100%", md: "55%" }}>

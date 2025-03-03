@@ -1,5 +1,5 @@
-import React, { useState, ReactNode } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, ReactNode, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Box } from "@chakra-ui/react";
 import MainMenu from "./components/MainMenu";
 import Footer from "./components/Footer";
@@ -11,6 +11,21 @@ import WorkflowAutomation from './pages/WorkflowAutomation';
 import PerformanceInsights from './pages/PerformanceInsights';
 import AllFeatures from './pages/AllFeatures';
 import LandingJoannaWiebe from './pages/LandingConcept';
+import ReactGA from "react-ga4";
+
+// Initialize GA4 with your measurement ID
+ReactGA.initialize("G-CKBFQLY6S2"); // Replace G-XXXXXXXXXX with your actual GA4 measurement ID
+
+// Create a component to track page views
+const PageViewTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
+
+  return null;
+};
 
 interface LayoutWrapperProps {
   children: ReactNode;
@@ -46,6 +61,7 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
 function App() {
   return (
     <Router>
+      <PageViewTracker />
       <LayoutWrapper>
         <Routes>
           <Route path="/" element={<Home />} />
