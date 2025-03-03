@@ -1,5 +1,5 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
-import { Container, Box, Text, Button, VStack, HStack, Image, SimpleGrid, Grid, GridItem, Highlight, Heading, List, Flex, useBreakpointValue, Link } from "@chakra-ui/react"
+import { Container, Box, Text, Button, VStack, HStack, Image, SimpleGrid, Grid, GridItem, Highlight, Heading, List, Flex, useBreakpointValue, Link, Icon } from "@chakra-ui/react"
 import { AccordionItem, AccordionItemContent, AccordionItemTrigger, AccordionRoot } from "@/components/ui/accordion"
 import { Tag } from "@/components/ui/tag"
 import { motion, useScroll, AnimatePresence, useTransform } from 'framer-motion';
@@ -9,6 +9,8 @@ import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
 import { LuCircleCheck } from "react-icons/lu";
 import ReactMarkdown from 'react-markdown';
 import { IoCheckboxOutline } from "react-icons/io5";
+import React from 'react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 // Add the shuffleArray function
 function shuffleArray<T>(array: T[]): T[] {
@@ -19,6 +21,8 @@ function shuffleArray<T>(array: T[]): T[] {
     }
     return newArray;
 }
+
+
 
 interface Integration {
     src: string;
@@ -61,7 +65,10 @@ const LandingConcept = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const stepsRef = useRef<HTMLDivElement>(null);
-
+    const [expandedItems, setExpandedItems] = useState<string[]>([]);
+    const handleAccordionChange = (details: { value: string[] }) => {
+        setExpandedItems(details.value);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -167,22 +174,22 @@ const LandingConcept = () => {
     );
 
     useEffect(() => {
-        const unsubscribe = scrollYProgress.onChange(v => {
+        const unsubscribe = scrollYProgress.on("change", (v) => {
             const step = Math.floor(v * steps.length);
             setCurrentStep(Math.min(step, steps.length - 1));
         });
         return () => unsubscribe();
-    }, [scrollYProgress]);
+    }, [scrollYProgress, steps.length]);
 
     const subheadingFontSize = useBreakpointValue({ base: "lg", md: "xl", lg: "2xl" });
     const h1FontSize = useBreakpointValue({ base: "3xl", md: "5xl", lg: "8xl" });
     const h2FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "5xl" });
-    // const h3FontSize = useBreakpointValue({ base: "xl", md: "3xl", lg: "4xl" });
-    // const h4FontSize = useBreakpointValue({ base: "lg", md: "2xl", lg: "3xl" });
+    const h3FontSize = useBreakpointValue({ base: "xl", md: "2xl", lg: "2xl" });
+    const h4FontSize = useBreakpointValue({ base: "lg", md: "2xl", lg: "3xl" });
 
     return (
         <Box bg="brandNeutral.500">
-            <Box pt={{ base: "24px", md: "54px" }}> 
+            <Box pt={{ base: "24px", md: "54px" }}>
                 <Box bg="#F4F0EB" w="full" minH="100vh">
                     <Container maxW="container.xl" mx="auto">
                         {/* Hero Section */}
@@ -202,7 +209,7 @@ const LandingConcept = () => {
                                 maxW={{ base: "full", md: "6xl" }}
                                 pt={{ base: 6, md: "12" }}
                             >
-                                Cut Your Creative Production Costs By 65% Instantly
+                                Cut Creative Production Costs by 65%, Instantly.
                             </Heading>
                             <Text
                                 fontSize={subheadingFontSize}
@@ -262,9 +269,14 @@ const LandingConcept = () => {
                 <Container maxW="container.xl" mx="auto" bg="white" py={{ base: 10, md: 20 }}>
                     <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={{ base: 8, lg: 12 }}>
                         <GridItem>
-                            <Text color="gray.900" fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" textAlign={{ base: "center", lg: "left" }}>
-                                The World's Biggest Brands Choose CreateTOTALLY
-                            </Text>
+                            <Heading
+                                as="h3"
+                                fontSize={h3FontSize}
+                                fontWeight="bold"
+                                textAlign={{ base: "center", lg: "left" }}
+                                color='#001e44'
+                            >The World's Biggest Brands Choose CreateTOTALLY
+                            </Heading>
                         </GridItem>
                         <GridItem>
                             <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} gap={{ base: 8, md: 8 }} >
@@ -309,17 +321,18 @@ const LandingConcept = () => {
 
             <Box>
                 {/* Built to scale your Figma and Adobe content */}
-                <Container maxW="container.xl" mx="auto" py={{ base: 8, md: 16 }}>
-                    <Box textAlign={{ base: "center", md: "left" }}>
-                        <Tag variant="solid" size={{ base: "md", md: "lg" }} bg="brandFuchsia.100" color="brandFuchsia.600" mb={{ base: 2, md: 3 }} startElement={<HiTemplate />}>Template & Content Creation</Tag>
-                    </Box>
+                <Container maxW="container.xl" mx="auto" pb={{ base: 8, md: 16 }}>
+
                     <Flex
                         direction={{ base: "column", lg: "row" }}
                         gap={{ base: 6, md: 8 }}
-                        alignItems={{ base: "center", lg: "flex-start" }}
+                        alignItems="center"
                     >
-                        <Box flex={{ base: "1 1 100%", lg: "3 1 60%" }}>
+                        <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }}>
                             <Box>
+                                <Box textAlign={{ base: "center", md: "left" }}>
+                                    <Tag variant="solid" size={{ base: "md", md: "lg" }} bg="brandFuchsia.100" color="brandFuchsia.600" mb={{ base: 2, md: 3 }} startElement={<HiTemplate />}>Template & Content Creation</Tag>
+                                </Box>
                                 <Heading
                                     fontSize={h2FontSize}
                                     color="gray.900"
@@ -330,17 +343,17 @@ const LandingConcept = () => {
                                     Double Your Output.<br /> Zero Trade-offs.
                                 </Heading>
                                 <Text color="gray.900" fontSize={{ base: "lg", md: "xl" }} lineHeight={1.25} mb={{ base: 4, md: 6 }} textAlign={{ base: "center", lg: "left" }}>
-                                    Your team relies on Figma and Adobe - so we built automation that works with your native tools, not against them.
+                                    Your team relies on Figma and Adobe - so, we built automation that works with your native tools, not against them.
                                 </Text>
                                 <List.Root color="gray.900" fontSize={{ base: "md", md: "lg", lg: "xl" }} gap={{ base: 1, md: 2 }} variant="plain" >
                                     {[
-                                        "No switching. Keep your existing workflows. No proprietary software.",
+                                        "No switching to proproetary software. Keep your existing workflows.",
                                         "Full creative control. Set design rules, automate, and approve—without losing the craft.",
                                         "One-click efficiency. Automate without coding. Handle thousands of assets in minutes."
                                     ].map((item, index) => (
                                         <List.Item key={index}>
                                             <List.Indicator asChild color="green.500">
-                                                <LuCircleCheck />
+                                                <Icon as={LuCircleCheck} />
                                             </List.Indicator>
                                             {item}
                                         </List.Item>
@@ -351,14 +364,10 @@ const LandingConcept = () => {
                                 Book a creative asset audit →
                             </Button>                         */}
                         </Box>
-                        <Box flex={{ base: "1 1 100%", lg: "2 1 40%" }} mt={{ base: 8, lg: 0 }}>
+                        <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }} mt={{ base: 8, lg: 0 }}>
                             <Box
                                 width="100%"
-                                borderRadius="xl"
                                 overflow="hidden"
-                                p={{ base: 2, md: 3 }}
-                                borderWidth="1px"
-                                borderColor="white"
                             >
                                 <Image src="/AutomationSuite.svg" alt="All Channels" width="100%" />
                             </Box>
@@ -368,86 +377,95 @@ const LandingConcept = () => {
 
                 {/* ALL CHANNELS */}
 
-                
-                <Box>
-                <Box>
-                    <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
-                        <VStack gap={16} align="center">
-                            <Box textAlign="center" maxW="4xl">
-                                <Tag variant="solid" fontSize={h2FontSize} bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>
-                                    Workflow & Automation
-                                </Tag>
-                                <Heading color="gray.900" fontSize={{ base: "4xl", md: "5xl" }} fontWeight="bold" textAlign="center" lineHeight={1} mb="3">
-                                    How It Works
-                                </Heading>
-                                <Text fontSize={{ base: "lg", md: "xl" }} color="gray.900" mt={4}>
-                                    Streamline your content creation process with our powerful automation tools.
-                                </Text>
-                            </Box>
-                            <Box w="full" position="relative" ref={lineRef}>
-                                <Flex justify="center" direction={{ base: "column", md: "row" }}>
-                                    <Box maxWidth="1200px" width="100%" position="relative">
-                                        <Flex direction={{ base: "column", md: "row" }}>
-                                            <Box width={{ base: "100%", md: "35%" }} position="relative" pr={{ base: 0, md: 8 }} mb={{ base: 8, md: 0 }}>
-                                                <Box
-                                                    display={{ base: "none", md: "block" }}
-                                                    position="absolute"
-                                                    right="31px"
-                                                    top="8px"
-                                                    bottom="8px"
-                                                    width="2px"
-                                                    bg="gray.200"
-                                                    transform="translateX(50%)"
-                                                />
-                                                {/* Progress line */}
-                                                <Box display={{ base: "none", md: "block" }}>
-                                                    <motion.div
-                                                        style={{
-                                                            position: 'absolute',
-                                                            right: '31px',
-                                                            top: '8px',
-                                                            bottom: '8px',
-                                                            width: '2px',
-                                                            background: '#CA3FC0',
-                                                            transformOrigin: 'top',
-                                                            transform: 'translateX(50%)',
-                                                            height: lineHeight
-                                                        }}
+                <Box
+                    width="100%"
+                    height={{ base: '90px', md: '380px' }} // Different heights for different screen sizes
+                    backgroundImage="url('/wave-divider-4.svg')"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="center"
+                    backgroundSize="cover"
+                    transform={{ base: 'rotate(0deg)', md: 'rotate(0deg)' }} // Different rotations for different screen sizes
+                />
+
+                <Box bg="white">
+                    <Box>
+                        <Container maxW="container.xl" mx="auto" pb={6}>
+                            <VStack gap={16} align="center">
+                                <Box textAlign="center" maxW="4xl">
+                                    <Tag variant="solid" fontSize={h2FontSize} bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>
+                                        Workflow & Automation
+                                    </Tag>
+                                    <Heading color="gray.900" fontSize={{ base: "4xl", md: "5xl" }} fontWeight="bold" textAlign="center" lineHeight={1} mb="3">
+                                        How It Works
+                                    </Heading>
+                                    <Text fontSize={{ base: "lg", md: "xl" }} color="gray.900" mt={4}>
+                                        Streamline your content creation process with our powerful automation tools.
+                                    </Text>
+                                </Box>
+                                <Box w="full" ref={lineRef} position="relative">
+                                    <Flex justify="center" direction={{ base: "column", md: "row" }}>
+                                        <Box maxWidth="1200px" width="100%" position="relative">
+                                            <Flex direction={{ base: "column", md: "row" }}>
+                                                <Box width={{ base: "100%", md: "35%" }} position="relative" pr={{ base: 0, md: 8 }} mb={{ base: 8, md: 0 }}>
+                                                    <Box
+                                                        display={{ base: "none", md: "block" }}
+                                                        position="absolute"
+                                                        right="31px"
+                                                        top="8px"
+                                                        bottom="8px"
+                                                        width="2px"
+                                                        bg="gray.200"
+                                                        transform="translateX(50%)"
                                                     />
-                                                </Box>
-                                                <VStack gap={{ base: 12, md: 36 }} align="stretch">
-                                                    {steps.map((step, index) => (
-                                                        <Flex key={index} align="center" id={`step-${index}`}>
-                                                            <Box flex="1" pr={4} textAlign={{ base: "left", md: "right" }}>
-                                                                <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
-                                                                    {step.label}
-                                                                </Text>
-                                                                <Text fontSize="md" color="gray.600" lineHeight="1.2">
-                                                                    {step.subLabel}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box
-                                                                flex="none"
-                                                                width="60px"
-                                                                height="60px"
-                                                                borderRadius="full"
-                                                                bg="brandFuchsia.500"
-                                                                display={{ base: "none", md: "flex" }}
-                                                                alignItems="center"
-                                                                justifyContent="center"
-                                                                zIndex={1}
-                                                                position="relative"
-                                                                left={{ base: 0, md: "30px" }}
-                                                            >
-                                                                <Box display={{ base: "none", md: "block" }}>
-                                                                    <step.icon color="white" size="24px" />
+                                                    {/* Progress line */}
+                                                    <Box display={{ base: "none", md: "block" }}>
+                                                        <motion.div
+                                                            style={{
+                                                                position: 'absolute',
+                                                                right: '31px',
+                                                                top: '8px',
+                                                                bottom: '8px',
+                                                                width: '2px',
+                                                                background: '#CA3FC0',
+                                                                transformOrigin: 'top',
+                                                                transform: 'translateX(50%)',
+                                                                height: lineHeight
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                    <VStack gap={{ base: 12, md: 36 }} align="stretch">
+                                                        {steps.map((step, index) => (
+                                                            <Flex key={index} align="center" id={`step-${index}`}>
+                                                                <Box flex="1" pr={4} textAlign={{ base: "left", md: "right" }}>
+                                                                    <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
+                                                                        {step.label}
+                                                                    </Text>
+                                                                    <Text fontSize="md" color="gray.600" lineHeight="1.2">
+                                                                        {step.subLabel}
+                                                                    </Text>
                                                                 </Box>
-                                                            </Box>
-                                                        </Flex>
-                                                    ))}
-                                                </VStack>
-                                            </Box>
-                                            
+                                                                <Box
+                                                                    flex="none"
+                                                                    width="60px"
+                                                                    height="60px"
+                                                                    borderRadius="full"
+                                                                    bg="brandFuchsia.500"
+                                                                    display={{ base: "none", md: "flex" }}
+                                                                    alignItems="center"
+                                                                    justifyContent="center"
+                                                                    zIndex={1}
+                                                                    position="relative"
+                                                                    left={{ base: 0, md: "30px" }}
+                                                                >
+                                                                    <Box display={{ base: "none", md: "block" }}>
+                                                                        <step.icon color="white" size="24px" />
+                                                                    </Box>
+                                                                </Box>
+                                                            </Flex>
+                                                        ))}
+                                                    </VStack>
+                                                </Box>
+
                                                 <Box width={{ base: "100%", md: "65%" }} pl={{ base: 0, md: 8 }} position="relative" height="auto">
                                                     <Box
                                                         ref={imageContainerRef}
@@ -489,15 +507,26 @@ const LandingConcept = () => {
                                                         </Box>
                                                     </Box>
                                                 </Box>
-                                            
-                                        </Flex>
-                                    </Box>
-                                </Flex>
-                            </Box>
-                        </VStack>
-                    </Container>
+
+                                            </Flex>
+                                        </Box>
+                                    </Flex>
+                                </Box>
+                            </VStack>
+                        </Container>
+                    </Box>
                 </Box>
-            </Box>
+
+                <Box
+                    width="100%"
+                    height={{ base: '90px', md: '450px' }} // Different heights for different screen sizes
+                    backgroundImage="url('/wave-divider-3.svg')"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="center"
+                    backgroundSize="cover"
+                    transform={{ base: 'rotate(0deg)', md: 'rotate(0deg)' }} // Different rotations for different screen sizes
+                />
+
 
                 {/* Assets Delivered Instantly */}
                 <Box>
@@ -508,33 +537,24 @@ const LandingConcept = () => {
                             align={{ base: "center", lg: "flex-start" }}
                             gap={{ base: 8, md: 12, lg: 16 }}
                         >
-                            <Box 
-                                flexBasis={{ base: "100%", lg: "40%" }} 
+                            <Box
+                                flexBasis={{ base: "100%", lg: "40%" }}
                                 mb={{ base: 8, lg: 0 }}
                                 order={{ base: 2, lg: 1 }}  // Change order on mobile
                             >                                <Box
-                                    width="100%"
-                                    maxWidth={{ base: "300px", md: "400px", lg: "100%" }}
-                                    aspectRatio="1/1"
-                                    borderRadius="xl"
-                                    borderWidth="1px"
-                                    borderColor="white"
-                                    overflow="hidden"
-                                    p={{ base: 1, md: 1.5 }}
-                                >
-                                <Vimeo
-                                    video="https://vimeo.com/1062020795"
-                                    responsive={true}
-                                    autopause={false}
-                                    autoplay={true}
-                                    loop={true}
-                                    controls={true}
-                                    muted={true}
-                                    style={{ width: '100%', height: '100%' }}
-                                />  
+                                width="100%"
+                                maxWidth={{ base: "300px", md: "400px", lg: "100%" }}
+                                overflow="hidden"
+                                p={{ base: 1, md: 1.5 }}
+                            >
+                                    <DotLottieReact
+                                        src="https://lottie.host/64a75798-d0a2-401c-81f7-f5ad58f10bfd/nA9e1sZCcn.lottie"
+                                        loop
+                                        autoplay
+                                    />
                                 </Box>
                             </Box>
-                            <Box 
+                            <Box
                                 flexBasis={{ base: "100%", md: "55%" }}
                                 order={{ base: 1, lg: 2 }}  // Change order on mobile
                             >
@@ -549,23 +569,24 @@ const LandingConcept = () => {
                                     Workflow & Automation
                                 </Tag>
                                 <Heading
-                                    color="gray.900"
-                                    fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-                                    fontWeight="bold"
+                                    as="h2"
+                                    fontSize={h2FontSize}
+                                    fontWeight="black"
+                                    lineHeight={{ base: "1.2", md: ".95" }}
+                                    color='#001e44'
                                     textAlign={{ base: "center", lg: "left" }}
-                                    lineHeight={1.2}
                                     mb={{ base: 3, md: 4 }}
                                 >
                                     How Much Are You Overpaying for Repetitive Work?
                                 </Heading>
                                 <Text
-                                    color="gray.900"
+                                    color='#001e44'
                                     fontSize={{ base: "lg", md: "xl" }}
                                     lineHeight={1.5}
                                     textAlign={{ base: "center", lg: "left" }}
                                     mb={{ base: 6, md: 8 }}
                                 >
-                                    A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That's time and budget lost-every single campaign.
+                                    A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That’s time and budget lost, on every single campaign.
                                 </Text>
                                 <Flex justify={{ base: "center", lg: "flex-start" }}>
                                     <Button bg="#001e44"
@@ -574,7 +595,7 @@ const LandingConcept = () => {
                                     >
                                         <Link href="mailto:info@createtotally.com?subject=Schedule%20a%20content%20audit" color="white">Schedule a content audit →</Link>
                                     </Button>
-                                </Flex> 
+                                </Flex>
                             </Box>
                         </Flex>
                     </Container>
@@ -600,7 +621,15 @@ const LandingConcept = () => {
                             <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }} position="relative" display="flex" alignItems="flex-start">
                                 <Box>
                                     <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiPlugsFill />}>Integrations</Tag>
-                                    <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" textAlign="left" lineHeight={1.2} mb={{ base: 3, md: 4 }}>
+                                    <Heading
+                                        as="h2"
+                                        fontSize={h2FontSize}
+                                        fontWeight="black"
+                                        lineHeight={{ base: "1.2", md: ".95" }}
+                                        color='#001e44'
+                                        textAlign="left"
+                                        mb={{ base: 3, md: 4 }}
+                                    >
                                         Seamless integration<br />with{" "}
                                         <span style={{ display: 'inline-flex', alignItems: 'center', minWidth: '10ch' }}>
                                             <AnimatePresence mode="wait">
@@ -644,8 +673,14 @@ const LandingConcept = () => {
                                             </AnimatePresence>
                                         </span>
                                     </Heading>
-                                    <Text color="gray.900" fontSize={{ base: "lg", md: "xl" }} maxW="xl" lineHeight={1.5} mt={4}>
-                                        Disconnected tools slow teams down. CreateTOTALLY integrates with your existing tech ensuring everything stays in sync.
+                                    <Text
+                                        color='#001e44'
+                                        fontSize={{ base: "lg", md: "xl" }}
+                                        maxW="xl"
+                                        lineHeight={1.5}
+                                        mt={4}
+                                    >
+                                        Disconnected tools slow teams down. CreateTOTALLY integrates with your existing tech, ensuring everything stays in sync.
                                     </Text>
                                 </Box>
                             </Box>
@@ -705,7 +740,14 @@ const LandingConcept = () => {
                         <VStack gap={{ base: 0 }}>
                             <Box w="full" textAlign={{ base: "center", md: "left" }} pb={{ base: 8, md: 12 }}>
                                 <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
-                                <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" lineHeight={1.2} mb="3">
+                                <Heading
+                                    as="h2"
+                                    fontSize={h2FontSize}
+                                    fontWeight="black"
+                                    lineHeight={{ base: "1.2", md: ".95" }}
+                                    color='#001e44'
+                                    mb="3"
+                                >
                                     Our Customers Save Big. Here's Proof.
                                 </Heading>
                             </Box>
@@ -782,38 +824,70 @@ const LandingConcept = () => {
                         <Container maxW="container.xl" mx="auto">
                             <VStack gap={{ base: 6, md: 10 }} align="stretch">
                                 <Box textAlign={{ base: "center", md: "left" }}>
-                                    <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" lineHeight={1.2} mb={{ base: 2, md: 4 }}>
-                                        Questions & answers
+                                    <Heading
+                                        as="h2"
+                                        fontSize={h2FontSize}
+                                        fontWeight="black"
+                                        lineHeight={{ base: "1.2", md: ".95" }}
+                                        color='#001e44'
+                                        mb={{ base: 2, md: 4 }}
+                                    >
+                                        Questions & Answers
                                     </Heading>
                                 </Box>
                                 <Box width="100%">
-                                    <AccordionRoot width="100%" multiple defaultValue={["b"]}>
-                                        {items.map((item, index) => (
-                                            <AccordionItem color="gray.900" key={index} value={item.value}>
-                                                <AccordionItemTrigger
-                                                    fontSize={{ base: "xl", md: "2xl" }}
-                                                    fontWeight="bold"
-                                                    py={4}
-                                                    pr={4}
-                                                    _hover={{ bg: "gray.50" }}
+                                    <AccordionRoot
+                                        width="100%"
+                                        multiple
+                                        value={expandedItems}
+                                        onValueChange={handleAccordionChange}
+                                    >
+                                        {items.map((item, index) => {
+                                            return (
+                                                <AccordionItem
+                                                    color="gray.900"
+                                                    key={index}
+                                                    value={item.value}
                                                 >
-                                                    {item.title}
-                                                </AccordionItemTrigger>
-                                                <AccordionItemContent
-                                                    fontSize={{ base: "md", md: "lg" }}
-                                                    fontWeight="regular"
-                                                    pb={4}
-                                                >
-                                                    <ReactMarkdown
-                                                        components={{
-                                                            p: (props) => <ParagraphWithPadding {...props} />
+                                                    <AccordionItemTrigger
+                                                        as="h4"
+                                                        fontSize={h4FontSize}
+                                                        fontWeight="bold"
+                                                        color='#001e44'
+                                                        py={4}
+                                                        pr={4}
+                                                        onClick={() => {
+                                                            const newExpandedItems = expandedItems.includes(item.value)
+                                                                ? expandedItems.filter(v => v !== item.value)
+                                                                : [...expandedItems, item.value];
+                                                            setExpandedItems(newExpandedItems);
                                                         }}
                                                     >
-                                                        {item.text}
-                                                    </ReactMarkdown>
-                                                </AccordionItemContent>
-                                            </AccordionItem>
-                                        ))}
+                                                        {item.title}
+                                                    </AccordionItemTrigger>
+                                                    <AccordionItemContent
+                                                        fontSize={{ base: "md", md: "lg" }}
+                                                        fontWeight="regular"
+                                                        color='#001e44'
+                                                        pb={4}
+                                                    >
+                                                        {expandedItems.includes(item.value) && (
+                                                            item.text ? (
+                                                                <ReactMarkdown
+                                                                    components={{
+                                                                        p: (props) => <ParagraphWithPadding {...props} />
+                                                                    }}
+                                                                >
+                                                                    {item.text}
+                                                                </ReactMarkdown>
+                                                            ) : (
+                                                                <p>No content available</p>
+                                                            )
+                                                        )}
+                                                    </AccordionItemContent>
+                                                </AccordionItem>
+                                            );
+                                        })}
                                     </AccordionRoot>
                                 </Box>
                             </VStack>

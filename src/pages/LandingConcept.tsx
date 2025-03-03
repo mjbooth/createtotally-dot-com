@@ -296,12 +296,7 @@ const LandingConcept = () => {
                         <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
                             <Box
                                 width="100%"
-                                // aspectRatio="1/1"
-                                borderRadius="xl"
                                 overflow="hidden"
-                                p="3"
-                                borderWidth="1px"
-                                borderColor="white"
                             >
                                 <Image src="/AutomationSuite.svg" alt="All Channels" width="100%" />
                             </Box>
