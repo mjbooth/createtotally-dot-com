@@ -22,7 +22,7 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
 
   return (
     <Box position="relative">
-      <MainMenu onExpandChange={setIsMenuExpanded} />
+      <MainMenu />
       <Box
         position="absolute"
         top="0"

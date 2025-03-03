@@ -35,7 +35,20 @@ const customConfig = defineConfig({
           800: { value: '#B89F7E' },
           900: { value: '#A4835A' },
           950: { value: '#927550' }
-        }
+        },
+        brandNavy: {
+          50: { value: "#FFFFFF" },
+          100: { value: '#FFFFFF' },
+          200: { value: '#FFFFFF' },
+          300: { value: '#F8F5F2' },
+          400: { value: '#F6F2EE' },
+          500: { value: '#F4F0EB' },
+          600: { value: '#E0D5C7' },
+          700: { value: '#CCBAA3' },
+          800: { value: '#B89F7E' },
+          900: { value: '#A4835A' },
+          950: { value: '#927550' }
+        },
       },
       fonts: {
         body: { value: "Inter Variable, system-ui, sans-serif" },

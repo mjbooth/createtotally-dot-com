@@ -1,8 +1,8 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
-import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
+import { Container, Box, Text, Button, VStack, HStack, Image, SimpleGrid, Grid, GridItem, Highlight, Heading, List, Flex, useBreakpointValue } from "@chakra-ui/react"
 import { AccordionItem, AccordionItemContent, AccordionItemTrigger, AccordionRoot } from "@/components/ui/accordion"
 import { Tag } from "@/components/ui/tag"
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence, useTransform } from 'framer-motion';
 import Vimeo from '@u-wave/react-vimeo';
 import { HiTemplate } from "react-icons/hi";
 import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
@@ -92,24 +92,27 @@ const LandingConcept = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const integrations = useMemo<Integration[]>(() => shuffleArray([
-        { src: "/adroll.svg", text: "AdRoll", colour: "#00aeef" },
-        { src: "/aem.svg", text: "AEM", colour: "rgb(238, 126, 55)" },
-        { src: "/brandfolder.svg", text: "Brandfolder", colour: "rgb(110, 206, 241)" },
-        { src: "/bynder.svg", text: "Bynder", colour: "#126dfe" },
-        { src: "/drive.svg", text: "Google Drive", colour: "#4285f4" },
-        { src: "/google-ads.svg", text: "Google Ads", colour: "#fbbc05" },
-        { src: "/monday-logo-x2.png", text: "Monday.com", colour: "#6161FF" },
-        { src: "/powerbi.svg", text: "Power BI", colour: "#f2c811" },
-        { src: "/adobe-workfront.png", text: "Adobe Workfront", colour: "#ff0000" },
-        { src: "/box.svg", text: "Box", colour: "#2486FC" },
-        { src: "/click-up.svg", text: "ClickUp", colour: "rgba(250, 18, 227, 1)" },
-        { src: "/aws-s3.svg", text: "Amazon S3", colour: "rgb(232, 146, 56)" },
-        { src: "/Sitecore.svg", text: "Sitecore", colour: "#ff1f38" },
-        { src: "/mark-gradient-blue-jira.svg", text: "Jira", colour: "#0146B3" },
-        { src: "/YouTube.svg", text: "YouTube", colour: "#ff0000" },
-        { src: "/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
-    ]), []);
+    const integrations = useMemo<Integration[]>(() => {
+        const allIntegrations = [
+            { src: "/adroll.svg", text: "AdRoll", colour: "#00aeef" },
+            { src: "/aem.svg", text: "AEM", colour: "rgb(238, 126, 55)" },
+            { src: "/brandfolder.svg", text: "Brandfolder", colour: "rgb(110, 206, 241)" },
+            { src: "/bynder.svg", text: "Bynder", colour: "#126dfe" },
+            { src: "/drive.svg", text: "Google Drive", colour: "#4285f4" },
+            { src: "/google-ads.svg", text: "Google Ads", colour: "#fbbc05" },
+            { src: "/monday-logo-x2.png", text: "Monday.com", colour: "#6161FF" },
+            { src: "/powerbi.svg", text: "Power BI", colour: "#f2c811" },
+            { src: "/adobe-workfront.png", text: "Adobe Workfront", colour: "#ff0000" },
+            { src: "/box.svg", text: "Box", colour: "#2486FC" },
+            { src: "/click-up.svg", text: "ClickUp", colour: "rgba(250, 18, 227, 1)" },
+            { src: "/aws-s3.svg", text: "Amazon S3", colour: "rgb(232, 146, 56)" },
+            { src: "/Sitecore.svg", text: "Sitecore", colour: "#ff1f38" },
+            { src: "/mark-gradient-blue-jira.svg", text: "Jira", colour: "#0146B3" },
+            { src: "/YouTube.svg", text: "YouTube", colour: "#ff0000" },
+            { src: "/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
+        ];
+        return shuffleArray(allIntegrations).slice(0, 15);
+    }, []);
 
     const steps = [
         { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/FigmaPlugin.jpg" },
@@ -125,7 +128,9 @@ const LandingConcept = () => {
     const { scrollYProgress } = useScroll({
         target: lineRef,
         offset: ["start center", "end center"]
-    })
+    });
+
+    const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
     useEffect(() => {
         if (videoRef.current) {
@@ -170,35 +175,52 @@ const LandingConcept = () => {
         return () => unsubscribe();
     }, [scrollYProgress]);
 
+    const subheadingFontSize = useBreakpointValue({ base: "lg", md: "xl", lg: "2xl" });
+    const h1FontSize = useBreakpointValue({ base: "3xl", md: "5xl", lg: "8xl" });
+    const h2FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "5xl" });
+    // const h3FontSize = useBreakpointValue({ base: "xl", md: "3xl", lg: "4xl" });
+    // const h4FontSize = useBreakpointValue({ base: "lg", md: "2xl", lg: "3xl" });
+
     return (
         <Box bg="brandNeutral.500">
-            <Box pt="54px"> {/* Adjust this value based on the height of your header */}
+            <Box pt={{ base: "24px", md: "54px" }}> 
                 <Box bg="#F4F0EB" w="full" minH="100vh">
                     <Container maxW="container.xl" mx="auto">
                         {/* Hero Section */}
                         <VStack
-                            pt={16}
-                            gap={12}
+                            pt={{ base: 8, md: 16 }}
+                            gap={{ base: 6, md: 12 }}
                             align="center"
                             w="full"
                         >
                             <Heading
-                                fontSize="8xl"
+                                as="h1"
+                                fontSize={h1FontSize}
                                 fontWeight="black"
-                                lineHeight=".95"
-                                color='gray.800'
+                                lineHeight={{ base: "1.2", md: ".95" }}
+                                color='#001e44'
                                 textAlign="center"
-                                maxW="6xl"
-                                pt="12"
+                                maxW={{ base: "full", md: "6xl" }}
+                                pt={{ base: 6, md: "12" }}
                             >
-                                Halve Your Creative Production Costs Instantly
+                                Cut Your Creative Production Costs By 65% Instantly
                             </Heading>
-                            <Text fontSize="2xl" color="gray.600" textAlign="center" maxW="3xl" lineHeight="1.2" fontWeight="light" pb="18">
-                                If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 50%. <br />Without sacrificing creative control.
+                            <Text
+                                fontSize={subheadingFontSize}
+                                color="#001e44"
+                                textAlign="center"
+                                maxW={{ base: "full", md: "3xl" }}
+                                lineHeight="1.2"
+                                pb={{ base: 3, md: "18" }}
+                            >
+                                If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 65%. <br />Without sacrificing creative control.
                             </Text>
-                            <HStack gap={16}>
-                                <Button colorScheme="blue" size="lg" variant="surface">Learn what automation can do for you</Button>
+                            <HStack gap={{ base: 4, md: 16 }} flexDirection={{ base: "column", md: "row" }}>
+                                <Button bg="#001e44" size="lg" variant="surface" width={{ base: "full", md: "auto" }}>
+                                    Book a Free 1:1 Strategy Call →
+                                </Button>
                             </HStack>
+                            {/* Video container */}
                             <Box
                                 w="full"
                                 maxW="6xl"
@@ -228,61 +250,57 @@ const LandingConcept = () => {
 
             <Box
                 width="100%"
-                height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                height={{ base: '90px', md: '380px' }}
                 backgroundImage="url('/wave-divider-1.svg')"
                 backgroundRepeat="no-repeat"
                 backgroundPosition="center"
                 backgroundSize="cover"
-                transform={{ base: 'rotate(-180deg)', md: 'rotate(-180deg)' }} // Different rotations for different screen sizes
+                transform={{ base: 'rotate(-180deg)', md: 'rotate(-180deg)' }}
             />
 
             {/* Client Logos Section */}
             <Box bg="white">
-                <Container maxW="container.xl" mx="auto" bg="#white" pt={20} pb={20}>
-                    <Box>
-                        <Grid
-                            templateColumns="repeat(8, 1fr)"
-                            gap="4"
-                            alignItems="center"
-                        >
-                            <GridItem rowSpan={2} colSpan={3} display="flex" alignItems="flex-start">
-                                <Text alignSelf="flex-start" color="gray.800" fontSize="2xl" fontWeight="bold" textAlign="left">
-                                    The World’s Biggest Brands Choose CreateTOTALLY
-                                </Text>
-                            </GridItem>
-                            {[
-                                "/bacardi_logo.png",
-                                "/vitality-logo.svg",
-                                "/Anheuser-Busch_InBev.svg",
-                                "/googlelogo_clr_74x24px.svg",
-                                "/Logo_NIKE.png",
-                                "/miele.svg",
-                                "/patek-philippe-sa-1.svg",
-                                "/Allwyn-Logo.png",
-                                "/AGY_22_Logo_Doner_RGB.png",
-                                "/MSC_Cruises_Logo.png"
-                            ].map((src, index) => (
-                                <GridItem key={index} display="flex" alignItems="center" justifyContent="center">
-                                    <Box lineHeight="1" mt="2" mb="2" pl="7" pr="7" width="100%" height="100%" position="relative" display="flex" alignItems="center" justifyContent="center">
+                <Container maxW="container.xl" mx="auto" bg="white" py={{ base: 10, md: 20 }}>
+                    <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={{ base: 8, lg: 12 }}>
+                        <GridItem>
+                            <Text color="gray.900" fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" textAlign={{ base: "center", lg: "left" }}>
+                                The World's Biggest Brands Choose CreateTOTALLY
+                            </Text>
+                        </GridItem>
+                        <GridItem>
+                            <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} gap={{ base: 8, md: 8 }} >
+                                {[
+                                    "/bacardi_logo.png",
+                                    "/vitality-logo.svg",
+                                    "/Anheuser-Busch_InBev.svg",
+                                    "/googlelogo_clr_74x24px.svg",
+                                    "/Logo_NIKE.png",
+                                    "/miele.svg",
+                                    "/patek-philippe-sa-1.svg",
+                                    "/Allwyn-Logo.png",
+                                    "/AGY_22_Logo_Doner_RGB.png",
+                                    "/MSC_Cruises_Logo.png"
+                                ].map((src, index) => (
+                                    <Box key={index} display="flex" alignItems="center" justifyContent="center" pl={{ base: 6 }} pr={{ base: 6 }}>
                                         <Image
                                             src={src}
                                             alt={`Client ${index + 1}`}
                                             objectFit="contain"
                                             maxWidth="100%"
-                                            maxHeight="100%"
+                                            maxHeight="60px"
                                             filter="grayscale(100%) brightness(0%)"
                                         />
                                     </Box>
-                                </GridItem>
-                            ))}
-                        </Grid>
-                    </Box>
+                                ))}
+                            </SimpleGrid>
+                        </GridItem>
+                    </Grid>
                 </Container>
             </Box>
 
             <Box
                 width="100%"
-                height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                height={{ base: '90px', md: '380px' }} // Different heights for different screen sizes
                 backgroundImage="url('/wave-divider-1.svg')"
                 backgroundRepeat="no-repeat"
                 backgroundPosition="center"
@@ -292,46 +310,53 @@ const LandingConcept = () => {
 
             <Box>
                 {/* Built to scale your Figma and Adobe content */}
-                <Container maxW="container.xl" mx="auto" pt={4} pb={20}>
-                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<HiTemplate />} >Template & Content Creation</Tag>
+                <Container maxW="container.xl" mx="auto" py={{ base: 8, md: 16 }}>
+                    <Box textAlign={{ base: "center", md: "left" }}>
+                        <Tag variant="solid" size={{ base: "md", md: "lg" }} bg="brandFuchsia.100" color="brandFuchsia.600" mb={{ base: 2, md: 3 }} startElement={<HiTemplate />}>Template & Content Creation</Tag>
+                    </Box>
                     <Flex
-                        direction={{ base: "column", md: "row" }}
-                        gap={8}
-                        alignItems="flex-start"
+                        direction={{ base: "column", lg: "row" }}
+                        gap={{ base: 6, md: 8 }}
+                        alignItems={{ base: "center", lg: "flex-start" }}
                     >
-                        <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+                        <Box flex={{ base: "1 1 100%", lg: "3 1 60%" }}>
                             <Box>
-                                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Double Your Output.<br /> Zero Trade-offs.</Heading>
-                                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">Your team relies on Figma and Adobe—so we built automation that works with your native tools, not against them.</Text>
-                                <List.Root color="gray.900" fontSize="xl" fontWeight="thin" gap="2" variant="plain" align="center">
-                                    <List.Item>
-                                        <List.Indicator asChild color="green.500">
-                                            <LuCircleCheck />
-                                        </List.Indicator>
-                                        No switching. Keep your existing workflows. No proprietary software.
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Indicator asChild color="green.500">
-                                            <LuCircleCheck />
-                                        </List.Indicator>
-                                        Full creative control. Set design rules, automate, and approve—without losing the craft.
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Indicator asChild color="green.500">
-                                            <LuCircleCheck />
-                                        </List.Indicator>
-                                        One-click efficiency. Automate without coding. Handle thousands of assets in minutes.</List.Item>
+                                <Heading
+                                    fontSize={h2FontSize}
+                                    color="gray.900"
+                                    fontWeight="bold"
+                                    textAlign={{ base: "center", lg: "left" }}
+                                    lineHeight={1.2} mb={{ base: 2, md: 3 }}
+                                >
+                                    Double Your Output.<br /> Zero Trade-offs.
+                                </Heading>
+                                <Text color="gray.900" fontSize={{ base: "lg", md: "xl" }} lineHeight={1.25} mb={{ base: 4, md: 6 }} textAlign={{ base: "center", lg: "left" }}>
+                                    Your team relies on Figma and Adobe - so we built automation that works with your native tools, not against them.
+                                </Text>
+                                <List.Root color="gray.900" fontSize={{ base: "md", md: "lg", lg: "xl" }} gap={{ base: 1, md: 2 }} variant="plain" >
+                                    {[
+                                        "No switching. Keep your existing workflows. No proprietary software.",
+                                        "Full creative control. Set design rules, automate, and approve—without losing the craft.",
+                                        "One-click efficiency. Automate without coding. Handle thousands of assets in minutes."
+                                    ].map((item, index) => (
+                                        <List.Item key={index}>
+                                            <List.Indicator asChild color="green.500">
+                                                <LuCircleCheck />
+                                            </List.Indicator>
+                                            {item}
+                                        </List.Item>
+                                    ))}
                                 </List.Root>
                             </Box>
-                            <Button mt="16" colorScheme="blue" size="lg" variant="surface">Discover Your Brand’s Biggest Bottlenecks</Button>
-                        </Box>
-                        <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+                            <Button mt={{ base: 8, md: 12 }} colorScheme="blue" size={{ base: "md", md: "lg" }} variant="surface" width={{ base: "full", md: "auto" }}>
+                                Get a free 1:1 discovery call →
+                            </Button>                        </Box>
+                        <Box flex={{ base: "1 1 100%", lg: "2 1 40%" }} mt={{ base: 8, lg: 0 }}>
                             <Box
                                 width="100%"
-                                // aspectRatio="1/1"
                                 borderRadius="xl"
                                 overflow="hidden"
-                                p="3"
+                                p={{ base: 2, md: 3 }}
                                 borderWidth="1px"
                                 borderColor="white"
                             >
@@ -342,82 +367,95 @@ const LandingConcept = () => {
                 </Container>
 
                 {/* ALL CHANNELS */}
+
+                
                 <Box>
-                    <Box>
-                        <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
-                            <VStack gap={16} align="center">
-                                <Box textAlign="center" maxW="4xl">
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
-                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="center" lineHeight={1} mb="3">How It Works</Heading>
-                                    <Text fontSize="xl" color="gray.600" mt={4}>
-                                        Streamline your content creation process with our powerful automation tools.
-                                    </Text>
-                                </Box>
-                                <Box w="full" position="relative" ref={lineRef}>
-                                    <Flex justify="center">
-                                        <Box maxWidth="1200px" width="100%" position="relative">
-                                            <Flex>
-                                                <Box width="35%" position="relative" pr={8}>
-                                                    <Box
-                                                        position="absolute"
-                                                        right="31px"
-                                                        top="8px"
-                                                        bottom="8px"
-                                                        width="2px"
-                                                        bg="gray.200"
-                                                        transform="translateX(50%)"
-                                                    />
+                <Box>
+                    <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
+                        <VStack gap={16} align="center">
+                            <Box textAlign="center" maxW="4xl">
+                                <Tag variant="solid" fontSize={h2FontSize} bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>
+                                    Workflow & Automation
+                                </Tag>
+                                <Heading color="gray.900" fontSize={{ base: "4xl", md: "5xl" }} fontWeight="bold" textAlign="center" lineHeight={1} mb="3">
+                                    How It Works
+                                </Heading>
+                                <Text fontSize={{ base: "lg", md: "xl" }} color="gray.900" mt={4}>
+                                    Streamline your content creation process with our powerful automation tools.
+                                </Text>
+                            </Box>
+                            <Box w="full" position="relative" ref={lineRef}>
+                                <Flex justify="center" direction={{ base: "column", md: "row" }}>
+                                    <Box maxWidth="1200px" width="100%" position="relative">
+                                        <Flex direction={{ base: "column", md: "row" }}>
+                                            <Box width={{ base: "100%", md: "35%" }} position="relative" pr={{ base: 0, md: 8 }} mb={{ base: 8, md: 0 }}>
+                                                <Box
+                                                    display={{ base: "none", md: "block" }}
+                                                    position="absolute"
+                                                    right="31px"
+                                                    top="8px"
+                                                    bottom="8px"
+                                                    width="2px"
+                                                    bg="gray.200"
+                                                    transform="translateX(50%)"
+                                                />
+                                                {/* Progress line */}
+                                                <Box display={{ base: "none", md: "block" }}>
                                                     <motion.div
                                                         style={{
                                                             position: 'absolute',
-                                                            right: '30px',
+                                                            right: '31px',
                                                             top: '8px',
                                                             bottom: '8px',
                                                             width: '2px',
                                                             background: '#CA3FC0',
                                                             transformOrigin: 'top',
-                                                            scaleY: scrollYProgress,
                                                             transform: 'translateX(50%)',
+                                                            height: lineHeight
                                                         }}
                                                     />
-
-                                                    <VStack gap={24} align="stretch">
-                                                        {steps.map((step, index) => (
-                                                            <Flex key={index} align="center">
-                                                                <Box flex="1" pr={4} textAlign="right">
-                                                                    <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
-                                                                        {step.label}
-                                                                    </Text>
-                                                                    <Text fontSize="md" color="gray.600" lineHeight="1.2">
-                                                                        {step.subLabel}
-                                                                    </Text>
-                                                                </Box>
-                                                                <Box
-                                                                    flex="none"
-                                                                    width="60px"
-                                                                    height="60px"
-                                                                    borderRadius="full"
-                                                                    bg="brandFuchsia.500"
-                                                                    display="flex"
-                                                                    alignItems="center"
-                                                                    justifyContent="center"
-                                                                    zIndex={1}
-                                                                    position="relative"
-                                                                    left="30px"
-                                                                >
+                                                </Box>
+                                                <VStack gap={{ base: 12, md: 24 }} align="stretch">
+                                                    {steps.map((step, index) => (
+                                                        <Flex key={index} align="center" id={`step-${index}`}>
+                                                            <Box flex="1" pr={4} textAlign={{ base: "left", md: "right" }}>
+                                                                <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
+                                                                    {step.label}
+                                                                </Text>
+                                                                <Text fontSize="md" color="gray.600" lineHeight="1.2">
+                                                                    {step.subLabel}
+                                                                </Text>
+                                                            </Box>
+                                                            <Box
+                                                                flex="none"
+                                                                width="60px"
+                                                                height="60px"
+                                                                borderRadius="full"
+                                                                bg="brandFuchsia.500"
+                                                                display={{ base: "none", md: "flex" }}
+                                                                alignItems="center"
+                                                                justifyContent="center"
+                                                                zIndex={1}
+                                                                position="relative"
+                                                                left={{ base: 0, md: "30px" }}
+                                                            >
+                                                                <Box display={{ base: "none", md: "block" }}>
                                                                     <step.icon color="white" size="24px" />
                                                                 </Box>
-                                                            </Flex>
-                                                        ))}
-                                                    </VStack>
-                                                </Box>
-                                                <Box width="65%" pl={8} position="relative" height="auto">
+                                                            </Box>
+                                                        </Flex>
+                                                    ))}
+                                                </VStack>
+                                            </Box>
+                                            
+                                                <Box width={{ base: "100%", md: "65%" }} pl={{ base: 0, md: 8 }} position="relative" height="auto">
                                                     <Box
                                                         ref={imageContainerRef}
-                                                        position="sticky"
+                                                        position={{ base: "relative", md: "sticky" }}
                                                         top="100px"
                                                         width="100%"
-                                                        paddingTop="56.25%" // This creates a 16:9 aspect ratio
+                                                        height="0"
+                                                        paddingBottom="56.25%" // This maintains the 16:9 aspect ratio
                                                         display="flex"
                                                         alignItems="center"
                                                         justifyContent="center"
@@ -430,6 +468,7 @@ const LandingConcept = () => {
                                                             bottom="0"
                                                             overflow="hidden"
                                                             borderRadius="xl"
+                                                            display={{ base: "none", md: "block" }}
                                                         >
                                                             {steps.map((step, index) => (
                                                                 <Image
@@ -444,50 +483,97 @@ const LandingConcept = () => {
                                                                     objectFit="cover"
                                                                     opacity={index === currentStep ? 1 : 0}
                                                                     transition="opacity 0.3s ease-in-out"
+                                                                    display={{ base: "none", md: "block" }}
                                                                 />
                                                             ))}
                                                         </Box>
                                                     </Box>
                                                 </Box>
-                                            </Flex>
-                                        </Box>
-                                    </Flex>
-                                </Box>
-                            </VStack>
-                        </Container>
-                    </Box>
+                                            
+                                        </Flex>
+                                    </Box>
+                                </Flex>
+                            </Box>
+                        </VStack>
+                    </Container>
                 </Box>
+            </Box>
 
                 {/* Assets Delivered Instantly */}
                 <Box>
-                    <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
+                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 24, lg: 36 }}>
                         <Flex
-                            direction={{ base: "column", md: "row" }}
+                            direction={{ base: "column", lg: "row" }}
                             justify="space-between"
-                            align="center"
-                            gap={{ base: 8, md: 16 }}
+                            align={{ base: "center", lg: "flex-start" }}
+                            gap={{ base: 8, md: 12, lg: 16 }}
                         >
-                            <Box flexBasis={{ base: "100%", md: "40%" }}>
-                                <Box
+                            <Box 
+                                flexBasis={{ base: "100%", lg: "40%" }} 
+                                mb={{ base: 8, lg: 0 }}
+                                order={{ base: 2, lg: 1 }}  // Change order on mobile
+                            >                                <Box
                                     width="100%"
+                                    maxWidth={{ base: "300px", md: "400px", lg: "100%" }}
                                     aspectRatio="1/1"
                                     borderRadius="xl"
                                     borderWidth="1px"
-                                    borderColor="gray.500"
+                                    borderColor="white"
                                     overflow="hidden"
-                                    p="1.5"
+                                    p={{ base: 1, md: 1.5 }}
                                 >
-                                    <DotLottiePlayer src="https://lottie.host/8ba66b8d-d104-48f8-851c-3761ece39880/wQMvRDL9o6.lottie"
+                                    <DotLottiePlayer
+                                        src="https://lottie.host/8ba66b8d-d104-48f8-851c-3761ece39880/wQMvRDL9o6.lottie"
                                         background="#F4F0EB"
                                         loop
-                                        autoplay>
+                                        autoplay
+                                        style={{ width: '100%', height: '100%' }}
+                                    >
                                     </DotLottiePlayer>
                                 </Box>
                             </Box>
-                            <Box flexBasis={{ base: "100%", md: "55%" }}>
-                                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
-                                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">How Much Are You Overpaying for Repetitive Work?</Heading>
-                                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25}>A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That’s time and budget lost—every single campaign.</Text>
+                            <Box 
+                                flexBasis={{ base: "100%", md: "55%" }}
+                                order={{ base: 1, lg: 2 }}  // Change order on mobile
+                            >
+                                <Tag
+                                    variant="solid"
+                                    size={{ base: "md", md: "lg" }}
+                                    bg="brandFuchsia.100"
+                                    color="brandFuchsia.600"
+                                    mb={{ base: 2, md: 3 }}
+                                    startElement={<PiRocketFill />}
+                                >
+                                    Workflow & Automation
+                                </Tag>
+                                <Heading
+                                    color="gray.900"
+                                    fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                                    fontWeight="bold"
+                                    textAlign={{ base: "center", lg: "left" }}
+                                    lineHeight={1.2}
+                                    mb={{ base: 3, md: 4 }}
+                                >
+                                    How Much Are You Overpaying for Repetitive Work?
+                                </Heading>
+                                <Text
+                                    color="gray.900"
+                                    fontSize={{ base: "lg", md: "xl" }}
+                                    lineHeight={1.5}
+                                    textAlign={{ base: "center", lg: "left" }}
+                                    mb={{ base: 6, md: 8 }}
+                                >
+                                    A single campaign requires dozens of sizes, formats, and versions. Your team is spending 80% of their time on production, not strategy. That's time and budget lost-every single campaign.
+                                </Text>
+                                <Flex justify={{ base: "center", lg: "flex-start" }}>
+                                    <Button
+                                        colorScheme="blue"
+                                        size={{ base: "md", md: "lg" }}
+                                        variant="surface"
+                                    >
+                                        Schedule a content audit →
+                                    </Button>
+                                </Flex> 
                             </Box>
                         </Flex>
                     </Container>
@@ -495,7 +581,7 @@ const LandingConcept = () => {
 
                 <Box
                     width="100%"
-                    height={{ base: '380px', md: '380px' }} // Different heights for different screen sizes
+                    height={{ base: '90px', md: '380px' }} // Different heights for different screen sizes
                     backgroundImage="url('/wave-divider-2.svg')"
                     backgroundRepeat="no-repeat"
                     backgroundPosition="center"
@@ -505,15 +591,15 @@ const LandingConcept = () => {
 
                 {/* Integrations Section */}
                 <Box bg="white">
-                    <Container maxW="container.xl" mx="auto" pt={32} pb={32}>
+                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 32 }}>
                         <Flex
-                            direction={{ base: "column", md: "row" }}
-                            gap={1}
+                            direction={{ base: "column", lg: "row" }}
+                            gap={{ base: 8, lg: 12 }}
                         >
-                            <Box flex={{ base: "1 1 100%", md: "1 1 50%" }} position="relative" display="flex" alignItems="center">
+                            <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }} position="relative" display="flex" alignItems="flex-start">
                                 <Box>
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiPlugsFill />} >Integrations</Tag>
-                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">
+                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiPlugsFill />}>Integrations</Tag>
+                                    <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" textAlign="left" lineHeight={1.2} mb={{ base: 3, md: 4 }}>
                                         Seamless integration<br />with{" "}
                                         <span style={{ display: 'inline-flex', alignItems: 'center', minWidth: '10ch' }}>
                                             <AnimatePresence mode="wait">
@@ -557,29 +643,50 @@ const LandingConcept = () => {
                                             </AnimatePresence>
                                         </span>
                                     </Heading>
-                                    <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25}>Disconnected tools slow teams down. CreateTOTALLY integrates with your existing tech ensuring everything stays in sync.</Text>
+                                    <Text color="gray.900" fontSize={{ base: "lg", md: "xl" }} maxW="xl" lineHeight={1.5} mt={4}>
+                                        Disconnected tools slow teams down. CreateTOTALLY integrates with your existing tech ensuring everything stays in sync.
+                                    </Text>
                                 </Box>
                             </Box>
-                            <Box flex={{ base: "1 1 100%", md: "1 1 50%" }}>
+                            <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }}>
                                 <Flex
                                     flexWrap="wrap"
                                     justifyContent="space-between"
+                                    mt={{ base: 8, lg: 0 }}
                                 >
                                     {integrations.map(({ src, text }: Integration, index: number) => (
                                         <Box
                                             key={index}
                                             position="relative"
-                                            width={{ base: "50%", sm: "33.33%", md: "25%" }}
+                                            width={{ base: "33.33%", sm: "25%", md: "20%" }}
+                                            p={2}
                                             onMouseEnter={() => setHoveredIntegration(text)}
                                             onMouseLeave={() => setHoveredIntegration(null)}
                                         >
-                                            <Box position="relative" width="120%" paddingBottom="calc(100% + 0rem)" >
-                                                <Box position="absolute" top="0" left="0" right="0" bottom="0" rounded="md" bg="white" display="flex" flexDirection="column" overflow="hidden" >
-                                                    <Box position="relative" width="100%" paddingBottom="100%" >
-                                                        <Box position="absolute" top="0" left="0" right="0" bottom="0" display="flex" alignItems="center" justifyContent="center" >
-                                                            <Image src={src} alt={`Integration ${index + 1}`} objectFit="contain" maxWidth="50%" maxHeight="50%" />
-                                                        </Box>
-                                                    </Box>
+                                            <Box
+                                                position="relative"
+                                                width="100%"
+                                                paddingBottom="100%"
+                                                rounded="md"
+                                                bg="white"
+                                            >
+                                                <Box
+                                                    position="absolute"
+                                                    top="0"
+                                                    left="0"
+                                                    right="0"
+                                                    bottom="0"
+                                                    display="flex"
+                                                    alignItems="center"
+                                                    justifyContent="center"
+                                                >
+                                                    <Image
+                                                        src={src}
+                                                        alt={`Integration ${index + 1}`}
+                                                        objectFit="contain"
+                                                        maxWidth="70%"
+                                                        maxHeight="70%"
+                                                    />
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -592,108 +699,110 @@ const LandingConcept = () => {
 
 
                 {/* Effortless Execution */}
-                <Box>
-                    <Box bg="white" py={12} px={8}>
-                        <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                            <Grid templateRows="auto auto">
-                                <Grid
-                                    templateColumns={{
-                                        base: "1fr",
-                                        md: "repeat(2, 1fr)"
-                                    }}
-                                    gap={8}
-                                    mb="-0.5px"
-                                    ml="-0.5px"
-                                    mr="-0.5px"
-                                    border="sm"
-                                    borderColor="gray.200"
-                                    pl="8"
-                                    pr="12"
-                                    pt="28"
-                                    pb="28"
-                                    color="gray.300"
-                                >
-                                    <GridItem>
-                                        <Box>
-                                            <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
-                                            <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">
-                                                Our Customers Save Big. Here’s Proof.
-                                            </Heading>
-                                        </Box>
+                <Box bg="white" py={{ base: 8, md: 12 }} px={{ base: 4, md: 8 }}>
+                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 36 }} >
+                        <VStack gap={{ base: 0 }}>
+                            <Box w="full" textAlign={{ base: "center", md: "left" }} pb={{ base: 8, md: 12 }}>
+                                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
+                                <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" lineHeight={1.2} mb="3">
+                                    Our Customers Save Big. Here's Proof.
+                                </Heading>
+                            </Box>
+                            <Grid
+                                templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
+                                w="full"
+                                mb="-0.5px"
+                                ml="-0.5px"
+                                mr="-0.5px"
+                            >
+                                {[
+                                    {
+                                        image: "/white-claw-hard-seltzer-logo-vector.svg",
+                                        title: "White Claw Hard Seltzer",
+                                        description: "55% reduction in production cost. 8x faster.",
+                                        highlight: ["8x faster.", "55% reduction"]
+                                    },
+                                    {
+                                        image: "/Hasbro_logo.svg",
+                                        title: "Hasbro",
+                                        description: "Briefing to live in 3 weeks. Sold out in 3 markets.",
+                                        highlight: "Briefing to live in 3 weeks."
+                                    },
+                                    {
+                                        image: "/Logo_NIKE.png",
+                                        title: "Nike",
+                                        description: "10x faster to brief, adapt and deliver retail films.",
+                                        highlight: "10x faster"
+                                    },
+                                    {
+                                        image: "/tws.jpeg",
+                                        title: "The Wine Society",
+                                        description: "38% reduction in new customer cost per acquisition.",
+                                        highlight: "38% reduction"
+                                    }
+                                ].map((item, index) => (
+                                    <GridItem
+                                        key={index}
+                                        p={{ base: 5, md: 8 }}
+                                        mx="-0.5px"
+                                        mt="-0.5px"
+                                        border="sm"
+                                        borderColor="gray.200"
+                                        lineHeight={{ base: "1.2", md: "lg" }}
+                                    >
+                                        <VStack align="start" gap={4} height="100%">
+                                            <Text fontSize={{ base: "lg", md: "xl" }} color="gray.600">
+                                                <Highlight
+                                                    query={item.highlight}
+                                                    styles={{
+                                                        fontWeight: "black",
+                                                        color: "brandFuchsia.500",
+                                                        wordBreak: "break-word",
+                                                        whiteSpace: "normal",
+                                                    }}
+                                                >
+                                                    {item.description}
+                                                </Highlight>
+                                            </Text>
+                                            <Box width="50%" maxWidth="150px" flex="1" display="flex" alignItems="center">
+                                                <Image src={item.image} alt={item.title} objectFit="contain" />
+                                            </Box>
+                                        </VStack>
                                     </GridItem>
-                                </Grid>
-                                <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={0}>
-                                    {[
-                                        {
-                                            image: "/white-claw-hard-seltzer-logo-vector.svg",
-                                            title: "White Claw Hard Seltzer",
-                                            description: "55% reduction in production cost. 8x faster.",
-                                            highlight: ["8x faster.", "55% reduction"]
-                                        },
-                                        {
-                                            image: "/Hasbro_logo.svg",
-                                            title: "Hasbro",
-                                            description: "Briefing to live in 3 weeks. Sold out in 3 markets.",
-                                            highlight: "Briefing to live in 3 weeks."
-                                        },
-                                        {
-                                            image: "/Logo_NIKE.png",
-                                            title: "Nike",
-                                            description: "10x faster to brief, adapt and deliver retail films.",
-                                            highlight: "10x faster"
-                                        },
-                                        {
-                                            image: "/TWS-LOGO_PMS485_200mmx200mm_V2.jpg",
-                                            title: "The Wine Society",
-                                            description: "38% reduction in new customer cost per acquisition.",
-                                            highlight: "38% reduction"
-                                        }
-                                    ].map((item, index) => (
-                                        <GridItem
-                                            key={index}
-                                            mx="-0.5px"
-                                            mt="-0.5px"
-                                            border="sm"
-                                            borderColor="gray.200"
-                                            pl="8"
-                                            pr="4"
-                                            pt="12"
-                                            pb="10"
-                                            color="gray.300"
-                                        >
-                                            <VStack key={index} align="start" gap={4} height="100%">
-                                                <Text fontSize="xl" color="gray.600">
-                                                    <Highlight
-                                                        query={item.highlight}
-                                                        styles={{ fontWeight: "black", color: "brandFuchsia.500" }}
-                                                    >
-                                                        {item.description}
-                                                    </Highlight>
-                                                </Text>
-                                                <Box width="30%" flex="1" display="flex" alignItems="center">
-                                                    <Image src={item.image} alt={item.title} />
-                                                </Box>
-                                            </VStack>
-                                        </GridItem>
-                                    ))}
-                                </Grid>
+                                ))}
                             </Grid>
-                        </Container>
-                    </Box>
+                        </VStack>
+                    </Container>
+                </Box>
 
-                    {/* Questions & answers */}
-                    <Box>
-                        <Container maxW="container.xl" mx="auto" pt={36} pb={36}>
-                            <VStack gap={8} align="center">
-                                <Box textAlign="center">
-                                    <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Questions & answers</Heading>
+                {/* Questions & answers */}
+                <Box>
+                    <Box bg="brandNeutral.500" py={{ base: 12, md: 24 }}>
+                        <Container maxW="container.xl" mx="auto">
+                            <VStack gap={{ base: 6, md: 10 }} align="stretch">
+                                <Box textAlign={{ base: "center", md: "left" }}>
+                                    <Heading color="gray.900" fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} fontWeight="bold" lineHeight={1.2} mb={{ base: 2, md: 4 }}>
+                                        Questions & answers
+                                    </Heading>
                                 </Box>
-                                <Box>
-                                    <AccordionRoot width="4xl" multiple defaultValue={["b"]}>
+                                <Box width="100%">
+                                    <AccordionRoot width="100%" multiple defaultValue={["b"]}>
                                         {items.map((item, index) => (
                                             <AccordionItem color="gray.900" key={index} value={item.value}>
-                                                <AccordionItemTrigger fontSize="2xl" fontWeight="bold" mt="6" mb="6">{item.title}</AccordionItemTrigger>
-                                                <AccordionItemContent fontSize="md" fontWeight="regular" mb="6">
+                                                <AccordionItemTrigger
+                                                    fontSize={{ base: "xl", md: "2xl" }}
+                                                    fontWeight="bold"
+                                                    py={4}
+                                                    pr={4}
+                                                    _hover={{ bg: "gray.50" }}
+                                                >
+                                                    {item.title}
+                                                </AccordionItemTrigger>
+                                                <AccordionItemContent
+                                                    fontSize={{ base: "md", md: "lg" }}
+                                                    fontWeight="regular"
+                                                    pb={4}
+                                                >
                                                     <ReactMarkdown
                                                         components={{
                                                             p: (props) => <ParagraphWithPadding {...props} />
@@ -716,7 +825,6 @@ const LandingConcept = () => {
                             <Text fontSize="2xl" fontWeight="bold" color="white">
                                 See exactly how much you’ll save.
                             </Text>
-                            <Button colorScheme="whiteAlpha" size="lg">Book a demo today</Button>
                         </VStack>
                     </Box>
                 </Box>
