@@ -22,8 +22,6 @@ function shuffleArray<T>(array: T[]): T[] {
     return newArray;
 }
 
-
-
 interface Integration {
     src: string;
     text: string;
@@ -182,7 +180,7 @@ const LandingConcept = () => {
     }, [scrollYProgress, steps.length]);
 
     const subheadingFontSize = useBreakpointValue({ base: "lg", md: "xl", lg: "2xl" });
-    const h1FontSize = useBreakpointValue({ base: "3xl", md: "5xl", lg: "8xl" });
+    const h1FontSize = useBreakpointValue({ base: "4xl", md: "6xl", lg: "8xl" });
     const h2FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "5xl" });
     const h3FontSize = useBreakpointValue({ base: "xl", md: "2xl", lg: "2xl" });
     const h4FontSize = useBreakpointValue({ base: "lg", md: "2xl", lg: "3xl" });
@@ -222,9 +220,9 @@ const LandingConcept = () => {
                                 If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 65%. <br />Without sacrificing creative control.
                             </Text>
                             <HStack gap={{ base: 4, md: 16 }} flexDirection={{ base: "column", md: "row" }}>
-                                <Button bg="#001e44" size="lg" variant="surface" width={{ base: "full", md: "auto" }}>
-                                    <Link href="mailto:info@createtotally.com?subject=I%27d%20like%20a%20free%201%3A1%20strategy%20call" color="white">Book a Free 1:1 Strategy Call →</Link>
-                                </Button>
+                            <Button bg="#001e44" size="lg" variant="surface" width={{ base: "full", md: "auto" }}>
+                                <Link href="mailto:info@createtotally.com?subject=I%27d%20like%20a%20free%201%3A1%20strategy%20call" color="white">Book a Free 1:1 Strategy Call →</Link>
+                            </Button>
                             </HStack>
                             {/* Video container */}
                             <Box
@@ -330,15 +328,29 @@ const LandingConcept = () => {
                     >
                         <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }}>
                             <Box>
+                            <Box
+                                flexBasis={{ base: "100%", md: "55%" }}
+                                order={{ base: 1, lg: 2 }}  // Change order on mobile
+                                textAlign={{ base: "center", md: "left" }}
+                            >
+                                <Tag
+                                    variant="solid"
+                                    size={{ base: "md", md: "lg" }}
+                                    bg="brandFuchsia.100"
+                                    color="brandFuchsia.600"
+                                    mb={{ base: 2, md: 3 }}
+                                    startElement={<HiTemplate />}>Template & Content Creation</Tag>
+                                </Box>
                                 <Box textAlign={{ base: "center", md: "left" }}>
-                                    <Tag variant="solid" size={{ base: "md", md: "lg" }} bg="brandFuchsia.100" color="brandFuchsia.600" mb={{ base: 2, md: 3 }} startElement={<HiTemplate />}>Template & Content Creation</Tag>
                                 </Box>
                                 <Heading
+                                    as="h2"
                                     fontSize={h2FontSize}
-                                    color="gray.900"
-                                    fontWeight="bold"
+                                    fontWeight="black"
+                                    lineHeight={{ base: "1.2", md: ".95" }}
+                                    color='#001e44'
                                     textAlign={{ base: "center", lg: "left" }}
-                                    lineHeight={1.2} mb={{ base: 2, md: 3 }}
+                                    mb={{ base: 3, md: 4 }}
                                 >
                                     Double Your Output.<br /> Zero Trade-offs.
                                 </Heading>
@@ -392,10 +404,24 @@ const LandingConcept = () => {
                         <Container maxW="container.xl" mx="auto" pb={6}>
                             <VStack gap={16} align="center">
                                 <Box textAlign="center" maxW="4xl">
-                                    <Tag variant="solid" fontSize={h2FontSize} bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>
+                                    <Tag
+                                        variant="solid"
+                                        size={{ base: "md", md: "lg" }}
+                                        bg="brandFuchsia.100"
+                                        color="brandFuchsia.600"
+                                        mb={{ base: 2, md: 3 }} 
+                                        startElement={<PiRocketFill />}>
                                         Workflow & Automation
                                     </Tag>
-                                    <Heading color="gray.900" fontSize={{ base: "4xl", md: "5xl" }} fontWeight="bold" textAlign="center" lineHeight={1} mb="3">
+                                    <Heading
+                                        as="h2"
+                                        fontSize={h2FontSize}
+                                        fontWeight="black"
+                                        lineHeight={{ base: "1.2", md: ".95" }}
+                                        color='#001e44'
+                                        textAlign={{ base: "center" }}
+                                        mb={{ base: 3, md: 4 }}
+                                    >
                                         How It Works
                                     </Heading>
                                     <Text fontSize={{ base: "lg", md: "xl" }} color="gray.900" mt={4}>
@@ -530,7 +556,7 @@ const LandingConcept = () => {
 
                 {/* Assets Delivered Instantly */}
                 <Box>
-                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 24, lg: 32 }}>
+                    <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 24, lg: 24 }}>
                         <Flex
                             direction={{ base: "column", lg: "row" }}
                             justify="space-between"
@@ -563,7 +589,7 @@ const LandingConcept = () => {
                                     size={{ base: "md", md: "lg" }}
                                     bg="brandFuchsia.100"
                                     color="brandFuchsia.600"
-                                    mb={{ base: 2, md: 3 }}
+                                    mb={{ base: 2, md: 3 }} 
                                     startElement={<PiRocketFill />}
                                 >
                                     Workflow & Automation
@@ -620,7 +646,13 @@ const LandingConcept = () => {
                         >
                             <Box flex={{ base: "1 1 100%", lg: "1 1 50%" }} position="relative" display="flex" alignItems="flex-start">
                                 <Box>
-                                    <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiPlugsFill />}>Integrations</Tag>
+                                    <Tag 
+                                        variant="solid"
+                                        size={{ base: "md", md: "lg" }}
+                                        bg="brandFuchsia.100"
+                                        color="brandFuchsia.600"
+                                        mb={{ base: 2, md: 3 }} 
+                                        startElement={<PiPlugsFill />}>Integrations</Tag>
                                     <Heading
                                         as="h2"
                                         fontSize={h2FontSize}
@@ -739,14 +771,22 @@ const LandingConcept = () => {
                     <Container maxW="container.xl" mx="auto" py={{ base: 16, md: 36 }} >
                         <VStack gap={{ base: 0 }}>
                             <Box w="full" textAlign={{ base: "center", md: "left" }} pb={{ base: 8, md: 12 }}>
-                                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
+                                <Tag 
+                                    variant="solid"
+                                    size={{ base: "md", md: "lg" }}
+                                    bg="brandFuchsia.100"
+                                    color="brandFuchsia.600"
+                                    mb={{ base: 2, md: 3 }}                                     
+                                    startElement={<PiRocketFill />}
+                                >
+                                    Workflow & Automation</Tag>
                                 <Heading
                                     as="h2"
                                     fontSize={h2FontSize}
                                     fontWeight="black"
                                     lineHeight={{ base: "1.2", md: ".95" }}
                                     color='#001e44'
-                                    mb="3"
+                                    mb={{ base: 3, md: 4 }}
                                 >
                                     Our Customers Save Big. Here's Proof.
                                 </Heading>
@@ -830,7 +870,7 @@ const LandingConcept = () => {
                                         fontWeight="black"
                                         lineHeight={{ base: "1.2", md: ".95" }}
                                         color='#001e44'
-                                        mb={{ base: 2, md: 4 }}
+                                        mb={{ base: 3, md: 4 }}
                                     >
                                         Questions & Answers
                                     </Heading>
