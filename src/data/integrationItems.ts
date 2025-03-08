@@ -17,5 +17,4 @@ export const integrationItems = [
     { src: "/mark-gradient-blue-jira.svg", text: "Jira", colour: "#0146B3" },
     { src: "/YouTube.svg", text: "YouTube", colour: "#ff0000" },
     { src: "/Meta_Platforms_Inc_logo.svg", text: "Meta", colour: "#0082fb" }
-    // ...
   ];

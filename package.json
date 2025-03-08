@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "find:unused": "next-unused",
+    "prune": "ts-prune"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.9.0",
@@ -28,6 +30,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
+    "next-unused": "^0.0.6",
+    "ts-prune": "^0.10.3",
     "typescript": "^5"
   }
 }

@@ -1,12 +1,15 @@
 // src/components/StepsSection.tsx
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Box, Heading, Flex, VStack, Text, Icon, Image } from '@chakra-ui/react';
-import { IoCheckboxOutline } from 'react-icons/io5';
+import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
+import { Tag } from "@/components/ui/tag"
+import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
+import { steps } from '@/data/howItWorksSteps';
 
-interface Step {
+
+interface Steps {
   icon: React.ElementType;
   label: string;
   subLabel: string;
@@ -15,10 +18,9 @@ interface Step {
 
 interface StepsSectionProps {
   title: string;
-  steps: Step[];
 }
 
-export const StepsSection: React.FC<StepsSectionProps> = ({ title, steps }) => {
+export const StepsSection: React.FC<StepsSectionProps> = ({ title }) => {
   const lineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: lineRef,
@@ -27,75 +29,108 @@ export const StepsSection: React.FC<StepsSectionProps> = ({ title, steps }) => {
 
   // Animate the line height
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const [currentStep, setCurrentStep] = useState(0);
 
   return (
-    <Box py={20} ref={lineRef} position="relative">
-      <Heading textAlign="center" fontSize={{ base: '2xl', md: '4xl' }} mb={10}>
-        {title}
-      </Heading>
-      <Flex flexDir={{ base: 'column', md: 'row' }} maxW="6xl" mx="auto">
-        <Box w={{ base: '100%', md: '35%' }} pr={{ base: 0, md: 8 }}>
-          {/* Background line */}
-          <Box
-            display={{ base: 'none', md: 'block' }}
-            position="absolute"
-            right="31px"
-            top="8px"
-            bottom="8px"
-            width="2px"
-            bg="gray.200"
-            transform="translateX(50%)"
-          />
-          {/* Animated progress line */}
-          <motion.div
-            style={{
-              display: 'none',
-              position: 'absolute',
-              right: '31px',
-              top: '8px',
-              bottom: '8px',
-              width: '2px',
-              background: '#CA3FC0',
-              transformOrigin: 'top',
-              transform: 'translateX(50%)',
-              height: lineHeight,
-            }}
-          />
-          <VStack align="stretch" spacing={12}>
-            {steps.map((step, idx) => (
-              <Flex key={idx} align="center">
-                <Text flex="1" pr={4} fontWeight="bold">
-                  {step.label}
+    <Box>
+      <Box>
+        <Box>
+          <Container maxW="container.xl" mx="auto" pt={36} pb={6}>
+            <VStack gap={16} align="center">
+              <Box textAlign="center" maxW="4xl">
+                <Tag variant="solid" size="lg" bg="brandFuchsia.100" color="brandFuchsia.600" mb="3" startElement={<PiRocketFill />}>Workflow & Automation</Tag>
+                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="center" lineHeight={1} mb="3">{title}</Heading>
+                <Text fontSize="xl" color="gray.600" mt={4}>
+                  Streamline your content creation process with our powerful automation tools.
                 </Text>
-                <Box
-                  w="50px"
-                  h="50px"
-                  borderRadius="full"
-                  bg="brandFuchsia.500"
-                  display={{ base: 'none', md: 'flex' }}
-                  alignItems="center"
-                  justifyContent="center"
-                  zIndex={1}
-                  position="relative"
-                  left="30px"
-                >
-                  <Icon as={step.icon} color="white" boxSize={5} />
-                </Box>
-              </Flex>
-            ))}
-          </VStack>
+              </Box>
+              <Box w="full" position="relative" ref={lineRef}>
+                <Flex justify="center">
+                  <Box maxWidth="1200px" width="100%" position="relative">
+                    <Flex>
+                      <Box width="35%" position="relative" pr={8}>
+                        <Box
+                          position="absolute"
+                          right="31px"
+                          top="8px"
+                          bottom="8px"
+                          width="2px"
+                          bg="gray.200"
+                          transform="translateX(50%)"
+                        />
+                        <motion.div
+                          style={{
+                            position: 'absolute',
+                            right: '30px',
+                            top: '8px',
+                            bottom: '8px',
+                            width: '2px',
+                            background: '#CA3FC0',
+                            transformOrigin: 'top',
+                            scaleY: scrollYProgress,
+                            transform: 'translateX(50%)',
+                          }}
+                        />
+
+                        <VStack gap={24} align="stretch">
+                          {steps.map((steps, index) => (
+                            <Flex key={index} align="center">
+                              <Box flex="1" pr={4} textAlign="right">
+                                <Text fontWeight="bold" fontSize="md" color="gray.900" lineHeight="1.2">
+                                  {steps.label}
+                                </Text>
+                                <Text fontSize="md" color="gray.600" lineHeight="1.2">
+                                  {steps.subLabel}
+                                </Text>
+                              </Box>
+                              <Box
+                                flex="none"
+                                width="60px"
+                                height="60px"
+                                borderRadius="full"
+                                bg="brandFuchsia.500"
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                zIndex={1}
+                                position="relative"
+                                left="30px"
+                              >
+                                <steps.icon color="white" size="24px" />
+                              </Box>
+                            </Flex>
+                          ))}
+                        </VStack>
+                      </Box>
+                      <Box width="65%" pl={8}>
+                        {steps.map((steps, index) => (
+                          <Box
+                            key={index}
+                            width="100%"
+                            aspectRatio="16/9"
+                            borderRadius="xl"
+                            borderWidth="1px"
+                            borderColor="gray.500"
+                            overflow="hidden"
+                            p="1.5"
+                            display={index === currentStep ? "block" : "none"}
+                          >
+                            <Image
+                              src={steps.image}
+                              borderRadius="xl"
+                              alt={steps.label}
+                            />
+                          </Box>
+                        ))}
+                      </Box>
+                    </Flex>
+                  </Box>
+                </Flex>
+              </Box>
+            </VStack>
+          </Container>
         </Box>
-        <Box w={{ base: '100%', md: '65%' }} position="relative">
-          {/* Sticky container for images */}
-          {/* Could animate based on scroll if you want separate images shown per step */}
-          <Image
-            src={steps[0].image}
-            alt="Steps Visual"
-            width="100%"
-            borderRadius="xl"
-          />
-        </Box>
-      </Flex>
+      </Box>
     </Box>
   );
-};
+};  

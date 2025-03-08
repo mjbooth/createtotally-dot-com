@@ -2,10 +2,10 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Container, Box, SimpleGrid, Heading, Image, Flex, Text } from '@chakra-ui/react';
+import { Container, Box, Heading, Image, Flex, Text } from '@chakra-ui/react';
 import { shuffleArray } from '../utils/shuffleArray';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
-import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
+import { motion, AnimatePresence } from 'framer-motion';
+import { PiPlugsFill } from "react-icons/pi";
 import { Tag } from "@/components/ui/tag"
 
 interface Integration {

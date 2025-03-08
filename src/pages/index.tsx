@@ -1,33 +1,16 @@
 import React from 'react';
 import { Box } from "@chakra-ui/react"
-import { HeroSection } from '../components/HeroSection';
-import { StepsSection } from '../components/StepsSection';
-import { IntegrationsSection } from '../components/IntegrationsSection';
-import { FAQSection } from '../components/FAQSection';
+import { HeroSection } from '@/components/HeroSection';
+import { StepsSection } from '@/components/StepsSection';
+import { IntegrationsSection } from '@/components/IntegrationsSection';
+import { integrationItems } from '@/data/integrationItems';
 import { WaveDivider } from '@/components/WaveDivider';
 import { ClientLogos } from '../components/ClientLogos';
-import { integrationItems } from '@/data/integrationItems';
 import { clientLogos } from '@/data/clientLogos';
+import ProductionBottlenecks from '@/components/ProductionBottlenecks';
+import { FAQ } from '@/components/FAQ';
 
 export default function HomePage() {
-  const stepsData = [
-    {
-      icon: require('react-icons/io5').IoCheckboxOutline,
-      label: "#1 Start with Figma & Adobe",
-      subLabel: "...",
-      image: "/FigmaPlugin.jpg",
-    },
-    // ...
-  ];
-
-  const faqItems = [
-    {
-      title: "How does the automation actually work?",
-      text: "Think of CreateTOTALLY as your creative team’s efficiency powerhouse...",
-    },
-    // ...
-  ];
-
   return (
     <Box bg="brandNeutral.500">
       <HeroSection
@@ -53,12 +36,19 @@ export default function HomePage() {
         rotation="0deg" 
       />
 
-      <StepsSection title="How It Works" steps={stepsData} />
+      <ProductionBottlenecks />
+
+      <StepsSection title="How it works" />
 
       <IntegrationsSection
         integrations={integrationItems}
         tagTitle="Integrations"
       />
+
+      <FAQ 
+        title="Frequently asked questions"
+      />
+
     </Box>
   );
 }
