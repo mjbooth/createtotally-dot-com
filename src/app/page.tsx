@@ -1,46 +1,54 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
-import { FAQSection } from '@/components/FAQSection';
-import { StepsSection } from '@/components/StepsSection';
-import { VideoSection } from '@/components/VideoSection';
+import { Box } from "@chakra-ui/react"
 import { HeroSection } from '@/components/HeroSection';
+import { StepsSection } from '@/components/StepsSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { getSteps } from '@/data/marketingData';
+import { integrationItems } from '../data/integrationItems';
+import { WaveDivider } from '@/components/WaveDivider';
+import { ClientLogos } from '@/components/ClientLogos';
+import { clientLogos } from '../data/clientLogos';
+import ProductionBottlenecks from '@/components/ProductionBottlenecks';
+import { FAQ } from '@/components/FAQ';
 
-export default function Home() {
-  const stepsData = getSteps();
-
-  const integrationItems = [
-    { src: "/adroll.svg", text: "AdRoll", colour: "#00aeef" },
-    // ... (add the rest of your integration items)
-  ];
-
-  const faqItems = [
-    {
-      title: "How does the automation actually work?",
-      text: "Think of CreateTOTALLY as your creative team's efficiency powerhouse...",
-    },
-    // ... (add the rest of your FAQ items)
-  ];
-
+export default function HomePage() {
   return (
-    <Box>
+    <Box bg="brandNeutral.500">
       <HeroSection
         title="Cut Creative Production Costs by 65%, Instantly."
-        subtitle="If you make more than 10 prints..."
+        subtitle="If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 65%. Without sacrificing creative control."
         ctaLabel="Book a Free 1:1 Strategy Call →"
         ctaLink="mailto:info@createtotally.com"
       />
-      <VideoSection videoUrl="https://vimeo.com/1054417102" />
+      
+      <WaveDivider
+        backgroundImage="/wave-divider-1.svg"
+        heightBase="380px"
+        heightMd="380px"
+        rotation="-180deg" 
+      />
 
-      <StepsSection title="How It Works" steps={stepsData} />
+      <ClientLogos logos={clientLogos} />
+
+      <WaveDivider
+        backgroundImage="/wave-divider-1.svg"
+        heightBase="380px"
+        heightMd="380px"
+        rotation="0deg" 
+      />
+
+      <ProductionBottlenecks />
+
+      <StepsSection title="How it works" />
 
       <IntegrationsSection
         integrations={integrationItems}
-        title="Seamless Integration"
+        tagTitle="Integrations"
       />
 
-      <FAQSection heading="Questions & Answers" items={faqItems} />
+      <FAQ 
+        title="Frequently asked questions"
+      />
+
     </Box>
   );
 }

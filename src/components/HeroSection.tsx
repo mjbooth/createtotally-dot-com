@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Container, Heading, Text, Button, VStack, HStack, Link, useBreakpointValue, } from '@chakra-ui/react';
-import { VideoSection } from '../components/VideoSection';
+import { VideoSection } from './VideoSection';
 
 interface HeroSectionProps {
   title: string;

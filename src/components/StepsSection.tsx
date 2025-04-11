@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
 import { Tag } from "@/components/ui/tag"
 import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
-import { steps } from '@/data/howItWorksSteps';
+import { steps } from '../data/howItWorksSteps';
 
 
 interface Steps {
