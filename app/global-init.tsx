@@ -15,7 +15,7 @@ export function GlobalInitialization() {
     // Track initial page view
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
     ReactGA.send({ hitType: "pageview", page: url });
-  }, []); // Run only once on mount
+  }, [pathname, searchParams]); // ✅ included dependencies
 
   // Track page views on route changes
   useEffect(() => {

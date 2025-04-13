@@ -1,53 +1,25 @@
-import { Providers } from './providers';
-import { GlobalInitialization } from './global-init';
-import '../src/App.css'; // Adjust path if needed
-import MainMenu from "../src/components/MainMenu";
-import Footer from "../src/components/Footer";
-import { Box } from "@chakra-ui/react";
-import LayoutClient from './layout-client';
-import { Metadata } from 'next'
+import type { Metadata } from "next";
+import { Provider } from "@/components/ui/provider"
 
 export const metadata: Metadata = {
-  title: 'CreateTOTALLY - Design Automation Platform',
-  description: 'Automate your design workflow with CreateTOTALLY. Save time and reduce costs with our powerful design automation platform.',
-  keywords: 'design automation, workflow automation, creative automation',
-  openGraph: {
-    title: 'CreateTOTALLY - Design Automation Platform',
-    description: 'Automate your design workflow with CreateTOTALLY',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CreateTOTALLY',
-      }
-    ],
-  },
-}
+  title: "CreateTOTALLY",
+  description: "Creative Automation for Performance Teams",
+  metadataBase: new URL("https://createtotally.com"),
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CreateTOTALLY | Total Content Automation</title>
+        <link rel="icon" href="public/fav.ico" type="image/x-icon" />
       </head>
       <body>
-        <GlobalInitialization />
-        <Providers>
-          <LayoutClient>
-            <Box position="relative">
-              <MainMenu />
-              <Box position="relative" zIndex="0">
-                {children}
-              </Box>
-              <Footer />
-            </Box>
-          </LayoutClient>
-        </Providers>
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   );

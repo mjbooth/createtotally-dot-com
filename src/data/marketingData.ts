@@ -1,5 +1,6 @@
 import { Integration, AccordionItem, Step } from '../types';
 import { shuffleArray } from '../utils/helpers';
+import { IoCheckboxOutline } from "react-icons/io5";
 
 // Static data that would be used at build time
 export function getIntegrations(): Integration[] {
@@ -59,31 +60,31 @@ export function getAccordionItems(): AccordionItem[] {
 export function getSteps(): Step[] {
   return [
     { 
-        icon: "IoCheckboxOutline",
+        icon: IoCheckboxOutline,
         label: "#1 Start with Figma & Adobe", 
         subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", 
         image: "/FigmaPlugin.jpg" 
     },
     { 
-        icon: "IoCheckboxOutline",
+        icon: IoCheckboxOutline,
         label: "#2 No-code Templating", 
         subLabel: "Set up templates easily, without writing any code. Just click and customise.", 
         image: "/TemplateDesigner.jpg" 
     },
     { 
-        icon: "IoCheckboxOutline",
+        icon: IoCheckboxOutline,
         label: "#3 Content Planning", 
         subLabel: "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.", 
         image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" 
     },
     { 
-        icon: "IoCheckboxOutline",
+        icon: IoCheckboxOutline,
         label: "#4 Approve Without the Back-and-Forth", 
         subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", 
         image: "/TaskNotification.jpg" 
     },
     { 
-        icon: "IoCheckboxOutline",
+        icon: IoCheckboxOutline,
         label: "#5 Track & Optimise", 
         subLabel: "See what's working, measure results, and improve designs over time.",    
         image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" 

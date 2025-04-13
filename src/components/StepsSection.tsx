@@ -1,20 +1,13 @@
 // src/components/StepsSection.tsx
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Container, Box, Text, Button, VStack, HStack, Image, Grid, GridItem, Highlight, Heading, List, Flex } from "@chakra-ui/react"
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import { Container, Box, Text, VStack, Image, Heading, Flex } from "@chakra-ui/react"
 import { Tag } from "@/components/ui/tag"
-import { PiRocketFill, PiPlugsFill } from "react-icons/pi";
+import { PiRocketFill } from "react-icons/pi";
 import { steps } from '../data/howItWorksSteps';
 
-
-interface Steps {
-  icon: React.ElementType;
-  label: string;
-  subLabel: string;
-  image: string;
-}
 
 interface StepsSectionProps {
   title: string;
@@ -27,9 +20,15 @@ export const StepsSection: React.FC<StepsSectionProps> = ({ title }) => {
     offset: ['start center', 'end center'],
   });
 
-  // Animate the line height
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
   const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange(v => {
+      const step = Math.floor(v * steps.length);
+      setCurrentStep(Math.min(step, steps.length - 1));
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
 
   return (
     <Box>
@@ -103,7 +102,7 @@ export const StepsSection: React.FC<StepsSectionProps> = ({ title }) => {
                         </VStack>
                       </Box>
                       <Box width="65%" pl={8}>
-                        {steps.map((steps, index) => (
+                        {steps.map((step, index) => (
                           <Box
                             key={index}
                             width="100%"
@@ -114,11 +113,11 @@ export const StepsSection: React.FC<StepsSectionProps> = ({ title }) => {
                             overflow="hidden"
                             p="1.5"
                             display={index === currentStep ? "block" : "none"}
-                          >
+                            >
                             <Image
-                              src={steps.image}
+                              src={step.image}
                               borderRadius="xl"
-                              alt={steps.label}
+                              alt={step.label}
                             />
                           </Box>
                         ))}

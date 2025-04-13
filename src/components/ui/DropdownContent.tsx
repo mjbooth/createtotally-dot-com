@@ -15,6 +15,7 @@ import * as PiIcons from "react-icons/pi";
 import * as MdIcons from "react-icons/md";
 import * as RiIcons from "react-icons/ri";
 import * as BsIcons from "react-icons/bs";
+import { IconType } from 'react-icons';
 
 interface MenuContent {
   [key: string]: {
@@ -41,28 +42,27 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
     if (!iconName) return null;
     
     const prefix = iconName.slice(0, 2);
-    let IconComponent;
+    let IconComponent: IconType | undefined;
 
     switch (prefix) {
       case 'Go':
-        IconComponent = (GoIcons as any)[iconName];
+        IconComponent = GoIcons[iconName as keyof typeof GoIcons];
         break;
       case 'Hi':
-        IconComponent = (HiIcons as any)[iconName];
+        IconComponent = HiIcons[iconName as keyof typeof HiIcons];
         break;
       case 'Pi':
-        IconComponent = (PiIcons as any)[iconName];
+        IconComponent = PiIcons[iconName as keyof typeof PiIcons];
         break;
       case 'Md':
-        IconComponent = (MdIcons as any)[iconName];
+        IconComponent = MdIcons[iconName as keyof typeof MdIcons];
         break;
       case 'Ri':
-        IconComponent = (RiIcons as any)[iconName];
-          break;
+        IconComponent = RiIcons[iconName as keyof typeof RiIcons];
+        break;
       case 'Bs':
-        IconComponent = (BsIcons as any)[iconName];
-          break;
-      // Add more cases for other icon libraries as needed
+        IconComponent = BsIcons[iconName as keyof typeof BsIcons];
+        break;
       default:
         console.warn(`Unknown icon prefix: ${prefix}`);
         return null;

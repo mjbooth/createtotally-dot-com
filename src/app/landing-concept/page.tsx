@@ -102,29 +102,26 @@ const LandingConcept = () => {
                 setIsPlaying(false);
             });
         }
-    }, []);
-
-    const togglePlay = () => {
-        if (videoRef.current) {
-            if (isPlaying) {
-                videoRef.current.pause();
-            } else {
-                videoRef.current.play();
+    
+        const togglePlay = () => {
+            if (videoRef.current) {
+                if (isPlaying) {
+                    videoRef.current.pause();
+                } else {
+                    videoRef.current.play();
+                }
+                setIsPlaying(!isPlaying);
             }
-            setIsPlaying(!isPlaying);
-        }
-    };
-
-    // Add this line to use the togglePlay function
-    useEffect(() => {
+        };
+    
         const video = videoRef.current;
         if (video) {
             video.addEventListener('click', togglePlay);
             return () => video.removeEventListener('click', togglePlay);
         }
-    }, []);
+    }, [isPlaying]);
 
-    const ParagraphWithPadding: React.FC<React.PropsWithChildren<{}>> = ({ children, ...props }) => (
+    const ParagraphWithPadding: React.FC<React.PropsWithChildren<React.ComponentProps<typeof Text>>> = ({ children, ...props }) => (
         <Text as="p" mb={4} {...props}>
             {children}
         </Text>
@@ -136,7 +133,7 @@ const LandingConcept = () => {
             setCurrentStep(Math.min(step, steps.length - 1));
         });
         return () => unsubscribe();
-    }, [scrollYProgress]);
+    }, [scrollYProgress, steps.length]);
 
     return (
         <Box bg="brandNeutral.500">

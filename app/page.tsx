@@ -3,10 +3,10 @@ import { Box } from "@chakra-ui/react"
 import { HeroSection } from '@/components/HeroSection';
 import { StepsSection } from '@/components/StepsSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { integrationItems } from '../data/integrationItems';
+import { integrationItems } from '@/data/integrationItems';
 import { WaveDivider } from '@/components/WaveDivider';
 import { ClientLogos } from '@/components/ClientLogos';
-import { clientLogos } from '../data/clientLogos';
+import { clientLogos } from '@/data/clientLogos';
 import ProductionBottlenecks from '@/components/ProductionBottlenecks';
 import { FAQ } from '@/components/FAQ';
 

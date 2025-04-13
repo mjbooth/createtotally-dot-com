@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Container, Heading, Text, Button, VStack, HStack, Link, useBreakpointValue, GridItem, Image, Grid } from '@chakra-ui/react';
+import { Box, Container, Text, GridItem, Image, Grid } from '@chakra-ui/react';
 
 interface Logo {
   src: string;

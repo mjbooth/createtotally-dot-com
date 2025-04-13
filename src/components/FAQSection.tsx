@@ -4,10 +4,7 @@
 import React from 'react';
 import {
   Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
+  Text,
   Box,
   Heading,
 } from '@chakra-ui/react';
@@ -29,23 +26,22 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ items, heading }) => {
         <Heading as="h2" fontSize="3xl" mb={6} textAlign={{ base: 'center', md: 'left' }}>
           {heading}
         </Heading>
-        <Accordion allowMultiple>
-          {items.map((item, idx) => (
-            <AccordionItem key={idx}>
+        <Accordion.Root>
+          {items.map((item, index) => (
+            <Accordion.Item key={index} value={item.title}>
               <h2>
-                <AccordionButton>
+                <Accordion.ItemTrigger>
                   <Box flex="1" textAlign="left" fontWeight="bold">
                     {item.title}
                   </Box>
-                  <AccordionIcon />
-                </AccordionButton>
+                </Accordion.ItemTrigger>
               </h2>
-              <AccordionPanel pb={4}>
+              <Accordion.ItemContent pb={4}>
                 <Text>{item.text}</Text>
-              </AccordionPanel>
-            </AccordionItem>
+              </Accordion.ItemContent>
+            </Accordion.Item>
           ))}
-        </Accordion>
+        </Accordion.Root>
       </Box>
     </Box>
   );

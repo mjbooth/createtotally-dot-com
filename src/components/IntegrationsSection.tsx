@@ -1,9 +1,8 @@
 // src/components/IntegrationsSection.tsx
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Container, Box, Heading, Image, Flex, Text } from '@chakra-ui/react';
-import { shuffleArray } from '../utils/shuffleArray';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PiPlugsFill } from "react-icons/pi";
 import { Tag } from "@/components/ui/tag"
@@ -23,8 +22,6 @@ export const IntegrationsSection: React.FC<IntegrationsSectionProps> = ({
   integrations,
   tagTitle,
 }) => {
-  // Example: shuffle array once
-  const shuffled = useMemo(() => shuffleArray(integrations), [integrations]);
   const [hoveredIntegration, setHoveredIntegration] = useState<string | null>(null);
 
   return (
