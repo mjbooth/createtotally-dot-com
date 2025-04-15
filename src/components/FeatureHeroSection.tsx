@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Container, Heading, Text, VStack, useBreakpointValue, Stack, SimpleGrid, Flex, Icon, Center, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, useBreakpointValue, Stack, Flex, Icon } from '@chakra-ui/react';
 import { HiCheckCircle } from "react-icons/hi";
 
 
@@ -21,7 +21,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
 }) => {
 
   const h1FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "6xl" });
-  const subheadingFontSize = useBreakpointValue({ base: "lg", md: "xl", lg: "2xl" });
+  const subheadingFontSize = useBreakpointValue({ base: "md", md: "lg" });
 
   return (
     <Box>
@@ -57,7 +57,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
           </Heading>
 
           <Text
-            fontSize={{ base: "md", md: "lg" }}
+            fontSize={subheadingFontSize}
             color="gray.600"
             maxW={{ base: "full", md: "2xl" }}
           >
