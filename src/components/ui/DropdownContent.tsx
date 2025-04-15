@@ -15,6 +15,7 @@ import * as PiIcons from "react-icons/pi";
 import * as MdIcons from "react-icons/md";
 import * as RiIcons from "react-icons/ri";
 import * as BsIcons from "react-icons/bs";
+import * as TbIcons from"react-icons/tb";
 import { IconType } from 'react-icons';
 
 interface MenuContent {
@@ -62,6 +63,9 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
         break;
       case 'Bs':
         IconComponent = BsIcons[iconName as keyof typeof BsIcons];
+        break;
+      case 'Tb':
+        IconComponent = TbIcons[iconName as keyof typeof TbIcons];
         break;
       default:
         console.warn(`Unknown icon prefix: ${prefix}`);

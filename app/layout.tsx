@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Provider } from "@/components/ui/provider"
+import MainMenu from "@/components/MainMenu";
+import Footer from "@/components/Footer"
 
 export const metadata: Metadata = {
   title: "CreateTOTALLY",
@@ -10,15 +12,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CreateTOTALLY | Total Content Automation</title>
-        <link rel="icon" href="public/fav.ico" type="image/x-icon" />
       </head>
       <body>
         <Provider>
+          <MainMenu />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>

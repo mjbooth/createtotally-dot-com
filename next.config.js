@@ -48,6 +48,21 @@ const nextConfig = {
     async rewrites() {
       return [];
     },
+
+    // Add this new async headers function
+    async headers() {
+      return [
+        {
+          source: '/favicon.ico',
+          headers: [
+            {
+              key: 'Content-Type',
+              value: 'image/x-icon',
+            },
+          ],
+        },
+      ];
+    },
   };
 
   module.exports = nextConfig;

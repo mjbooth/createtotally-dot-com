@@ -1,0 +1,134 @@
+import { Container, Box, Text, Heading, Image, Flex } from "@chakra-ui/react"
+import { FeatureHeroSection } from '@/components/FeatureHeroSection';
+import { WaveDivider } from '@/components/WaveDivider';
+
+export default function WorkflowAutomation() {
+
+  return (
+    <Box>
+      <Box bg="brandNeutral.500">
+        <FeatureHeroSection
+            featureGroup="Workflow automation"
+            title="Creative work approved and live without chaos"
+            subtitle="No more version mix-ups, lost feedback, or project delays. Let CreateTOTALLY handle the flow so your team can focus on the work."
+            features={[
+              "Automatic approval routing",
+              "Always up-to-date versions",
+              "Clear, trackable feedback",
+              "Output that's ready to use",
+              "Works with your existing tools",
+            ]}
+          />
+
+        {/* Feature Block 1 */}
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap={24}
+            alignItems="center"
+          >
+            <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+              <Box>
+                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Approvals that run themselves</Heading>
+                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">We message reviewers when it’s time to act. They land on the right file, ready to approve. If there’s feedback, it’s routed instantly to the right team. If it’s approved, it moves forward — no handholding needed.</Text>
+              </Box>
+            </Box>
+            <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+              <Box
+                width="100%"
+                overflow="hidden"
+              >
+                <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%" />
+              </Box>
+            </Box>
+          </Flex>
+        </Container>
+
+
+        {/* Feature Block 2 */}
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap={24}
+            alignItems="center"
+          >
+            <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+              <Box
+                width="100%"
+                overflow="hidden"
+              >
+                <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%" />
+              </Box>
+            </Box>
+            <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+              <Box>
+                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">The latest proof every time</Heading>
+                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">
+                No more guessing if it’s the right file. Reviewers land on the most recent version every time — with all edits, comments, and approvals tracked in one place.</Text>
+              </Box>
+            </Box>
+          </Flex>
+        </Container>
+
+
+        {/* Feature Block 3 */}
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap={24}
+            alignItems="center"
+          >
+            <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+              <Box>
+                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Final assets go where they’re needed</Heading>
+                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">Once approved, files don’t just sit there. They’re named the right way, formatted to spec, and delivered to the right partner, platform, or folder — automatically.</Text>
+              </Box>
+            </Box>
+            <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+              <Box
+                width="100%"
+                overflow="hidden"
+              >
+                <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%" />
+              </Box>
+            </Box>
+          </Flex>
+        </Container>
+
+
+        {/* Feature Block 4 */}
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap={24}
+            alignItems="center"
+          >
+            <Box flex={{ base: "1 1 100%", md: "2 1 40%" }}>
+              <Box
+                width="100%"
+                overflow="hidden"
+              >
+                <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%" />
+              </Box>
+            </Box>
+            <Box flex={{ base: "1 1 100%", md: "3 1 60%" }}>
+              <Box>
+                <Heading color="gray.900" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="3">Works with your current tools</Heading>
+                <Text color="gray.900" fontSize="2xl" fontWeight="thin" lineHeight={1.25} mb="6">
+                Already use Workfront or Monday.com? Keep them. CreateTOTALLY integrates with the tools you already rely on — no need to change your setup. Just speed it up.</Text>
+              </Box>
+            </Box>
+          </Flex>
+        </Container>
+
+
+        <WaveDivider
+          backgroundImage="/wave-divider-1.svg"
+          heightBase="380px"
+          heightMd="380px"
+          rotation="-180deg"
+        />
+      </Box>
+    </Box>
+  );
+}

@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig } from "@chakra-ui/react"
+import { createSystem, defaultConfig } from "@chakra-ui/react";
 
 export const system = createSystem(defaultConfig, {
   theme: {
@@ -36,7 +36,7 @@ export const system = createSystem(defaultConfig, {
           200: { value: "#FFFFFF" },
           300: { value: "#F8F5F2" },
           400: { value: "#F6F2EE" },
-          500: { value: "#F4F0EB" },
+          500: { value: "#001E44" },
           600: { value: "#E0D5C7" },
           700: { value: "#CCBAA3" },
           800: { value: "#B89F7E" },
@@ -50,4 +50,14 @@ export const system = createSystem(defaultConfig, {
       },
     },
   },
-})
+  globalCss: {
+    "*::selection": {
+      color: "#F4F0EB",
+      backgroundColor: "rgba(202, 63, 192, 0.75)", // 50% transparent pink
+    },
+    "*::-moz-selection": {
+      color: "#F4F0EB",
+      backgroundColor: "rgba(202, 63, 192, 0.75)",
+    },
+  }
+});
