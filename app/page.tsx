@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from "@chakra-ui/react"
 import { HeroSection } from '@/components/HeroSection';
-import { StepsSection } from '@/components/StepsSection';
+import StepsSection from '@/components/StepsSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { integrationItems } from '@/data/integrationItems';
 import { WaveDivider } from '@/components/WaveDivider';
@@ -38,7 +38,7 @@ export default function HomePage() {
 
       <ProductionBottlenecks />
 
-      <StepsSection title="How it works" />
+      <StepsSection />
 
       <IntegrationsSection
         integrations={integrationItems}

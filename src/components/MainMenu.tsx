@@ -6,7 +6,11 @@ import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
 import DropdownContent from './ui/DropdownContent';
 
-const MainMenu: React.FC = () => {
+interface MainMenuProps {
+  setDropdownOpen: (open: boolean) => void;
+  isDropdownOpen: boolean;
+}
+const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const menuItems = [
@@ -16,9 +20,11 @@ const MainMenu: React.FC = () => {
     { label: 'Resources', hasDropdown: true },
   ];
 
+
   const handleMenuClick = (label: string) => {
     const newActiveMenu = activeMenu === label ? null : label;
     setActiveMenu(newActiveMenu);
+    setDropdownOpen(newActiveMenu !== null);
   };
 
   const menuContent = {
@@ -28,14 +34,14 @@ const MainMenu: React.FC = () => {
         col: 2,
         links: [
           { label: "About CreateTOTALLY", href: "#" },
-          { label: "Innovation Roadmap", href: "#" },
           { label: "All Features", href: "/all-features" },
+          { label: "Innovation Roadmap", href: "#" },
           { label: "Latest Feature Releases", href: "#" }
         ],
       },
       column2: {
         title: "Features",
-        col: 3,
+        col: 4,
         wrapAfter: 3,
         links: [
           { label: "Template & Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
@@ -48,23 +54,23 @@ const MainMenu: React.FC = () => {
       },
       column3: {
         title: "Pricing Tiers",
-        col: 3,
+        col: 2,
         links: [
           { label: "Studio", href: "#" },
           { label: "Powerhouse", href: "#" },
           { label: "Enterprise", href: "#" },
-          { label: "Enterprise+", href: "#" },
         ],
       },
     },
     Solutions: {
       column1: {
-        title: "Company Type",
+        title: "Teams",
         col: 2,
         links: [
           { label: "Brand Marketing", href: "#" },
           { label: "In-house Studio Team", href: "#" },
-          { label: "Production Agency", href: "#" },
+          { label: "Creative", href: "#" },
+          { label: "Production", href: "#" },
           { label: "Media & Performance", href: "#" },
         ],
       },
@@ -75,7 +81,7 @@ const MainMenu: React.FC = () => {
           { label: "Retail", href: "#" },
           { label: "FMCG", href: "#" },
           { label: "Consumer Electronics", href: "#" },
-          { label: "Finance", href: "#" },
+          { label: "Professional Services", href: "#" },
           { label: "Travel & Hospitality", href: "#" },
         ],
       },
@@ -83,9 +89,10 @@ const MainMenu: React.FC = () => {
         title: "Integrations",
         col: 2,
         links: [
-          { label: "Adobe Creative Cloud", href: "#" },
-          { label: "Slack", href: "#" },
-          { label: "Google Workspace", href: "#" },
+          { label: "Adobe Workfront", href: "#" },
+          { label: "Monday.com", href: "#" },
+          { label: "Box.com", href: "#" },
+          { label: "View all integrations", href: "#" },
         ],
       },
       column4: {
@@ -99,14 +106,33 @@ const MainMenu: React.FC = () => {
       },
     },
     Resources: {
-      // Similar structure for Resources
+      column1: {
+        title: "Knowledge Base",
+        col: 2,
+        links: [
+          { label: "About Us", href: "#" },
+          { label: "What's New", href: "#" },
+          { label: "Blog", href: "#" },
+          { label: "Media & Performance", href: "#" },
+        ],
+      },
+      column2: {
+        title: "Case Studies",
+        col: 2,
+        links: [
+          { label: "About Us", href: "#" },
+          { label: "What's New", href: "#" },
+          { label: "Blog", href: "#" },
+          { label: "Media & Performance", href: "#" },
+        ],
+      },
     },
   };
 
   return (
     <Box position="fixed" top={0} left={0} right={0} zIndex={1000} width="100%" bg="white" boxShadow="0px 1px 1px rgba(0, 0, 0, 0.15), 0px 0px 0px inset rgba(161, 161, 170, .75)">
       <Container maxW="container.xl" mx="auto">
-        <Flex justify="space-between" align="center" height="54px">
+        <Flex justify="space-between" align="center" pt={4} pb={4} >
           <Stack direction="row" gap={6}>
             <Link href="/">
               <Image src="CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="38px" />
@@ -120,7 +146,7 @@ const MainMenu: React.FC = () => {
                   variant="plain"
                   size="md"
                   fontWeight="light"
-                  color="gray.900"
+                  color="brandNavy.500"
                   onClick={() => handleMenuClick(item.label)}
                 >
                   {item.label}
@@ -139,14 +165,14 @@ const MainMenu: React.FC = () => {
                   p="0"
                   variant="plain"
                   fontWeight="light"
-                  color="gray.900"
+                  color="brandNavy.500"
                   _hover={{ textDecoration: 'none' }}
                 >
                   <Button
                     variant="plain"
                     size="md"
                     fontWeight="light"
-                    color="gray.900"
+                    color="brandNavy.500"
                   >
                     {item.label}
                   </Button>
@@ -165,15 +191,16 @@ const MainMenu: React.FC = () => {
           position="absolute"
           left={0}
           right={0}
-          top="54px"
+          top="72px"
           bg="white"
           zIndex={10}
+          boxShadow="inset 0 1px 0 rgba(0, 0, 0, 0.15)"
         >
           <Container maxW="container.xl" py={8} fontWeight="light" color="gray.900">
             <DropdownContent activeMenu={activeMenu} menuContent={menuContent} />
           </Container>
-          <Box bg="brandNavy.500" pt="2" pb="2">
-            <Container maxW="container.xl" fontWeight="regular" fontSize=".8rem">
+          <Box bg="brandPurple.600" pt="2" pb="2">
+            <Container maxW="container.xl" fontWeight="bold" fontSize=".8rem">
               <HStack gap={6}>
                 <Text color="brandNeutral.500">Contact Sales</Text>
                 <Separator orientation="vertical" height="4" colorPalette="white" />

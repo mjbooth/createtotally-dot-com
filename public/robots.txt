@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.createtotally.com/
+
+# Sitemaps
+Sitemap: https://www.createtotally.com/sitemap.xml

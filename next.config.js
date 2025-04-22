@@ -49,18 +49,17 @@ const nextConfig = {
       return [];
     },
 
-    // Add this new async headers function
     async headers() {
       return [
         {
-          source: '/favicon.ico',
+          source: '/(.*)',
           headers: [
             {
-              key: 'Content-Type',
-              value: 'image/x-icon',
+              key: 'Cache-Control',
+              value: 'public, max-age=31536000, immutable',
             },
           ],
-        },
+        }
       ];
     },
   };

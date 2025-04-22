@@ -79,7 +79,6 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
                 gap={2}
                 fontSize="sm"
                 color="gray.700"
-                width={{ base: '100%', sm: 'calc(50% - 8px)', md: 'calc(33.333% - 11px)' }}
                 justifyContent="flex-start"
               >
                 <Icon as={HiCheckCircle} color="#853FCA" boxSize={5} flexShrink={0} />
