@@ -20,6 +20,40 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Project Setup Overview
+
+This project is structured with a lightweight Markdown CMS approach:
+
+- `/content/` — Markdown files used as the content source.
+- `/lib/` — Utilities for parsing Markdown and transforming into HTML.
+- `/app/` — App Router structure with dynamic routes.
+
+### TypeScript & Aliases
+
+- Full TypeScript support enabled (`.ts` / `.tsx`).
+- `@/` alias configured to resolve from the project root (`baseUrl: "."`).
+
+### Linting & Formatting
+
+- ESLint set up with `next/core-web-vitals` and `plugin:prettier/recommended`.
+- Prettier config in `.prettierrc` for consistent code style.
+- Run `npm run lint` to check types, formatting, and common errors.
+- Run `npm run format` to auto-fix formatting.
+
+### Development Commands
+
+```bash
+npm run dev      # Start local development server
+npm run lint     # Run lint checks
+npm run format   # Auto-format codebase
+```
+
+### Additional Notes
+
+- Auto-generate static pages from Markdown files under `/content/blog`.
+- Frontmatter (title, description) in Markdown is used for SEO metadata.
+- Clean and scalable for future CMS-like expansions.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

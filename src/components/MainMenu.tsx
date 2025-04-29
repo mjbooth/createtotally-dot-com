@@ -33,10 +33,13 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
         title: "Platform",
         col: 2,
         links: [
-          { label: "About CreateTOTALLY", href: "#" },
-          { label: "All Features", href: "/all-features" },
-          { label: "Innovation Roadmap", href: "#" },
-          { label: "Latest Feature Releases", href: "#" }
+          { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
+          { label: "InDesign Automation", href: "#", icon: "SiAdobeindesign" },
+          { label: "After Effects Automation", href: "#", icon: "SiAdobeaftereffects" },
+          { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
+          { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
+          { label: "HTML Automation", href: "#", icon: "SiHtml5" },
+          
         ],
       },
       column2: {
@@ -50,6 +53,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
           { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },
           { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
           { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
+          { label: "All Features", href: "/all-features" },
         ],
       },
       column3: {
@@ -122,7 +126,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
         links: [
           { label: "About Us", href: "#" },
           { label: "What's New", href: "#" },
-          { label: "Blog", href: "#" },
+          { label: "Blog", href: "/blog" },
           { label: "Media & Performance", href: "#" },
         ],
       },
@@ -135,7 +139,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
         <Flex justify="space-between" align="center" pt={4} pb={4} >
           <Stack direction="row" gap={6}>
             <Link href="/">
-              <Image src="CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="38px" />
+              <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="38px" />
             </Link>
             {menuItems.map((item) => (
               item.hasDropdown ? (
@@ -181,8 +185,10 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
             ))}
           </Stack>
           <Stack direction="row">
-            <Button variant="ghost">Contact sales</Button>
-            <Button colorScheme="blue">Book a demo</Button>
+            <Button colorPalette="brandNeutral" variant="solid">Contact sales</Button>
+            <Link href="/get-started">
+              <Button variant="solid" colorPalette="brandFuchsia" rounded="full" >Get started →</Button>
+            </Link>
           </Stack>
         </Flex>
       </Container>
@@ -204,7 +210,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
               <HStack gap={6}>
                 <Text color="brandNeutral.500">Contact Sales</Text>
                 <Separator orientation="vertical" height="4" colorPalette="white" />
-                <Text color="brandNeutral.500">Request a Demo</Text>
+                <Text color="brandNeutral.500">Get started</Text>
               </HStack>
             </Container>
           </Box>

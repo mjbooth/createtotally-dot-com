@@ -1,6 +1,6 @@
 import { Container, Box, Text, Heading, Image, Flex } from "@chakra-ui/react"
-import { FeatureHeroSection } from '@/components/FeatureHeroSection';
-import { WaveDivider } from '@/components/WaveDivider';
+import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
+import { WaveDivider } from '@/src/components/WaveDivider';
 
 export default function WorkflowAutomation() {
 

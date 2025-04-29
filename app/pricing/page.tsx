@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { LuCircleCheck } from "react-icons/lu";
 import { Card } from "@chakra-ui/react"
-import { FeatureHeroSection } from '@/components/FeatureHeroSection';
+import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 
 const plans = [
   {

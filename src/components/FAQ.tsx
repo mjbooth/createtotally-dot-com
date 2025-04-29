@@ -1,9 +1,11 @@
+'use client';
+
 import {
     AccordionItem,
     AccordionItemContent,
     AccordionItemTrigger,
     AccordionRoot,
-} from "@/components/ui/accordion"
+} from "@/src/components/ui/accordion"
 import { Container, Box, Heading, VStack } from "@chakra-ui/react"
 
 interface FAQSectionProps {

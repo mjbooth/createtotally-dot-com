@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Provider } from "@/components/ui/provider"
-import Footer from "@/components/Footer"
+import { Provider } from "@/src/components/ui/provider"
+import Footer from "@/src/components/Footer"
 import { Box } from "@chakra-ui/react"
-import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
+import ClientLayoutWrapper from "@/src/components/ClientLayoutWrapper";
 
 export const metadata: Metadata = {
   title: "CreateTOTALLY - NexGen AI Automation",

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
-import MainMenu from "@/components/MainMenu";
+import MainMenu from "@/src/components/MainMenu";
 import { usePathname } from 'next/navigation';
 
 const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {

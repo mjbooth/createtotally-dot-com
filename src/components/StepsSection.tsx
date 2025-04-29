@@ -2,13 +2,22 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Container, Box, Text, VStack, Image, Heading, Flex, useBreakpointValue } from "@chakra-ui/react"
-import { Tag } from "@/components/ui/tag"
+import { Tag } from "@/src/components/ui/tag"
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PiRocketFill } from "react-icons/pi";
 import { IoCheckboxOutline } from "react-icons/io5";
 import React from 'react';
 
 const StepsSection = () => {
+    const steps = [
+        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/FigmaPlugin.jpg" },
+        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/TemplateDesigner.jpg" },
+        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
+        // { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
+        { icon: IoCheckboxOutline, label: "#4 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/TaskNotification.jpg" },
+        // { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
+        { icon: IoCheckboxOutline, label: "#5 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
+    ];
     const [currentStep, setCurrentStep] = useState(0);
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const stepsRef = useRef<HTMLDivElement>(null);
@@ -39,17 +48,7 @@ const StepsSection = () => {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const steps = [
-        { icon: IoCheckboxOutline, label: "#1 Start with Figma & Adobe", subLabel: "Upload existing Figma and Adobe design files, prepared using our suite of plugins.", image: "/FigmaPlugin.jpg" },
-        { icon: IoCheckboxOutline, label: "#2 No-code Templating", subLabel: "Set up templates easily, without writing any code. Just click and customise.", image: "/TemplateDesigner.jpg" },
-        { icon: IoCheckboxOutline, label: "#3 Content Planning", subLabel: "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.", image: "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png" },
-        // { icon: IoCheckboxOutline, label: "#4 Automate at Scale", subLabel: "The system quickly creates all your designs, perfectly formatted every time.", image: "/purple.svg" },
-        { icon: IoCheckboxOutline, label: "#4 Approve Without the Back-and-Forth", subLabel: "Share for review in one place. Get feedback, make changes, and approve quickly.", image: "/TaskNotification.jpg" },
-        // { icon: IoCheckboxOutline, label: "#6 Deliver Instantly", subLabel: "Send your files where they need to go—no extra steps, no renaming.", image: "/blue.svg" },
-        { icon: IoCheckboxOutline, label: "#5 Track & Optimise", subLabel: "See what's working, measure results, and improve designs over time.", image: "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png" }
-    ];
+    }, [steps.length]);
 
     const lineRef = useRef<HTMLDivElement | null>(null);
     const { scrollYProgress } = useScroll({

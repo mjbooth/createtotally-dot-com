@@ -1,11 +1,10 @@
-// src/components/IntegrationsSection.tsx
 'use client';
 
 import React, { useState } from 'react';
 import { Container, Box, Heading, Image, Flex, Text } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PiPlugsFill } from "react-icons/pi";
-import { Tag } from "@/components/ui/tag"
+import { Tag } from "@/src/components/ui/tag"
 
 interface Integration {
   src: string;
@@ -23,7 +22,7 @@ export const IntegrationsSection: React.FC<IntegrationsSectionProps> = ({
   tagTitle,
 }) => {
   const [hoveredIntegration, setHoveredIntegration] = useState<string | null>(null);
-
+  
   return (
     <Box bg="white">
       <Container maxW="container.xl" mx="auto" pt={32} pb={32}>

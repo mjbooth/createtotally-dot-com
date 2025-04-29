@@ -62,6 +62,28 @@ export const system = createSystem(defaultConfig, {
         heading: { value: "Inter Variable, system-ui, sans-serif" },
       },
     },
+    semanticTokens: {
+      colors: {
+        brandFuchsia: {
+          solid: { value: "{colors.brandFuchsia.500}" },
+          contrast: { value: "{colors.brandFuchsia.50}" },
+          fg: { value: "{colors.brandFuchsia.700}" },
+          muted: { value: "{colors.brandFuchsia.50}" },
+          subtle: { value: "{colors.brandFuchsia.200}" },
+          emphasized: { value: "{colors.brandFuchsia.300}" },
+          focusRing: { value: "{colors.brandFuchsia.500}" },
+        },
+        brandPurple: {
+          solid: { value: "{colors.brandPurple.600}" },
+          contrast: { value: "{colors.brandPurple.50}" },
+          fg: { value: "{colors.brandPurple.700}" },
+          muted: { value: "{colors.brandPurple.100}" },
+          subtle: { value: "{colors.brandPurple.200}" },
+          emphasized: { value: "{colors.brandPurple.300}" },
+          focusRing: { value: "{colors.brandPurple.500}" },
+        },
+      },
+    },
   },
   globalCss: {
     "*::selection": {
@@ -72,5 +94,64 @@ export const system = createSystem(defaultConfig, {
       color: "#F4F0EB",
       backgroundColor: "rgba(202, 63, 192, 0.75)",
     },
+    h1: {
+      color: "brandNavy.500",
+      fontSize: "4xl",
+      fontWeight: "bold",
+      textAlign: "left",
+      lineHeight: "1",
+      mb: "8"
+    },
+    h2: {
+      color: "brandNavy.500",
+      fontSize: "4xl",
+      fontWeight: "bold",
+      lineHeight: "1.2",
+      mb: "8",
+      mt: "16"
+    },
+    h3: {
+      fontSize: { base: '2xl', md: '3xl' },
+      fontWeight: 'semibold',
+      mt: 10,
+      mb: 4,
+      lineHeight: 'short',
+    },
+    li: {
+      fontSize: 'md',
+      color: "brandNavy.500",
+      mb: 2,
+      pl: 2,
+    },
+    '.prose p': {
+      fontSize: "lg",
+      fontWeight: "regular",
+      lineHeight: "1.5",
+      mb: "6",
+    },
+    '.prose ul': {
+      fontSize: "md",
+      fontWeight: "regular",
+      lineHeight: "1.5",
+      mb: "6",
+      listStyleType: 'circle',
+      paddingLeft: 6,
+      marginBottom: 4,
+    },
+    '.prose li': {
+      fontSize: "md",
+      fontWeight: "regular",
+      lineHeight: "1.5",
+      mb: "6",
+    },
+    '.prose a': {
+      color: 'brandFuchsia.500',
+      fontWeight: 'medium',
+      textDecoration: 'underline',
+      _hover: {
+        color: 'brandFuchsia.200',
+        textDecoration: 'none',
+      },
+    }
   }
 });

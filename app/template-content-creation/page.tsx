@@ -1,6 +1,6 @@
 import { Container, Box, Text, List, Heading, Image, Flex, Em } from "@chakra-ui/react"
-import { FeatureHeroSection } from '@/components/FeatureHeroSection';
-import { WaveDivider } from '@/components/WaveDivider';
+import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
+import { WaveDivider } from '@/src/components/WaveDivider';
 import { LuCircleCheck, LuCircleX } from "react-icons/lu";
 
 export default function TemplateContentCreation() {

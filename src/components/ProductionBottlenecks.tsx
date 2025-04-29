@@ -1,11 +1,10 @@
-// src/components/ProductionBottlenecks.tsx
 'use client';
 
 import React from 'react';
 import { Container, Box, Text, Button, Image, Heading, List, Flex } from "@chakra-ui/react"
 import { HiTemplate } from "react-icons/hi";
 import { LuCircleCheck } from "react-icons/lu";
-import { Tag } from "@/components/ui/tag"
+import { Tag } from "@/src/components/ui/tag"
 
 export default function ProductionBottlenecks() {
   return (
