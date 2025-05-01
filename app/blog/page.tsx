@@ -2,7 +2,7 @@
 
 import { getAllPosts } from '@/lib/hygraph';
 import Link from 'next/link';
-import { Box, Heading, Stack, Text, Container, Image } from '@chakra-ui/react';
+import { Box, Heading, Stack, Text, Container, Image, SimpleGrid } from '@chakra-ui/react';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 
 export default async function BlogPage() {
@@ -20,12 +20,7 @@ export default async function BlogPage() {
         
         <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
 
-          <Stack
-            gap={10}
-            direction="row"
-            flexWrap="wrap"
-            justify="space-between"
-          >
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={10}>
             {posts.map((post) => (
               <Box
                 key={post.id}
@@ -33,10 +28,9 @@ export default async function BlogPage() {
                 borderRadius="md"
                 bg="white"
                 p={6}
-                width={{ base: '100%', md: '48%', lg: '30%' }}
               >
                 <Link href={`/blog/${post.slug}`}>
-                {post.coverImage?.url && (
+                  {post.coverImage?.url && (
                     <Box as="figure" width="100%" position="relative" mb={4}>
                       <Image
                         src={post.coverImage.url}
@@ -75,7 +69,7 @@ export default async function BlogPage() {
                 </Text>
               </Box>
             ))}
-          </Stack>
+          </SimpleGrid>
         </Container>
       </Box>
     </Box>

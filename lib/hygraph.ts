@@ -57,6 +57,57 @@ export const getPostBySlug = async (slug: string) => {
   return post;
 };
 
+// Fetch ALL pages
+export const getAllPages = async () => {
+  const query = gql`
+    query GetAllPages {
+      pages {
+        id
+        title
+        slug
+        content {
+          html
+        }
+        publishedAt
+        icon {
+          url
+        }
+      }
+    }
+  `;
+
+  const { pages } = await client.request<{ pages: Page[] }>(query);
+
+  return pages;
+};
+
+// Fetch SINGLE page by slug
+export const getPageBySlug = async (slug: string) => {
+  const query = gql`
+    query PageBySlug($slug: String!) {
+      page(where: { slug: $slug }) {
+        id
+        title
+        subtitle
+        slug
+        content {
+          html
+        }
+        publishedAt
+        icon {
+          url
+        }
+      }
+    }
+  `;
+
+  const variables = { slug };
+
+  const { page } = await client.request<{ page: Page }>(query, variables);
+
+  return page;
+};
+
 interface PostSummary {
   id: string;
   title: string;
@@ -80,4 +131,18 @@ interface PostDetail {
   };
   publishedAt: string;
   excerpt: string;
+}
+
+interface Page {
+  id: string;
+  title: string;
+  subtitle: string;
+  slug: string;
+  content: {
+    html: string;
+  };
+  icon?: {
+    url: string;
+  };
+  publishedAt: string;
 }

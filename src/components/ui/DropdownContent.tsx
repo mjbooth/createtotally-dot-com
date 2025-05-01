@@ -17,6 +17,7 @@ import * as MdIcons from "react-icons/md";
 import * as RiIcons from "react-icons/ri";
 import * as BsIcons from "react-icons/bs";
 import * as TbIcons from"react-icons/tb";
+import * as FaIcons from"react-icons/fa";
 import { IconType } from 'react-icons';
 import * as SiIcons from 'react-icons/si';
 import NextLink from 'next/link';
@@ -73,6 +74,9 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
       case 'Si':
         IconComponent = SiIcons[iconName as keyof typeof SiIcons];
         break;
+        case 'Fa':
+          IconComponent = FaIcons[iconName as keyof typeof FaIcons];
+          break;
       default:
         console.warn(`Unknown icon prefix for "${iconName}"`);
         return null;

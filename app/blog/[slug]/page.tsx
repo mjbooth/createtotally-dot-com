@@ -35,7 +35,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
 
   return (
     <Box as="main" py={8} bg="gray.50">
-      <Container maxW="6xl" mx="auto" py={16} color="brandNavy.500">
+      <Container maxW="4xl" mx="auto" py={16} color="brandNavy.500">
         <Heading
           as="h1"
           size="4xl"

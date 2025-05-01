@@ -126,20 +126,20 @@ export const system = createSystem(defaultConfig, {
     '.prose p': {
       fontSize: "lg",
       fontWeight: "regular",
-      lineHeight: "1.5",
+      lineHeight: "150%",
       mb: "6",
     },
     '.prose ul': {
-      fontSize: "md",
+      fontSize: "lg",
       fontWeight: "regular",
       lineHeight: "1.5",
       mb: "6",
-      listStyleType: 'circle',
+      listStyleType: 'disc',
       paddingLeft: 6,
       marginBottom: 4,
     },
     '.prose li': {
-      fontSize: "md",
+      fontSize: "lg",
       fontWeight: "regular",
       lineHeight: "1.5",
       mb: "6",
@@ -152,6 +152,9 @@ export const system = createSystem(defaultConfig, {
         color: 'brandFuchsia.200',
         textDecoration: 'none',
       },
+    },
+    "*::marker": {
+      color: "rgba(202, 63, 192, 1)",
     }
   }
 });

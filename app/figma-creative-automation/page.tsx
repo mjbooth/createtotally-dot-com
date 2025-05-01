@@ -19,15 +19,15 @@ export default function TemplateContentCreation() {
       <Box bg="brandNeutral.500">
         <FeatureHeroSection
           featureGroup="Figma Creative Automation"
-          title="Figma automation that doesn’t compromise on creativity"
-          subtitle="Automate, adapt and scale your designs — without ever leaving your Figma workflow."
+          title="Figma automation that doesn&apos;t compromise on creativity"
+          subtitle="Automate, adapt and scale your designs — all without leaving your Figma workflow."
           features={[
-            "Automate native Figma files",
+            "Automate entire Figma files",
             "Adapt for every market in seconds",
             "One-click content generation",
             "Self-serve adaptation",
             "Eliminate manual versioning",
-            "Empower your entire team"          ]}
+            "Empower your entire team"]}
         />
 
         {/* Feature Block 1 */}
@@ -40,21 +40,21 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">Your creative team is stretched. Your content demands are growing.</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mb="6">Figma is brilliant. But it wasn’t built for high-volume content production.</Text>
-                <List.Root color="brandNavy.500" fontSize="lg" fontWeight="regular" gap="2" variant="plain" align="center">
-                  <List.Item>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Figma is brilliant. But it wasn&apos;t built for high-volume content production.</Text>
+                <List.Root color="brandNavy.500" fontWeight="regular" gap="2" variant="plain" align="center">
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
                     Manual versioning slows everything down
                   </List.Item>
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
                     Localised changes are still being made by designers
                   </List.Item>
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
@@ -62,8 +62,8 @@ export default function TemplateContentCreation() {
                   </List.Item>
                 </List.Root>
               </Box>
-              <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mt="6" mb="6">
-                You don&apos;t need more headcount. You need scalable automation that works natively with Figma. That&apos;s CreateTOTALLY.
+              <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mt="6" mb="6">
+                You don&apos;t need more headcount. You need flexible automation that works inside Figma. That&apos;s CreateTOTALLY.
               </Text>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -95,18 +95,15 @@ export default function TemplateContentCreation() {
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
-                <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">
-                  The new way to work with Figma
+                <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">The new way to work with Figma
                 </Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mb="6">
-                  Imagine creating a single Figma file that powers hundreds of brand-safe, on-message variations across markets and platforms.
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                  Imagine designing a single Figma file that powers hundreds of brand-safe, on-message variations — across markets, products and platforms.
                 </Text>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mb="6">
-                  Your team controls updates to text, imagery and language — all without needing to re-enter Figma. No specialist skills required.
-                </Text>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mb="6">
-                  One source of truth. One beautiful interface. One platform to adapt everything.
-                </Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                  Your team updates text, images or formats — without ever re-entering Figma. No specialist skills required.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                  One platform. One source of truth. Endless adaptation.</Text>
               </Box>
             </Box>
           </Flex>
@@ -124,42 +121,37 @@ export default function TemplateContentCreation() {
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">What you can do with CreateTOTALLY + Figma</Heading>
                 <List.Root color="brandNavy.500" fontSize="lg" fontWeight="regular" gap="2" variant="plain" align="center">
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Automate native Figma files into thousands of variants
+                    Automate entire Figma files into thousands of variants
                   </List.Item>
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Empower non-designers to generate creative through a simple UI
-                  </List.Item>
-                  <List.Item>
+                    Empower non-designers to generate creative through a simple interface</List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Adapt campaigns by market, product, language or format
-                  </List.Item>
-                  <List.Item>
+                    Adapt campaigns by market, product, language or format</List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Review and approve content inside a collaborative workflow
-                  </List.Item>
-                  <List.Item>
+                    Review and approve content inside a collaborative workflow</List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Render at scale, with serverless cloud infrastructure
-                  </List.Item>
+                    Render at scale with serverless cloud infrastructure</List.Item>
                 </List.Root>
               </Box>
               <Box>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mt="6" mb="6">
-                  CreateTOTALLY gives you a creative automation engine, built on top of the design tool your team already loves.
-                </Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mt="6" mb="6">
+                  CreateTOTALLY is a creative automation engine, built on top of the design tools your team already loves.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -183,9 +175,8 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">From production bottlenecks to creative scale</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mb="6">
-                  Here’s what changes
-                </Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                  Here’s what changes:</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
@@ -272,23 +263,22 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">CreateTOTALLY x PerfectDraft</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mt="6" mb="6">
-                In 2024, PerfectDraft produced thousands of pieces of content manually. In 2025, they needed to scale without adding headcount.<br />Using CreateTOTALLY, they:
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mt="6" mb="6">
+                  In 2024, PerfectDraft produced thousands of content pieces manually. In 2025, they moved to scale — without scaling headcount. With CreateTOTALLY, they:
                 </Text>
                 <List.Root color="brandNavy.500" fontSize="lg" fontWeight="regular" gap="2" variant="plain" align="center">
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
-                    Automated content production from Figma
-                  </List.Item>
-                  <List.Item>
+                    Automated content production from Figma</List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
                     Empowered marketers to create their own assets
                   </List.Item>
-                  <List.Item>
+                  <List.Item fontSize="lg">
                     <List.Indicator asChild color="green.500">
                       <LuCircleCheck />
                     </List.Indicator>
@@ -297,9 +287,8 @@ export default function TemplateContentCreation() {
                 </List.Root>
               </Box>
               <Box>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.2} mt="6" mb="6">
-                The result? More content. Faster time to market. Zero compromise.
-                </Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mt="6" mb="6">
+                  The result? More content. Faster time to market. Zero compromise.</Text>
               </Box>
             </Box>
 
