@@ -1,8 +1,7 @@
 // /app/blog/page.tsx
 
 import { getAllPages } from '@/lib/hygraph';
-import Link from 'next/link';
-import { Box, Heading, Stack, Text, Container, Image, SimpleGrid } from '@chakra-ui/react';
+import { Box, Heading, Stack, Container, } from '@chakra-ui/react';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 
 export default async function PagesList() {

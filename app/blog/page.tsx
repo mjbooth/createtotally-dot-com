@@ -2,7 +2,7 @@
 
 import { getAllPosts } from '@/lib/hygraph';
 import Link from 'next/link';
-import { Box, Heading, Stack, Text, Container, Image, SimpleGrid } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, Image, SimpleGrid } from '@chakra-ui/react';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 
 export default async function BlogPage() {
