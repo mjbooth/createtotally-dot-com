@@ -332,7 +332,7 @@ export default function TemplateContentCreation() {
                 mx="auto"
               >
                 <Text fontSize={["lg", "xl", "4xl"]} fontWeight="bold" color="black" lineHeight={1.2} pb="8">
-                  Accelerate your Figma<br />workflows with CreateTOTALLY
+                  Accelerate your InDesign<br />workflows with CreateTOTALLY
                 </Text>
                 <Link href="/get-started">
                   <Button py="8" px="12" variant="solid" fontSize={["lg", "xl", "2xl"]} colorPalette="brandFuchsia" rounded="full" >Get started today →</Button>

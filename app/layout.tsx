@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Provider } from "@/src/components/ui/provider"
+import { NavigationProvider } from "@/src/context/NavigationContext";
 import Footer from "@/src/components/Footer"
 import { Box } from "@chakra-ui/react"
 import ClientLayoutWrapper from "@/src/components/ClientLayoutWrapper";
@@ -41,12 +42,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Provider>
-          <Box bg="white">
-            <ClientLayoutWrapper>
-              {children}
-            </ClientLayoutWrapper>
-            <Footer />
-          </Box>
+          <NavigationProvider>
+            <Box bg="white">
+              <ClientLayoutWrapper>
+                {children}
+              </ClientLayoutWrapper>
+              <Footer />
+            </Box>
+          </NavigationProvider>
         </Provider>
       </body>
     </html>

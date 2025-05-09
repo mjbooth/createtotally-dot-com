@@ -1,17 +1,32 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Container, Flex, Stack, Button, Image, Text, Link, HStack, Separator } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
 import DropdownContent from './ui/DropdownContent';
+import { useNavigation } from "@/src/context/NavigationContext";
+import { usePathname } from 'next/navigation';
 
-interface MainMenuProps {
-  setDropdownOpen: (open: boolean) => void;
-  isDropdownOpen: boolean;
-}
-const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
+const MainMenu: React.FC = () => {
+  const { isNavOpen, toggleNav, closeNav } = useNavigation();
+  const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+useEffect(() => {
+  if (!isNavOpen && activeMenu !== null) {
+    console.log("Nav closed — resetting activeMenu");
+    setActiveMenu(null);
+  }
+}, [isNavOpen, activeMenu]);
+
+  useEffect(() => {
+    console.log("Route changed to:", pathname);
+    if (isNavOpen) {
+      console.log("Closing nav due to route change");
+      closeNav();
+    }
+  }, [pathname]);
 
   const menuItems = [
     { label: 'Platform', hasDropdown: true },
@@ -24,7 +39,11 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
   const handleMenuClick = (label: string) => {
     const newActiveMenu = activeMenu === label ? null : label;
     setActiveMenu(newActiveMenu);
-    setDropdownOpen(newActiveMenu !== null);
+    if (newActiveMenu) {
+      if (!isNavOpen) toggleNav();
+    } else {
+      closeNav();
+    }
   };
 
   const menuContent = {
@@ -160,7 +179,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
                   {item.label}
                   <motion.div
                     animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
                     style={{ marginLeft: '5px', display: 'inline-block' }}
                   >
                     <HiMiniChevronDown />
@@ -196,7 +215,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
           </Stack>
         </Flex>
       </Container>
-      {activeMenu && (
+      {isNavOpen && activeMenu && (
         <Box
           position="absolute"
           left={0}

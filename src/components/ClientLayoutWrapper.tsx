@@ -1,25 +1,32 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import MainMenu from "@/src/components/MainMenu";
-import { usePathname } from 'next/navigation';
+import { useNavigation } from "@/src/context/NavigationContext";
 
 const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const pathname = usePathname();
+    const ref = useRef<HTMLDivElement>(null);
+    const { isNavOpen, closeNav } = useNavigation();
 
     useEffect(() => {
-        setDropdownOpen(false);
-    }, [pathname]);
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                if (isNavOpen) {
+                    closeNav();
+                }
+            }
+        };
 
-    const handleSetDropdownOpen = (open: boolean) => {
-        setDropdownOpen(open);
-    };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [isNavOpen, closeNav]);
 
     return (
         <>
-            <MainMenu setDropdownOpen={handleSetDropdownOpen} isDropdownOpen={isDropdownOpen} />
+            <div ref={ref}>
+                <MainMenu />
+            </div>
             <Box
                 pt="72px"
                 position="relative"
@@ -32,10 +39,10 @@ const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                     bottom={0}
                     width="100vw"
                     height="calc(100vh - 72px)"
-                    zIndex={isDropdownOpen ? 999 : -1}
-                    pointerEvents={isDropdownOpen ? "auto" : "none"}
-                    bg={isDropdownOpen ? "rgba(244, 240, 235, 0.75)" : "transparent"}
-                    backdropFilter={isDropdownOpen ? "blur(4px)" : "none"}
+                    zIndex={isNavOpen ? 999 : -1}
+                    pointerEvents={isNavOpen ? "auto" : "none"}
+                    bg={isNavOpen ? "rgba(244, 240, 235, 0.75)" : "transparent"}
+                    backdropFilter={isNavOpen ? "blur(4px)" : "none"}
                     transition="all 0.3s ease"
                 />
                 <Box position="relative" zIndex={2}>

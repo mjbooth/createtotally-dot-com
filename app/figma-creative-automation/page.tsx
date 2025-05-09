@@ -153,7 +153,8 @@ export default function TemplateContentCreation() {
 
       <Box as="section" bg="brandWhite.500">
         {/* Feature Block 3 */}
-        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
+
+                <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
           <Flex
             direction={{ base: "column", md: "row" }}
             gap={24}
@@ -161,51 +162,57 @@ export default function TemplateContentCreation() {
           >
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
-                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">
-                  How it works:<br />From Figma to finished in three steps
+                <Heading as="h2" color="brandNavy.500" fontSize="5xl" maxW="4xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="16">
+                  Scale your design workflow with InDesign automation
                 </Heading>
               </Box>
             </Box>
           </Flex>
           <SimpleGrid columns={3} gap={16} mb={20}>
-            <GridItem>
-              <Box>
-                <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
-                <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #1 Set up in Figma
+            <GridItem bg="brandNeutral.500" >
+              <Box p={6}>
+                <Text color="brandPurple.500" fontSize="md" fontWeight="black" mb="3">STEP ONE</Text>
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
+                  Set up in Figma
                 </Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5}>
                   Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.
                 </Text>
               </Box>
+              <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%"/>
             </GridItem>
-            <GridItem>
-              <Box>
-                <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
-                <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #2 Upload to CreateTOTALLY
+
+            <GridItem bg="brandNeutral.500" >
+              <Box p={6}>
+                <Text color="brandPurple.500" fontSize="md" fontWeight="black" mb="3">STEP TWO</Text>
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
+                  Upload to CreateTOTALLY
                 </Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
-                  Your templates become intelligent production systems that maintain design integrity while allowing controlled changes.
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5}>
+                  Your templates become intelligent production systems that maintain design integrity, while allowing controlled changes.
                 </Text>
               </Box>
+              <Image src="/812f934f093212b5f2a939227b970a6bf3406929-1080x864.avif" alt="All Channels" width="100%" />
             </GridItem>
-            <GridItem>
-              <Box>
-                <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
-                <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #3 Scale endlessly
+
+            <GridItem bg="brandNeutral.500" >
+              <Box p={6}>
+                <Text color="brandPurple.500" fontSize="md" fontWeight="black" mb="3">STEP THREE</Text>
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
+                  Scale endlessly
                 </Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
-                  Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5}>
+                  With CreateTOTALLY, you can scale your design workflow to handle thousands of assets, hundreds of projects, or even tens of thousands of clients.Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.
                 </Text>
               </Box>
+              <Image src="/9c8500506ec9297dc6eb446ceedf317df81b8b1e-1560x1248.avif" alt="All Channels" width="100%" />
             </GridItem>
+
           </SimpleGrid>
           <Box textAlign="right" mb={8}>
             <Link
               href="/get-started#figma"
-              color="brandFuchsia.500"
+              color="brandPurple.500"
               fontSize="lg"
               fontWeight="bold"
               _hover={{ textDecoration: "underline" }}
