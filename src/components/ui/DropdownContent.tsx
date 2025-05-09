@@ -27,7 +27,6 @@ interface DropdownContentProps {
     [key: string]: MenuContent;
   };
 }
-
 const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuContent }) => {
   const content = menuContent[activeMenu];
 
@@ -92,7 +91,14 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
             <Flex mt={2}>
               <Stack gap={2} flex={1}>
                 {column.links.slice(0, column.wrapAfter || column.links.length).map((link, index) => (
-                  <Button asChild key={index} _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} >
+                  <Button 
+                    asChild
+                    key={index}
+                    color="brandNavy.500"
+                    bg="transparent"
+                    _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} 
+                    _active={{ color: "brandPurple.700", bg: "brandPurple.100" }}
+                  >
                     <NextLink href={link.href} style={{ 
                       display: 'flex',
                       width: '100%',
@@ -110,7 +116,14 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
               {column.wrapAfter && column.col && column.col > 1 && (
                 <Stack gap={2} flex={1}>
                   {column.links.slice(column.wrapAfter).map((link, index) => (
-                    <Button asChild key={index + (column.wrapAfter ?? 0)} _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} >
+                    <Button 
+                      asChild 
+                      key={index + (column.wrapAfter ?? 0)} 
+                      color="brandNavy.500"
+                      bg="transparent"
+                      _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} 
+                      _active={{ color: "brandPurple.700", bg: "brandPurple.100" }}
+                    >
                       <NextLink href={link.href} style={{ 
                         display: 'flex',
                         width: '100%',

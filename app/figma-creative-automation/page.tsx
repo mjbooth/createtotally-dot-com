@@ -74,9 +74,8 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">The localisation bottleneck</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You&#39;ve designed the perfect campaign in Figma. Then the requests flood in: &quot;Can we get this in 12 languages?&quot; &quot;We need all the CTAs adapted for each market.&quot; &quot;The legal copy needs updating for France.&quot;<br /><br />Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn&#39;t use your creative talents.</Text>
-                <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="0"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Set up your design once, apply translations across multiple markets with a single click, and watch as properly formatted assets generate automatically—with fonts, spacing and layouts that respect each language&#39;s unique requirements.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You&#39;ve designed the perfect campaign in Figma. Then the requests flood in: &quot;Can we get this in 12 languages?&quot; &quot;We need all the CTAs adapted for each market.&quot; &quot;The legal copy needs updating for France.&quot;</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="0">Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn't use your creative talents.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -108,9 +107,8 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">The format explosion</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers...<br /><br />Each adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.</Text>
-                <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Set up your design once, apply translations across multiple markets with a single click, and watch as properly formatted assets generate automatically—with fonts, spacing and layouts that respect each language&#39;s unique requirements.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers...</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Each adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.</Text>
               </Box>
             </Box>
           </Flex>
@@ -127,9 +125,8 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mt="0" mb="8">The approval-revision loop</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You send assets for review. Then come the change requests: &quot;Can we try a different image?&quot; &quot;The headline&#39;s too long.&quot; &quot;Legal wants different disclaimers for each market.&quot;<br /><br />Each small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.</Text>
-                <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>&quot;With CreateTOTALLY:&quot;</Highlight> Make changes in seconds through our intuitive interface. Swap images, update text, or adjust components across multiple outputs simultaneously. Provide stakeholders with options without doubling your workload.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You send assets for review. Then come the change requests: &quot;Can we try a different image?&quot; &quot;The headline&#39;s too long.&quot; &quot;Legal wants different disclaimers for each market.&quot;</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Each small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -336,9 +333,13 @@ export default function TemplateContentCreation() {
                 textAlign="center"
                 maxWidth="container.xl"
                 mx="auto"
+                maxW="3xl"
               >
-                <Text fontSize={["lg", "xl", "4xl"]} fontWeight="bold" color="black" lineHeight={1.2} pb="8">
-                  Accelerate your Figma<br />workflows with CreateTOTALLY
+                <Text fontSize={["lg", "xl", "4xl"]} fontWeight="bold" color="brandNavy.500" lineHeight={1} pb="8">
+                  Ready to reclaim your creative time?
+                </Text>
+                <Text fontSize={["lg", "xl", "lg"]} color="brandNavy.500" lineHeight={1.2} pb="8">
+                  Stop wasting hours on repetitive production tasks. Start focusing on what you do best—creating remarkable designs that drive results.
                 </Text>
                 <Link href="/get-started">
                   <Button py="8" px="12" variant="solid" fontSize={["lg", "xl", "2xl"]} colorPalette="brandFuchsia" rounded="full" >Get started today →</Button>

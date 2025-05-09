@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, VStack, Stack } from "@chakra-ui/react"
+import { Box, Heading, Flex, VStack, Stack, Text } from "@chakra-ui/react"
 import {
   Button,
   Field,
@@ -32,9 +32,11 @@ export default function TemplateContentCreation() {
             maxW={{ base: "full", md: "6xl" }}
             pt={6}
           >
-            Talk with the team and see how CreateTOTALLY can fit your needs
+            Transform your creative workflow with CreateTOTALLY
           </Heading>
-
+          <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5}>
+            Join the teams saving 65% of their time through automated creative production. Book a personalised demo to see how we can streamline your process.
+          </Text>
         </VStack>
 
         {/* Right Side: Form Placeholder */}

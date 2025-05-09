@@ -52,7 +52,7 @@ export default function TemplateContentCreation() {
     <Box>
       <Box bg="brandNeutral.500">
         <FeatureHeroSection
-          featureGroup="Figma Creative Automation"
+          featureGroup="Adobe InDesign Creative Automation"
           title="Scale design production without sacrificing quality."
           subtitle="Keep your creative control. Let automation handle the busywork."
           features={[
