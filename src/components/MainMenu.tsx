@@ -55,9 +55,10 @@ useEffect(() => {
           { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
           { label: "InDesign Automation", href: "/adobe-indesign-automation", icon: "SiAdobeindesign" },
           { label: "After Effects Automation", href: "/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
-          // { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
-          // { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
-          // { label: "HTML Automation", href: "#", icon: "SiHtml5" },
+          { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
+          { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
+          { label: "HTML Automation", href: "#", icon: "SiHtml5" },
+          
         ],
       },
       column2: {
@@ -71,7 +72,7 @@ useEffect(() => {
           { label: "Workflow Automation", href: "/workflow-automation", icon: "TbArrowsShuffle" },
           { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },
           { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
-          // { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
+          { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
           { label: "All Features", href: "/all-features", icon: "FaPlus"},
         ],
       },
@@ -79,9 +80,9 @@ useEffect(() => {
         title: "Pricing Tiers",
         col: 2,
         links: [
-          { label: "Studio", href: "/pricing" },
-          { label: "Powerhouse", href: "/pricing" },
-          { label: "Enterprise", href: "/pricing" },
+          { label: "Studio", href: "#" },
+          { label: "Powerhouse", href: "#" },
+          { label: "Enterprise", href: "#" },
         ],
       },
     },
@@ -207,7 +208,6 @@ useEffect(() => {
             ))}
           </Stack>
           <Stack direction="row">
-            <Button colorPalette="brandNeutral" variant="solid">Contact sales</Button>
             <Link href="/get-started">
               <Button variant="solid" colorPalette="brandFuchsia" rounded="full" >Get started →</Button>
             </Link>
@@ -230,13 +230,9 @@ useEffect(() => {
           <Box bg="brandPurple.600" pt="2" pb="2">
             <Container maxW="container.xl" fontWeight="bold" fontSize=".8rem">
               <HStack gap={6}>
-                <Link href="/get-started">
-                  <Text color="brandNeutral.500">Get a platform demo →</Text>
-                </Link>
-                <Separator orientation="vertical" colorPalette="brandNeutral" height="4"/>
-                <Link href="/get-started">
-                  <Text color="brandNeutral.500">Test your own content →</Text>
-                </Link>
+                <Text color="brandNeutral.500">Contact Sales</Text>
+                <Separator orientation="vertical" height="4" colorPalette="white" />
+                <Text color="brandNeutral.500">Get started</Text>
               </HStack>
             </Container>
           </Box>

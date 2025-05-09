@@ -89,7 +89,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
           </Flex>
@@ -107,7 +107,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiLayout-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiLayout-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
@@ -138,7 +138,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
           </Flex>
@@ -189,7 +189,7 @@ export default function TemplateContentCreation() {
                   Upload to CreateTOTALLY
                 </Heading>
                 <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5}>
-                  Your After Effects templates become intelligent production systems that work like a motion designer - preserving every layer, comp, and effect exactly where you'd expect, from complex nested compositions to dynamic text layers, while maintaining full creative control.
+                  Your After Effects templates become intelligent production systems that work like a motion designer - preserving every layer, comp, and effect exactly where you&apos;d expect, from complex nested compositions to dynamic text layers, while maintaining full creative control.
                 </Text>
               </Box>
               <Image src="/812f934f093212b5f2a939227b970a6bf3406929-1080x864.avif" alt="All Channels" width="100%" />

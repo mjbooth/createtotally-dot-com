@@ -1,4 +1,4 @@
-import { Container, Box, Text, Link, Heading, Highlight, VStack, HStack, Icon, Button, Image, Flex, Separator, SimpleGrid, GridItem } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, VStack, HStack, Icon, Button, Image, Flex, SimpleGrid, GridItem } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 import { WaveDivider } from '@/src/components/WaveDivider';
 import { MdGridOn } from "react-icons/md";
@@ -75,7 +75,7 @@ export default function TemplateContentCreation() {
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">The localisation bottleneck</Heading>
                 <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You&#39;ve designed the perfect campaign in Figma. Then the requests flood in: &quot;Can we get this in 12 languages?&quot; &quot;We need all the CTAs adapted for each market.&quot; &quot;The legal copy needs updating for France.&quot;</Text>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="0">Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn't use your creative talents.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="0">Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn&apos;t use your creative talents.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -83,7 +83,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
           </Flex>
@@ -101,7 +101,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiLayout-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiLayout-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
@@ -134,7 +134,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="3xl" alt="All Channels" width="100%" />
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" borderRadius="4xl" alt="All Channels" width="100%" />
               </Box>
             </Box>
           </Flex>

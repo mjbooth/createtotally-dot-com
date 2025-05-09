@@ -82,7 +82,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/70351b60fc6d75651f4a46ff991c56ad2769c5a1-1080x864.avif" alt="All Channels" width="100%" />
+                <Image src="/70351b60fc6d75651f4a46ff991c56ad2769c5a1-1080x864.avif" alt="All Channels" width="100%" borderRadius="4xl"/>
               </Box>
             </Box>
           </Flex>
@@ -100,7 +100,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/13340a050ed0774753cf0ad62d126f05e1db4080-1560x1170.avif" alt="All Channels" width="100%" />
+                <Image src="/13340a050ed0774753cf0ad62d126f05e1db4080-1560x1170.avif" alt="All Channels" width="100%" borderRadius="4xl"/>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
@@ -131,7 +131,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 overflow="hidden"
               >
-                <Image src="/ac3268e75e31996b167dae723daf132d17a7600f-1092x864.avif" alt="All Channels" width="100%" borderRadius="md"/>
+                <Image src="/ac3268e75e31996b167dae723daf132d17a7600f-1092x864.avif" alt="All Channels" width="100%" borderRadius="4xl"/>
               </Box>
             </Box>
           </Flex>
@@ -172,7 +172,7 @@ export default function TemplateContentCreation() {
                   Use our StudioCraft plugin that runs quietly in the background, prepping your files for automation without ever touching your design intent. No new tools to learn. No templates to rebuild.
                 </Text>
               </Box>
-              <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%"/>
+              <Image src="/FigmaPlugin.jpg" alt="All Channels" width="100%" />
             </GridItem>
 
             <GridItem bg="brandNeutral.500" >
