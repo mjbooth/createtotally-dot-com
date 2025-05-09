@@ -13,7 +13,7 @@ export default async function BlogPage() {
       <Box bg="brandNeutral.500">
         <FeatureHeroSection
           featureGroup="Resources"
-          title="Blog for the creative automation world"
+          title="Stories, work, and what’s sparking our curiosity."
           subtitle=""
           features={[]}
         />

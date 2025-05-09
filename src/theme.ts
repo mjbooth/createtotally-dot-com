@@ -52,9 +52,9 @@ export const system = createSystem(defaultConfig, {
           500: { value: "#001E44" },
           600: { value: "#E0D5C7" },
           700: { value: "#CCBAA3" },
-          800: { value: "#B89F7E" },
-          900: { value: "#A4835A" },
-          950: { value: "#927550" },
+          800: { value: "#000A19" },
+          900: { value: "#000A19" },
+          950: { value: "#000A19" },
         },
       },
       fonts: {
@@ -66,7 +66,7 @@ export const system = createSystem(defaultConfig, {
       colors: {
         brandFuchsia: {
           solid: { value: "{colors.brandFuchsia.500}" },
-          contrast: { value: "{colors.brandFuchsia.50}" },
+          contrast: { value: "{colors.brandNeutral.500}" },
           fg: { value: "{colors.brandFuchsia.700}" },
           muted: { value: "{colors.brandFuchsia.50}" },
           subtle: { value: "{colors.brandFuchsia.200}" },

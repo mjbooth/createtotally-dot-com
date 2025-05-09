@@ -14,10 +14,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+
   return {
     title: page.title,
+    description: page.subtitle || 'Read the latest content.',
     openGraph: {
       title: page.title,
+      description: page.subtitle || '',
+      images: page.coverImage?.url ? [{ url: page.coverImage.url }] : [],
     },
   };
 }
@@ -34,7 +38,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
     <Box as="main" py={8} bg="gray.50">
       <Container maxW="4xl" mx="auto" py={16} color="brandNavy.500">
         {page.icon?.url && (
-          <Box as="figure" mb={16} overflow="hidden" borderRadius="md">
+          <Box as="figure" mb={6} overflow="hidden" borderRadius="md">
             <Image
               src={page.icon.url}
               alt={page.title}
@@ -54,16 +58,31 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
           mb={3}
           color="brandNavy.500"
         >
-          {page.title}
+          {page.title} + CreateTOTALLY
         </Heading>
-          <Text
-            fontSize="md"
-            color="brandNavy.500"
-            mb={12}
-            textAlign="center"
-          >
-            {page.subtitle}
-          </Text>
+        <Text
+          fontSize="md"
+          color="brandNavy.500"
+          mb={12}
+          textAlign="center"
+          maxW="3xl"
+          mx="auto"
+        >
+          {page.subtitle}
+        </Text>
+        <Box>
+          {page.coverImage?.url && (
+            <Box as="figure" mb={16} overflow="hidden" borderRadius="md">
+              <Image
+                src={page.coverImage.url}
+                alt={page.title}
+                width="100%"
+                height="auto"
+                objectFit="cover"
+              />
+            </Box>
+          )}
+        </Box>
         <Box
           className="prose"
           mx="auto"

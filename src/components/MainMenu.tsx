@@ -34,8 +34,8 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
         col: 2,
         links: [
           { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
-          { label: "InDesign Automation", href: "#", icon: "SiAdobeindesign" },
-          { label: "After Effects Automation", href: "#", icon: "SiAdobeaftereffects" },
+          { label: "InDesign Automation", href: "/adobe-indesign-automation", icon: "SiAdobeindesign" },
+          { label: "After Effects Automation", href: "/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
           { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
           { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
           { label: "HTML Automation", href: "#", icon: "SiHtml5" },
@@ -45,9 +45,10 @@ const MainMenu: React.FC<MainMenuProps> = ({ setDropdownOpen }) => {
       column2: {
         title: "Features",
         col: 4,
-        wrapAfter: 3,
+        wrapAfter: 4,
         links: [
-          { label: "Template & Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
+          { label: "Easy Templating", href: "/template-content-creation", icon: "HiTemplate" },
+          { label: "Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
           { label: "Creative Automation", href: "/creative-automation", icon: "PiRocketFill" },
           { label: "Workflow Automation", href: "/workflow-automation", icon: "TbArrowsShuffle" },
           { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },

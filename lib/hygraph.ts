@@ -72,6 +72,9 @@ export const getAllPages = async () => {
         icon {
           url
         }
+        icon {
+          url
+        }
       }
     }
   `;
@@ -92,6 +95,9 @@ export const getPageBySlug = async (slug: string) => {
         slug
         content {
           html
+        }
+        coverImage {
+          url
         }
         publishedAt
         icon {
@@ -131,6 +137,9 @@ interface PostDetail {
   };
   publishedAt: string;
   excerpt: string;
+  icon?: {
+    url: string;
+  };
 }
 
 interface Page {
@@ -142,6 +151,9 @@ interface Page {
     html: string;
   };
   icon?: {
+    url: string;
+  };
+  coverImage?: {
     url: string;
   };
   publishedAt: string;

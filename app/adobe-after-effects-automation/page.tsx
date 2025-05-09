@@ -1,60 +1,16 @@
-import { Container, Box, Text, Link, Heading, Highlight, VStack, HStack, Icon, Button, Image, Flex, Separator, SimpleGrid, GridItem } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, Highlight, Button, Image, Flex, Separator, SimpleGrid, GridItem } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 import { WaveDivider } from '@/src/components/WaveDivider';
-import { MdGridOn } from "react-icons/md";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { HiOutlinePuzzle } from "react-icons/hi";
-import { TbTextWrapDisabled } from "react-icons/tb";
-import { FiFolderPlus } from "react-icons/fi";
-import { BiLayerPlus } from "react-icons/bi";
-import { VscFileMedia } from "react-icons/vsc";
 
-const features = [
-  { 
-    title: "Pixel-perfect rendering",
-    descitption: "What you design is exactly what gets rendered, every time",
-    icon: <MdGridOn />
-  },
-  { 
-    title: "Native auto layout support",
-    descitption: "Your responsive design logic works exactly as intended",
-    icon: <LuLayoutDashboard />
-  },
-  { 
-    title: "Component consistency",
-    descitption: "Update once, apply everywhere with linked elements",
-    icon: <HiOutlinePuzzle />
-  },
-  { 
-    title: "Text that knows how to behave",
-    descitption: "Smart text scaling keeps your layouts intact, even with longer translations",
-    icon: <TbTextWrapDisabled />
-  },
-  { 
-    title: "Asset management that makes sense",
-    descitption: "Centralised library with usage rights and market-specific controls",
-    icon: <FiFolderPlus />
-  },
-  { 
-    title: "Bulk generation that actually works",
-    descitption: "Hundreds of assets from a single content plan, no manual exports",
-    icon: <BiLayerPlus />
-  },
-  { 
-    title: "Multi-format exports",
-    descitption: "PNG, JPEG, @2x, or custom specs—automatically packaged and ready to use",
-    icon: <VscFileMedia />
-  }
-];
 export default function TemplateContentCreation() {
 
   return (
     <Box>
       <Box bg="brandNeutral.500">
         <FeatureHeroSection
-          featureGroup="Figma Creative Automation"
-          title="Stop Drowning in Design Edits. Start Automating Your Figma Workflow."
-          subtitle="Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments or late nights at your desk."
+          featureGroup="Adobe After Effects Automation"
+          title="Break from Video Production Bottlenecks—Without Sacrificing Creative Control"
+          subtitle="Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it."
           features={[
             "Automate entire Figma files",
             "Adapt for every market in seconds",
@@ -73,10 +29,10 @@ export default function TemplateContentCreation() {
           >
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
-                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">The localisation bottleneck</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You&#39;ve designed the perfect campaign in Figma. Then the requests flood in: &quot;Can we get this in 12 languages?&quot; &quot;We need all the CTAs adapted for each market.&quot; &quot;The legal copy needs updating for France.&quot;<br /><br />Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn&#39;t use your creative talents.</Text>
+                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">You&#39;re drowning in repetitive versioning</Heading>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Every small text change, every asset swap, every language variant means reopening projects, hunting down layers, and manually adjusting compositions. Your skilled designers become glorified text editors, burning creative energy on monotonous tasks.</Text>
                 <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="0"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Set up your design once, apply translations across multiple markets with a single click, and watch as properly formatted assets generate automatically—with fonts, spacing and layouts that respect each language&#39;s unique requirements.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Upload your existing After Effects templates—exactly as they are—and automate thousands of variations through a clean, intuitive interface. No rework. No compromises. Just your design, made dynamic.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -107,10 +63,10 @@ export default function TemplateContentCreation() {
             </Box>
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
-                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">The format explosion</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers...<br /><br />Each adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.</Text>
+                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8" mt="0">&quot;Automation&quot; forces you to design differently</Heading>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">Other tools demand rigid token systems and obscure naming conventions that limit your creative freedom. You&#39;re forced to adapt your design process to fit their technical constraints, not the other way around.</Text>
                 <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Set up your design once, apply translations across multiple markets with a single click, and watch as properly formatted assets generate automatically—with fonts, spacing and layouts that respect each language&#39;s unique requirements.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> We don&#39;t ask you to design differently—we work the way you already do. Our platform analyses your After Effects project directly, making every text layer, image, and nested comp editable while preserving your creative intent.</Text>
               </Box>
             </Box>
           </Flex>
@@ -118,7 +74,7 @@ export default function TemplateContentCreation() {
 
 
         {/* Feature Block 3 */}
-        <Container maxW="container.xl" mx="auto" pt={32} pb={3}>
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
           <Flex
             direction={{ base: "column", md: "row" }}
             gap={24}
@@ -126,10 +82,10 @@ export default function TemplateContentCreation() {
           >
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
-                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mt="0" mb="8">The approval-revision loop</Heading>
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">You send assets for review. Then come the change requests: &quot;Can we try a different image?&quot; &quot;The headline&#39;s too long.&quot; &quot;Legal wants different disclaimers for each market.&quot;<br /><br />Each small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.</Text>
+                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mt="0" mb="8">Quality breaks down at scale</Heading>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">What looks perfect in a test render falls apart when you need to produce hundreds of variations. Typography issues, missing assets, plugin compatibility problems - suddenly, your streamlined process becomes a quality control nightmare.</Text>
                 <Separator mb="6" />
-                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>&quot;With CreateTOTALLY:&quot;</Highlight> Make changes in seconds through our intuitive interface. Swap images, update text, or adjust components across multiple outputs simultaneously. Provide stakeholders with options without doubling your workload.</Text>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6"><Highlight query="With CreateTOTALLY:" styles={{ fontWeight: "black", color: "brandFuchsia.500" }}>With CreateTOTALLY:</Highlight> Our deep template intelligence understands the intricacies of motion design. From nested precomps to track mattes, from blend modes to expressions, we preserve the fine details that make your work sing.</Text>
               </Box>
             </Box>
             <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
@@ -162,7 +118,7 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">
-                  How it works:<br />From Figma to finished in three steps
+                  How it works:<br />Simplicity meets sophistication
                 </Heading>
               </Box>
             </Box>
@@ -172,10 +128,10 @@ export default function TemplateContentCreation() {
               <Box>
                 <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
                 <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #1 Set up in Figma
+                  Design naturally
                 </Heading>
                 <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
-                  Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.
+                  Create your After Effects templates exactly as you normally would, with all the creative complexity your project demands.
                 </Text>
               </Box>
             </GridItem>
@@ -183,10 +139,10 @@ export default function TemplateContentCreation() {
               <Box>
                 <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
                 <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #2 Upload to CreateTOTALLY
+                  Upload seamlessly
                 </Heading>
                 <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
-                  Your templates become intelligent production systems that maintain design integrity while allowing controlled changes.
+                  Our plugin packages everything correctly, flags any potential issues, and securely transfers your template to our platform.
                 </Text>
               </Box>
             </GridItem>
@@ -194,10 +150,21 @@ export default function TemplateContentCreation() {
               <Box>
                 <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
                 <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
-                  #3 Scale endlessly
+                  Edit at scale
                 </Heading>
                 <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
-                  Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.
+                  Modify text, swap images, update colours, or inject data across hundreds of variations through our intuitive interface.
+                </Text>
+              </Box>
+            </GridItem>
+            <GridItem>
+              <Box>
+                <Image borderRadius="3xl" src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
+                <Heading as="h3" color="brandNavy.500" fontSize="3xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="4">
+                  Render and deliver
+                </Heading>
+                <Text color="brandNavy.500" fontSize="lg" fontWeight="regular" lineHeight={1.5} mb="6">
+                  Get production-ready MP4 or ProRes files that maintain every detail of your original design, ready for deployment.
                 </Text>
               </Box>
             </GridItem>
@@ -224,7 +191,7 @@ export default function TemplateContentCreation() {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            py="64"
+            py="44"
           >
             <Flex
               flexDirection="column"
@@ -232,11 +199,12 @@ export default function TemplateContentCreation() {
               justifyContent="center"
               height="100%"
               width="100%"
+              px={4}
             >
               <Box
                 p={4}
-                pb={12}
                 textAlign="center"
+                maxWidth="container.xl"
                 mx="auto"
               >
                 <Text fontSize={["lg", "xl", "4xl"]} fontWeight="bold" color="black">
@@ -258,7 +226,7 @@ export default function TemplateContentCreation() {
       </Box>
 
       <Box bg="brandNeutral.500">
-        <Container maxW="container.xl" mx="auto" pt={32} pb={0}>
+        <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
           <Flex
             direction={{ base: "column", md: "row" }}
             gap={32}
@@ -267,38 +235,46 @@ export default function TemplateContentCreation() {
             <Box flex={{ base: "1 1 100%", md: "3 1 50%" }}>
               <Box>
                 <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="8">
-                  Built by designers who understand production
+                  Engineered for real-world production excellence
                 </Heading>
-                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="12">
+                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="6">
                   CreateTOTALLY isn&#39;t just another automation tool—it&#39;s created by designers who&#39;ve felt your pain:
                 </Text>
               </Box>
             </Box>
           </Flex>
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={12}>
-            {features.map((feature, index) => (
-              <Box key={index} textAlign="left">
-                <HStack align="left" mb={4} gap="0">
-                  <Box color="brandFuchsia.500" m={4} mt={0} p={3} >
-                    <Icon size="2xl" color="brandFuchsia.500">
-                      {feature.icon}
-                    </Icon>
-                  </Box>
-                  <Box>
-                    <VStack align="left" mb={4} gap="0">
-                      <Text fontSize="lg" color="brandNavy.500" fontWeight="bold">
-                        {feature.title}
-                      </Text>
-                      <Text color="brandNavy.500" fontSize="md" lineHeight={1.6}>
-                        {feature.descitption}
-                      </Text>
-                    </VStack>
-                  </Box>
-                </HStack>
+          <SimpleGrid columns={4} gap={8} mb={20}>
+            <GridItem>
+              <Box>
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="6">True typography</Heading>
+                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="0">Support for all fonts (OTF/TTF) across render machines, Unicode compatibility for any language, language-specific font substitutions, and both paragraph and point text options.</Text>
               </Box>
-            ))}
+            </GridItem>
+            <GridItem>
+              <Box>
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="6">Third-party plugin support</Heading>
+                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="0">Pre-installed plugins including Red Giant (Trapcode, Universe, VFX), Video Copilot (Element 3D, Optical Flares, SABER), Boris FX, RE:Vision, Frischluft, and more.</Text>
+              </Box>
+            </GridItem>
+            <GridItem>
+              <Box>
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="6">Production-grade rendering</Heading>
+                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="0">Maintains linked assets intact, preserves adjustment layers, mattes, and native effects, ensures consistent layout integrity, and supports both MP4 and ProRes deliverables.</Text>
+              </Box>
+            </GridItem>
+            <GridItem>
+              <Box>
+                <Image src="/feature-placeholder-FiPenTool-sqr.jpg" alt="All Channels" width="100%" />
+                <Heading as="h3" color="brandNavy.500" fontSize="2xl" fontWeight="bold" textAlign="left" lineHeight={1} mb="2" mt="6">Bulletproof project handling</Heading>
+                <Text color="brandNavy.500" fontSize="lg" lineHeight={1.5} mb="0">Automatically flags missing assets before upload, packages projects correctly, and ensures smooth handoffs between team members.</Text>
+              </Box>
+            </GridItem>
           </SimpleGrid>
         </Container>
+
         <WaveDivider
           backgroundImage="/wave-divider-1.svg"
           heightBase="380px"
@@ -331,7 +307,7 @@ export default function TemplateContentCreation() {
                 mx="auto"
               >
                 <Text fontSize={["lg", "xl", "4xl"]} fontWeight="bold" color="black" lineHeight={1.2} pb="8">
-                  Accelerate your Figma<br />workflows with CreateTOTALLY
+                  Ready to reclaim your creative time?
                 </Text>
                 <Link href="/get-started">
                   <Button py="8" px="12" variant="solid" fontSize={["lg", "xl", "2xl"]} colorPalette="brandFuchsia" rounded="full" >Get started today →</Button>

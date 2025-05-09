@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Stack,
-  Grid,
-  GridItem,
-  Heading,
-  Button,
-  Flex,
-  Separator,
-  HStack
-} from '@chakra-ui/react';
+import { Box, Stack, Grid, GridItem, Heading, Button, Flex, Separator, HStack } from '@chakra-ui/react';
 import * as GoIcons from "react-icons/go";
 import * as HiIcons from "react-icons/hi";
 import * as PiIcons from "react-icons/pi";
