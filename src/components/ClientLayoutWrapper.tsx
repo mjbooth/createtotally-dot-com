@@ -33,7 +33,7 @@ const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
             >
                 <Box
                     position="fixed"
-                    top="160px"
+                    top={0}
                     left={0}
                     right={0}
                     bottom={0}
@@ -41,8 +41,8 @@ const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                     height="calc(100vh - 160px)"
                     zIndex={isNavOpen ? 999 : -1}
                     pointerEvents={isNavOpen ? "auto" : "none"}
-                    bg={isNavOpen ? "rgba(244, 240, 235, 0.75)" : "transparent"}
-                    backdropFilter={isNavOpen ? "blur(4px)" : "none"}
+                    // bg={isNavOpen ? "rgba(244, 240, 235, 0.75)" : "transparent"}
+                    // backdropFilter={isNavOpen ? "blur(4px)" : "none"}
                     transition="all 0.3s ease"
                 />
                 <Box position="relative" zIndex={2}>

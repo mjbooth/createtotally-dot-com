@@ -1,15 +1,6 @@
 import React from 'react';
-import { Box, Stack, Grid, GridItem, Heading, Button, Flex, Separator, HStack } from '@chakra-ui/react';
-import * as GoIcons from "react-icons/go";
-import * as HiIcons from "react-icons/hi";
-import * as PiIcons from "react-icons/pi";
-import * as MdIcons from "react-icons/md";
-import * as RiIcons from "react-icons/ri";
-import * as BsIcons from "react-icons/bs";
-import * as TbIcons from"react-icons/tb";
-import * as FaIcons from"react-icons/fa";
-import { IconType } from 'react-icons';
-import * as SiIcons from 'react-icons/si';
+import { Box, Stack, Heading, Button, Flex, HStack } from '@chakra-ui/react';
+import { renderIcon } from '@/src/utils/iconUtils';
 import NextLink from 'next/link';
 
 interface MenuContent {
@@ -32,100 +23,29 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
 
   if (!content) return null;
 
-  const renderIcon = (iconName?: string) => {
-    if (!iconName) return null;
-  
-    const prefix = iconName.slice(0, 2);
-    let IconComponent: IconType | undefined;
-  
-    switch (prefix) {
-      case 'Go':
-        IconComponent = GoIcons[iconName as keyof typeof GoIcons];
-        break;
-      case 'Hi':
-        IconComponent = HiIcons[iconName as keyof typeof HiIcons];
-        break;
-      case 'Pi':
-        IconComponent = PiIcons[iconName as keyof typeof PiIcons];
-        break;
-      case 'Md':
-        IconComponent = MdIcons[iconName as keyof typeof MdIcons];
-        break;
-      case 'Ri':
-        IconComponent = RiIcons[iconName as keyof typeof RiIcons];
-        break;
-      case 'Bs':
-        IconComponent = BsIcons[iconName as keyof typeof BsIcons];
-        break;
-      case 'Tb':
-        IconComponent = TbIcons[iconName as keyof typeof TbIcons];
-        break;
-      case 'Si':
-        IconComponent = SiIcons[iconName as keyof typeof SiIcons];
-        break;
-        case 'Fa':
-          IconComponent = FaIcons[iconName as keyof typeof FaIcons];
-          break;
-      default:
-        console.warn(`Unknown icon prefix for "${iconName}"`);
-        return null;
-    }
-  
-    if (!IconComponent) {
-      console.warn(`Icon "${iconName}" not found in ${prefix}Icons`);
-      return null;
-    }
-  
-    return <IconComponent />;
-  };
-
   return (
-    <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+    <Flex flexWrap="wrap" gap={20} p={20}>
       {Object.entries(content).map(([key, column]) => (
-        <GridItem key={key} colSpan={column.col || 1}>
+        <Box key={key}>
           <Box fontSize="14px">
-            <Heading color="brandPurple.600" as="h3" size="md" mb={4} textTransform="normal" fontSize="md" fontWeight="700">
+            <Heading color="brandNavy.500" as="h3" size="md" m={0} textTransform="normal" fontSize="md" fontWeight="700">
               {column.title}
             </Heading>
-            <Separator size="xs" borderColor="white" />
             <Flex mt={2}>
-              <Stack gap={2} flex={1}>
-                {column.links.slice(0, column.wrapAfter || column.links.length).map((link, index) => (
+              <Stack gap={1} flex={1} overflowY="hidden">
+                {column.links.map((link, index) => (
                   link.visible !== false && (
-                  <Button 
-                    asChild
-                    key={index}
-                    color="brandNavy.500"
-                    bg="transparent"
-                    _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} 
-                    _active={{ color: "brandPurple.700", bg: "brandPurple.100" }}
-                  >
-                    <NextLink href={link.href} style={{ 
-                      display: 'flex',
-                      width: '100%',
-                      textAlign: 'left',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center' }}>
-                      <HStack gap={2}>
-                        {renderIcon(link.icon)}
-                        <Box as="span">{link.label}</Box>
-                      </HStack>
-                    </NextLink>
-                  </Button>
-                  )
-                ))}
-              </Stack>
-              {column.wrapAfter && column.col && column.col > 1 && (
-                <Stack gap={2} flex={1}>
-                  {column.links.slice(column.wrapAfter).map((link, index) => (
-                    link.visible !== false && (
                     <Button 
-                      asChild 
-                      key={index + (column.wrapAfter ?? 0)} 
+                      asChild
+                      key={index}
                       color="brandNavy.500"
                       bg="transparent"
-                      _hover={{ color: "brandNavy.500", bg: "brandPurple.50" }} 
-                      _active={{ color: "brandPurple.700", bg: "brandPurple.100" }}
+                      _hover={{ color: "brandFuchsia.500", bg: "transparent", fontWeight: "500" }} 
+                      _active={{ color: "brandFuchsia.700", bg: "brandPurple.100" }}
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      px="0"
                     >
                       <NextLink href={link.href} style={{ 
                         display: 'flex',
@@ -139,15 +59,14 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                         </HStack>
                       </NextLink>
                     </Button>
-                    )
-                  ))}
-                </Stack>
-              )}
+                  )
+                ))}
+              </Stack>
             </Flex>
           </Box>
-        </GridItem>
+        </Box>
       ))}
-    </Grid>
+    </Flex>
   );
 };
 

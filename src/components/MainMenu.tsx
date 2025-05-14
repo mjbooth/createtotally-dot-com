@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Text, Link, HStack, Separator } from '@chakra-ui/react';
+import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
-import DropdownContent from './ui/DropdownContent';
+import DropdownContent from '@/src/components/ui/DropdownContent';
 import { useNavigation } from "@/src/context/NavigationContext";
 import { usePathname } from 'next/navigation';
 
@@ -63,8 +63,7 @@ const MainMenu: React.FC = () => {
       },
       column2: {
         title: "Features",
-        col: 4,
-        wrapAfter: 4,
+        col: 2,
         links: [
           { label: "Easy Templating", href: "/template-content-creation", icon: "HiTemplate" },
           { label: "Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
@@ -184,42 +183,55 @@ const MainMenu: React.FC = () => {
               </Link>
             </Box>
             <Stack direction="row" gap={6} align="center">
+
               {menuItems.map((item) => (
                 item.hasDropdown ? (
-                  <Button
-                    key={item.label}
-                    p="0"
-                    gap="0"
-                    variant="plain"
-                    size="md"
-                    fontWeight="500"
-                    color="brandNavy.500"
-                    onClick={() => handleMenuClick(item.label)}
-                  >
-                    {item.label}
-                    <motion.div
-                      animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
-                      transition={{ duration: 0.2, ease: 'easeInOut' }}
-                      style={{ marginLeft: '5px', display: 'inline-block' }}
-                    >
-                      <HiMiniChevronDown />
-                    </motion.div>
-                  </Button>
+                  <Popover.Root key={item.label} size="sm">
+                    <Popover.Trigger asChild>
+                      <Button
+                        size="sm"
+                        variant="plain"
+                        color="brandNavy.500"
+                        onClick={() => handleMenuClick(item.label)}
+                        _hover={{
+                          color: "#CA3FC0"
+                        }}
+                      >
+                        {item.label}
+                        <motion.div
+                          animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
+                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                          style={{ marginLeft: '5px', display: 'inline-block' }}
+                        >
+                          <HiMiniChevronDown />
+                        </motion.div>
+                      </Button>
+                    </Popover.Trigger>
+                    <Portal>
+                      <Popover.Positioner>
+                        <Popover.Content
+                          css={{ "--popover-bg": "#EDE6DE" }}
+                          width="auto"
+                          maxWidth="1200px"
+                          shadow="realistic"
+                          borderRadius="40px"
+                        >
+                          <Popover.Body color="brandNavy.500">
+                            <DropdownContent activeMenu={item.label} menuContent={menuContent} />
+                          </Popover.Body>
+                        </Popover.Content>
+                      </Popover.Positioner>
+                    </Portal>
+                  </Popover.Root>
                 ) : (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    p="0"
-                    variant="plain"
-                    fontWeight="light"
-                    color="brandNavy.500"
-                    _hover={{ textDecoration: 'none' }}
-                  >
+                  <Link key={item.label} href={item.href}>
                     <Button
+                      size="sm"
                       variant="plain"
-                      size="md"
-                      fontWeight="light"
                       color="brandNavy.500"
+                      _hover={{
+                        color: "#CA3FC0"
+                      }}
                     >
                       {item.label}
                     </Button>
@@ -232,29 +244,7 @@ const MainMenu: React.FC = () => {
             </Stack>
           </Flex>
         </Container>
-        {isNavOpen && activeMenu && (
-          <Box
-            position="absolute"
-            left={0}
-            right={0}
-            top="160px"
-            bg="brandNeutral.200"
-            zIndex={10}
-          >
-            <Container maxW="container.xl" py={8} fontWeight="light" color="gray.900">
-              <DropdownContent activeMenu={activeMenu} menuContent={menuContent} />
-            </Container>
-            <Box bg="brandPurple.600" pt="2" pb="2">
-              <Container maxW="container.xl" fontWeight="bold" fontSize=".8rem">
-                <HStack gap={6}>
-                  <Text color="brandNeutral.500">Contact Sales</Text>
-                  <Separator orientation="vertical" height="4" colorPalette="white" />
-                  <Text color="brandNeutral.500">Get started</Text>
-                </HStack>
-              </Container>
-            </Box>
-          </Box>
-        )}
+
       </Box>
     </Box>
   );
