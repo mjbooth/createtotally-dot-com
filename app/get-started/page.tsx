@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Heading, Flex, VStack, Stack, Text, Alert, Image, Textarea, List, Container } from "@chakra-ui/react"
+import { Box, Heading, Flex, VStack, Stack, Text, Alert, Image, Textarea, List, Container, VisuallyHidden } from "@chakra-ui/react"
 import {
   Button,
   Field,
@@ -22,7 +22,7 @@ type FormInputs = {
   companyName: string;
   companySize: string;
   country: string;
-  honeypot: string;
+  capture: string;
   details: string;
 };
 
@@ -257,20 +257,19 @@ export default function TemplateContentCreation() {
                   rows={4}
                 />
               </Field.Root>
-                <Input
-                  type="text"
-                  {...register("honeypot")}
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  style={{ 
-                    position: 'absolute', 
-                    left: '-9999px', 
-                    top: '-9999px' 
-                  }}
-                />
+<VisuallyHidden>
+                <Field.Root flex={1}>
+                  <Field.Label>
+                    Honeypot
+                    <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input
+                    {...register("capture")}
+                  />
+                </Field.Root>
+</VisuallyHidden>
               <Button colorPalette="brandFuchsia" type="submit" width="full">
-                Contact sales
+                Get started with a demo →
               </Button>
             </Stack>
           </form>
@@ -293,39 +292,39 @@ export default function TemplateContentCreation() {
       </Box>
       <Box>
         <Container maxW="container.xl" mx="auto" pt={32} pb={20}>
-        <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="center" lineHeight={1} mt="0" mb="8">
-          They say it better than we do.
-        </Heading>
-        <Flex gap={8} justify="center">
-          {/* Testimonial cards */}
-          <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
-            <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
-            <Flex align="center">
-              <Box>
-                <Text fontWeight="bold">Martijn Hazelaar</Text>
-                <Text fontSize="sm">Head of digital, Vennoot</Text>
-              </Box>
-            </Flex>
-          </Box>
-          <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
-            <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
-            <Flex align="center">
-              <Box>
-                <Text fontWeight="bold">Martijn Hazelaar</Text>
-                <Text fontSize="sm">Head of digital, Vennoot</Text>
-              </Box>
-            </Flex>
-          </Box>
-          <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
-            <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
-            <Flex align="center">
-              <Box>
-                <Text fontWeight="bold">Martijn Hazelaar</Text>
-                <Text fontSize="sm">Head of digital, Vennoot</Text>
-              </Box>
-            </Flex>
-          </Box>
-         </Flex>
+          <Heading as="h2" color="brandNavy.500" fontSize="4xl" fontWeight="bold" textAlign="center" lineHeight={1} mt="0" mb="8">
+            They say it better than we do.
+          </Heading>
+          <Flex gap={8} justify="center">
+            {/* Testimonial cards */}
+            <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
+              <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
+              <Flex align="center">
+                <Box>
+                  <Text fontWeight="bold">Martijn Hazelaar</Text>
+                  <Text fontSize="sm">Head of digital, Vennoot</Text>
+                </Box>
+              </Flex>
+            </Box>
+            <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
+              <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
+              <Flex align="center">
+                <Box>
+                  <Text fontWeight="bold">Martijn Hazelaar</Text>
+                  <Text fontSize="sm">Head of digital, Vennoot</Text>
+                </Box>
+              </Flex>
+            </Box>
+            <Box bg="white" p={6} borderRadius="md" maxW="sm" color="brandNavy.500">
+              <Text mb={8}>&quot;Lorem ipsum dolor sit amet, facilisi rapidus crescimus, elementum adoptionis est crucialis eligendi solutionem novam. Slite est amica, facilis adoptio.&quot;</Text>
+              <Flex align="center">
+                <Box>
+                  <Text fontWeight="bold">Martijn Hazelaar</Text>
+                  <Text fontSize="sm">Head of digital, Vennoot</Text>
+                </Box>
+              </Flex>
+            </Box>
+          </Flex>
         </Container>
       </Box>
     </Box>

@@ -28,17 +28,17 @@ const ClientLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
                 <MainMenu />
             </div>
             <Box
-                pt="72px"
+                mt="160px"
                 position="relative"
             >
                 <Box
                     position="fixed"
-                    top="72px"
+                    top="160px"
                     left={0}
                     right={0}
                     bottom={0}
                     width="100vw"
-                    height="calc(100vh - 72px)"
+                    height="calc(100vh - 160px)"
                     zIndex={isNavOpen ? 999 : -1}
                     pointerEvents={isNavOpen ? "auto" : "none"}
                     bg={isNavOpen ? "rgba(244, 240, 235, 0.75)" : "transparent"}

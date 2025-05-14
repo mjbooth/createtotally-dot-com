@@ -36,14 +36,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#FFFCFB' }}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
         <Provider>
           <NavigationProvider>
-            <Box bg="white">
+            <Box bg="brandNeutral.200">
               <ClientLayoutWrapper>
                 {children}
               </ClientLayoutWrapper>

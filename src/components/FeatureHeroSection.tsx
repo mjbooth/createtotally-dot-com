@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Heading, Text, useBreakpointValue, Stack, Flex, Icon } from '@chakra-ui/react';
+import { Box, Heading, Text, useBreakpointValue, Stack, Flex, Icon, Container } from '@chakra-ui/react';
 import { HiCheckCircle } from "react-icons/hi";
 
 
@@ -20,74 +20,80 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   features,
 }) => {
 
-  const h1FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "6xl" });
+  const h1FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "80px" });
   const subheadingFontSize = useBreakpointValue({ base: "md", md: "lg" });
 
   return (
-    <Box>
-      <Box
-        bg="gray.50"
-        py={{ base: 12, md: 20 }}
-        px={{ base: 6, md: 12 }}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Stack
-          gap={6}
-          maxW="4xl"
-          mx="auto"
-          textAlign="center"
+    <Box
+      bg="brandNeutral.200"
+    >
+      <Container maxW="1152px" mb="110px">
+        <Box
+          display="flex"
+          justifyContent="center"
           alignItems="center"
+          pt="5"
         >
-          <Text fontSize="sm" fontWeight="bold" color="#853FCA" textTransform="uppercase" letterSpacing="wide">
-            {featureGroup}
-          </Text>
-          <Heading
-            as="h1"
-            fontSize={h1FontSize}
-            fontWeight="black"
-            lineHeight={{ base: "1.2", md: ".95" }}
-            color='#001e44'
-            textAlign="center"
-            maxW={{ base: "full", md: "6xl" }}
-            pt={6}
-          >
-            {title}
-          </Heading>
-
-          <Text
-            fontSize={subheadingFontSize}
-            color="gray.600"
-            maxW={{ base: "full", md: "2xl" }}
-          >
-            {subtitle}
-          </Text>
-
-          <Flex
-            flexWrap="wrap"
-            justifyContent="center"
-            gap={4}
-            maxW="3xl"
+          <Stack
+            gap={6}
             mx="auto"
-            pt={4}
+            textAlign="center"
+            alignItems="center"
+            pb="40"
           >
-            {features.map((feature, i) => (
-              <Flex
-                key={i}
-                align="center"
-                gap={2}
-                fontSize="sm"
-                color="gray.700"
-                justifyContent="flex-start"
-              >
-                <Icon as={HiCheckCircle} color="#853FCA" boxSize={5} flexShrink={0} />
-                <Text>{feature}</Text>
-              </Flex>
-            ))}
-          </Flex>
-        </Stack>
-      </Box>
+            <Box
+              bg="brandPurple.600"
+              p="12px"
+              borderRadius="lg"
+            >
+              <Text fontSize="2xl" fontWeight="bold" color="#brandNeutral.500" lineHeight="1">
+                {featureGroup}
+              </Text>
+            </Box>
+            <Heading
+              as="h1"
+              fontSize={h1FontSize}
+              fontWeight="900"
+              lineHeight="1"
+              color="brandNavy.500"
+              textAlign="center"
+              letterSpacing="tight"
+              mb="0"
+            >
+              {title}
+            </Heading>
+            <Text
+              fontSize={subheadingFontSize}
+              color="gray.600"
+              maxW={{ base: "full", md: "2xl" }}
+            >
+              {subtitle}
+            </Text>
+            <Flex
+              flexWrap="wrap"
+              justifyContent="center"
+              gap={4}
+              maxW="3xl"
+              mx="auto"
+              pt={4}
+            >
+              {features.map((feature, i) => (
+                <Flex
+                  key={i}
+                  align="center"
+                  gap={2}
+                  fontSize="sm"
+                  color="gray.700"
+                  justifyContent="flex-start"
+                >
+                  <Icon as={HiCheckCircle} color="brandPurple.600" boxSize={5} flexShrink={0} />
+                  <Text>{feature}</Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Stack>
+        </Box>
+      </Container>
     </Box>
   );
 };

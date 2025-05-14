@@ -15,7 +15,7 @@ import NextLink from 'next/link';
 interface MenuContent {
   [key: string]: {
     title: string;
-    links: Array<{ label: string; href: string; icon?: string }>;
+    links: Array<{ label: string; href: string; icon?: string; visible?: boolean; }>;
     col?: number;
     wrapAfter?: number;
   };
@@ -91,6 +91,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
             <Flex mt={2}>
               <Stack gap={2} flex={1}>
                 {column.links.slice(0, column.wrapAfter || column.links.length).map((link, index) => (
+                  link.visible !== false && (
                   <Button 
                     asChild
                     key={index}
@@ -111,11 +112,13 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                       </HStack>
                     </NextLink>
                   </Button>
+                  )
                 ))}
               </Stack>
               {column.wrapAfter && column.col && column.col > 1 && (
                 <Stack gap={2} flex={1}>
                   {column.links.slice(column.wrapAfter).map((link, index) => (
+                    link.visible !== false && (
                     <Button 
                       asChild 
                       key={index + (column.wrapAfter ?? 0)} 
@@ -136,6 +139,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                         </HStack>
                       </NextLink>
                     </Button>
+                    )
                   ))}
                 </Stack>
               )}

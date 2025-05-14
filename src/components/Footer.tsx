@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Container, VStack, Link } from '@chakra-ui/react';
+import { Box, Flex, Text, Container, Link, Image } from '@chakra-ui/react';
 
 const footerData = [
     {
@@ -49,33 +49,68 @@ const footerData = [
 
 const Footer = () => {
     return (
-        <Box width="100%" bgColor="brandNavy.900">
-            <Container maxW="container.xl" mx="auto" p={{ base: 5, md: 12 }}>
-                <VStack gap={5} alignItems="initial">
-                    {<Flex
+        <Box bgColor="brandNeutral.200">
+            <Container maxW="FullWidth" px={{ base: 4, md: 0 }} py="28">
+                <Flex 
+                    direction={{ base: 'column', md: 'row' }} 
+                    justifyContent={{ base: 'center', md: 'space-between' }} 
+                    alignItems={{ base: 'center', md: 'flex-start' }}
+                >
+                    {/* Logo column */}
+                    <Box 
+                        flex={{ base: '1 1 100%', md: '0 0 auto' }} 
+                        mb={{ base: 8, md: 0 }}
+                        textAlign={{ base: 'center', md: 'left' }}
+                    >
+                        <Image 
+                            src="/CreateTOTALLY_FBIcon.png" 
+                            alt="CreateTOTALLY Logo" 
+                            width="150px" 
+                            height="auto" 
+                            display="inline-block"
+                        />
+                    </Box>
+
+                    {/* Footer data columns */}
+                    <Flex 
                         flexWrap="wrap"
                         direction={{ base: 'column', md: 'row' }}
-                        alignItems="start"
-                        justifyContent="space-between"
+                        alignItems={{ base: 'center', md: 'flex-start' }}
+                        justifyContent={{ base: 'center', md: 'flex-end' }}
+                        flex="1"
+                        gap="10"
+                        textAlign={{ base: 'center', md: 'left' }}
                     >
                         {footerData.map((data, index) => (
-                            <Flex key={index} direction="column" pb="5">
+                            <Flex 
+                                key={index} 
+                                direction="column" 
+                                pb="5" 
+                                flex={{ base: '1 1 100%', md: '0 0 auto' }} 
+                                ml={{ md: 8 }}
+                                alignItems={{ base: 'center', md: 'flex-start' }}
+                            >
                                 <Text
                                     fontWeight={700}
                                     pb="1"
+                                    color="#09090B"
                                 >
                                     {data.label}
                                 </Text>
-                                <Flex direction={{ base: 'row', md: 'column' }}>
+                                <Flex 
+                                    direction="column"
+                                    alignItems={{ base: 'center', md: 'flex-start' }}
+                                >
                                     {data.links.map((link, index) => (
                                         <Link
                                             key={index}
                                             mt={1}
                                             mb={1}
                                             fontSize={{ base: 'sm', sm: 'md' }}
-                                            href="#"
-                                            mr={{ base: 1, sm: 2, md: 0 }}
+                                            href={link.href}
+                                            mr={{ base: 0, md: 2 }}
                                             color="gray.500"
+                                            textAlign={{ base: 'center', md: 'left' }}
                                         >
                                             {link.label}
                                         </Link>
@@ -83,13 +118,44 @@ const Footer = () => {
                                 </Flex>
                             </Flex>
                         ))}
-                    </Flex>}
-                    <Flex alignItems="center">
-                        <Text color="gray.500" fontSize="0.875rem">
-                            &copy; CreateTOTALLY 2024. All rights reserved.
-                        </Text>
                     </Flex>
-                </VStack>
+                </Flex>
+                <Flex 
+                    py="10" 
+                    px="3" 
+                    direction={{ base: 'column', md: 'row' }}
+                    justifyContent={{ base: 'center', md: 'space-between' }}
+                    alignItems={{ base: 'center', md: 'flex-end' }}
+                    flexWrap="wrap" 
+                    gap="9"
+                >
+                    <Flex 
+                        flex="1" 
+                        direction={{ base: 'column', md: 'row' }}
+                        alignItems={{ base: 'center', md: 'flex-start' }}
+                        justifyContent={{ base: 'center', md: 'space-between' }}
+                        textAlign={{ base: 'center', md: 'left' }}
+                        width="100%"
+                    >
+                        <Text color="gray.500" mb={{ base: '4', md: '0' }}>
+                            &copy; 2025 CreateTOTALLY. All rights reserved.
+                        </Text>
+                        <Flex 
+                            gap={{ base: '2', md: '4' }} 
+                            flexWrap="wrap" 
+                            justifyContent={{ base: 'center', md: 'flex-start' }}
+                            direction={{ base: 'column', md: 'row' }}
+                            alignItems="center"
+                        >
+                            <Link color="gray.500" href="#">Terms of Service</Link>
+                            <Link color="gray.500" href="#">Privacy Policy</Link>
+                            <Link color="gray.500" href="#">Consent Preferences</Link>
+                        </Flex>
+                    </Flex>
+                    <Box mt={{ base: '6', md: '0' }}>
+                        <Image src="/SOC-2-Type-II.png" alt="SOC 2 Type II" height="60px" />
+                    </Box>
+                </Flex>
             </Container>
         </Box>
     );

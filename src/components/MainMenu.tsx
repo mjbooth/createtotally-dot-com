@@ -13,12 +13,12 @@ const MainMenu: React.FC = () => {
   const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
-useEffect(() => {
-  if (!isNavOpen && activeMenu !== null) {
-    console.log("Nav closed — resetting activeMenu");
-    setActiveMenu(null);
-  }
-}, [isNavOpen, activeMenu]);
+  useEffect(() => {
+    if (!isNavOpen && activeMenu !== null) {
+      console.log("Nav closed — resetting activeMenu");
+      setActiveMenu(null);
+    }
+  }, [isNavOpen, activeMenu]);
 
   useEffect(() => {
     console.log("Route changed to:", pathname);
@@ -55,10 +55,10 @@ useEffect(() => {
           { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
           { label: "InDesign Automation", href: "/adobe-indesign-automation", icon: "SiAdobeindesign" },
           { label: "After Effects Automation", href: "/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
-          { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
-          { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
-          { label: "HTML Automation", href: "#", icon: "SiHtml5" },
-          
+          { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop", visible: false },
+          { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator", visible: false },
+          { label: "HTML Automation", href: "#", icon: "SiHtml5", visible: false },
+
         ],
       },
       column2: {
@@ -72,17 +72,17 @@ useEffect(() => {
           { label: "Workflow Automation", href: "/workflow-automation", icon: "TbArrowsShuffle" },
           { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },
           { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
-          { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
-          { label: "All Features", href: "/all-features", icon: "FaPlus"},
+          { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill", visible: false },
+          { label: "All Features", href: "/all-features", icon: "FaPlus" },
         ],
       },
       column3: {
         title: "Pricing Tiers",
         col: 2,
         links: [
-          { label: "Studio", href: "#" },
-          { label: "Powerhouse", href: "#" },
-          { label: "Enterprise", href: "#" },
+          { label: "Studio", href: "/pricing" },
+          { label: "Powerhouse", href: "/pricing" },
+          { label: "Enterprise", href: "/pricing" },
         ],
       },
     },
@@ -157,87 +157,105 @@ useEffect(() => {
   };
 
   return (
-    <Box position="fixed" top={0} left={0} right={0} zIndex={1000} width="100%" bg="white" boxShadow="0px 1px 1px rgba(0, 0, 0, 0.15), 0px 0px 0px inset rgba(161, 161, 170, .75)">
-      <Container maxW="container.xl" mx="auto">
-        <Flex justify="space-between" align="center" pt={4} pb={4} >
-          <Stack direction="row" gap={6}>
-            <Link href="/">
-              <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="38px" />
-            </Link>
-            {menuItems.map((item) => (
-              item.hasDropdown ? (
-                <Button
-                  key={item.label}
-                  p="0"
-                  gap="0"
-                  variant="plain"
-                  size="md"
-                  fontWeight="light"
-                  color="brandNavy.500"
-                  onClick={() => handleMenuClick(item.label)}
-                >
-                  {item.label}
-                  <motion.div
-                    animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
-                    transition={{ duration: 0.2, ease: 'easeInOut' }}
-                    style={{ marginLeft: '5px', display: 'inline-block' }}
-                  >
-                    <HiMiniChevronDown />
-                  </motion.div>
-                </Button>
-              ) : (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  p="0"
-                  variant="plain"
-                  fontWeight="light"
-                  color="brandNavy.500"
-                  _hover={{ textDecoration: 'none' }}
-                >
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      zIndex={1000}
+      width="100%"
+      bg="brandNeutral.200"
+      display="flex"
+      alignItems="center"  // This will vertically center the children
+      height="160px"  // Match the height of the inner Box
+    >
+      <Box
+        display="flex"
+        width="1440px"
+        padding="0px 24px"
+        justifyContent="center"
+        mx="auto"
+      >
+        <Container maxW="1200px" px="0">
+          <Flex justify="space-between" align="center" width="100%">
+            <Box>
+              <Link href="/">
+                <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="47.447px" />
+              </Link>
+            </Box>
+            <Stack direction="row" gap={6} align="center">
+              {menuItems.map((item) => (
+                item.hasDropdown ? (
                   <Button
+                    key={item.label}
+                    p="0"
+                    gap="0"
                     variant="plain"
                     size="md"
-                    fontWeight="light"
+                    fontWeight="500"
                     color="brandNavy.500"
+                    onClick={() => handleMenuClick(item.label)}
                   >
                     {item.label}
+                    <motion.div
+                      animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                      style={{ marginLeft: '5px', display: 'inline-block' }}
+                    >
+                      <HiMiniChevronDown />
+                    </motion.div>
                   </Button>
-                </Link>
-              )
-            ))}
-          </Stack>
-          <Stack direction="row">
-            <Link href="/get-started">
-              <Button variant="solid" colorPalette="brandFuchsia" rounded="full" >Get started →</Button>
-            </Link>
-          </Stack>
-        </Flex>
-      </Container>
-      {isNavOpen && activeMenu && (
-        <Box
-          position="absolute"
-          left={0}
-          right={0}
-          top="72px"
-          bg="white"
-          zIndex={10}
-          boxShadow="inset 0 1px 0 rgba(0, 0, 0, 0.15)"
-        >
-          <Container maxW="container.xl" py={8} fontWeight="light" color="gray.900">
-            <DropdownContent activeMenu={activeMenu} menuContent={menuContent} />
-          </Container>
-          <Box bg="brandPurple.600" pt="2" pb="2">
-            <Container maxW="container.xl" fontWeight="bold" fontSize=".8rem">
-              <HStack gap={6}>
-                <Text color="brandNeutral.500">Contact Sales</Text>
-                <Separator orientation="vertical" height="4" colorPalette="white" />
-                <Text color="brandNeutral.500">Get started</Text>
-              </HStack>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    p="0"
+                    variant="plain"
+                    fontWeight="light"
+                    color="brandNavy.500"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    <Button
+                      variant="plain"
+                      size="md"
+                      fontWeight="light"
+                      color="brandNavy.500"
+                    >
+                      {item.label}
+                    </Button>
+                  </Link>
+                )
+              ))}
+              <Link href="/get-started">
+                <Button variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">Get started →</Button>
+              </Link>
+            </Stack>
+          </Flex>
+        </Container>
+        {isNavOpen && activeMenu && (
+          <Box
+            position="absolute"
+            left={0}
+            right={0}
+            top="160px"
+            bg="brandNeutral.200"
+            zIndex={10}
+          >
+            <Container maxW="container.xl" py={8} fontWeight="light" color="gray.900">
+              <DropdownContent activeMenu={activeMenu} menuContent={menuContent} />
             </Container>
+            <Box bg="brandPurple.600" pt="2" pb="2">
+              <Container maxW="container.xl" fontWeight="bold" fontSize=".8rem">
+                <HStack gap={6}>
+                  <Text color="brandNeutral.500">Contact Sales</Text>
+                  <Separator orientation="vertical" height="4" colorPalette="white" />
+                  <Text color="brandNeutral.500">Get started</Text>
+                </HStack>
+              </Container>
+            </Box>
           </Box>
-        </Box>
-      )}
+        )}
+      </Box>
     </Box>
   );
 };
