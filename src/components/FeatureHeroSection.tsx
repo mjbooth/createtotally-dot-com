@@ -46,7 +46,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
               p="12px"
               borderRadius="lg"
             >
-              <Text fontSize="2xl" fontWeight="bold" color="#brandNeutral.500" lineHeight="1">
+              <Text fontSize="2xl" fontWeight="bold" color="brandNeutral.500" lineHeight="1">
                 {featureGroup}
               </Text>
             </Box>
