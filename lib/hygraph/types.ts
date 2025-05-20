@@ -21,18 +21,17 @@ export interface PostDetail extends PostSummary {
 export interface Page {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   slug: string;
   content: {
     html: string;
   };
-  icon?: {
-    url: string;
-  };
   coverImage?: {
     url: string;
   };
-  publishedAt: string;
+  icon?: {
+    url: string;
+  };
 }
 
 export interface Platform {

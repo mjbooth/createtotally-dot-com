@@ -59,21 +59,21 @@ export const FigmaPageData = {
       label: "Step one",
       title: "Set up in Figma",
       description: "Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.",
-      image: "/FigmaPlugin.jpg"
+      image: "/setup_in_figma.png"
     },
     {
       step: 2,
       label: "Step two",
       title: "Upload to CreateTOTALLY",
       description: "Your templates become intelligent production systems that maintain design integrity, while allowing controlled changes.",
-      image: "/812f934f093212b5f2a939227b970a6bf3406929-1080x864.avif"
+      image: "/upload_to_createtotally.png"
     },
     {
       step: 3,
       label: "Step three",
       title: "Scale endlessly",
       description: "With CreateTOTALLY, you can scale your design workflow to handle thousands of assets, hundreds of projects, or even tens of thousands of clients. Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.",
-      image: "/9c8500506ec9297dc6eb446ceedf317df81b8b1e-1560x1248.avif"
+      image: "/scale_endlessly_in_figma.png"
     }
   ],
   heroSectionData: {

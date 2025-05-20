@@ -2,7 +2,7 @@
 
 import { gql } from 'graphql-request';
 import { client } from './client';
-import { PostSummary, PostDetail } from './types';
+import { PostSummary, PostDetail, Page } from './types';
 
 const TEST_QUERY = gql`
   query {
@@ -77,4 +77,56 @@ export const getPostBySlug = async (slug: string): Promise<PostDetail> => {
   }
 };
 
-// Add any other queries or functions you need here
+const GET_ALL_PAGES = gql`
+  query GetAllPages {
+    pages {
+      id
+      title
+      slug
+      subtitle
+      icon {
+        url
+      }
+    }
+  }
+`;
+
+export const getAllPages = async (): Promise<Page[]> => {
+  try {
+    const { pages } = await client.request<{ pages: Page[] }>(GET_ALL_PAGES);
+    return pages;
+  } catch (error) {
+    console.error('Error fetching all pages:', error);
+    throw error;
+  }
+};
+
+const GET_PAGE_BY_SLUG = gql`
+  query GetPageBySlug($slug: String!) {
+    page(where: { slug: $slug }) {
+      id
+      title
+      slug
+      subtitle
+      content {
+        html
+      }
+      coverImage {
+        url
+      }
+      icon {
+        url
+      }
+    }
+  }
+`;
+
+export const getPageBySlug = async (slug: string): Promise<Page> => {
+  try {
+    const { page } = await client.request<{ page: Page }>(GET_PAGE_BY_SLUG, { slug });
+    return page;
+  } catch (error) {
+    console.error(`Error fetching page with slug ${slug}:`, error);
+    throw error;
+  }
+};
