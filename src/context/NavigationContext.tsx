@@ -3,6 +3,7 @@
 import React, { createContext, useState, useCallback, ReactNode, useContext, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
+
 type NavigationContextType = {
   isNavOpen: boolean;
   activeMenu: string | null;
@@ -51,3 +52,5 @@ export const useNavigation = () => {
   }
   return context;
 };
+
+export { NavigationContext };

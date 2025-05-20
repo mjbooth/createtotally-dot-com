@@ -3,8 +3,8 @@ import { getPostBySlug } from '@/lib/hygraph';
 import { Box, Container, Heading, Image } from "@chakra-ui/react";
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -34,7 +34,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   }
 
   return (
-    <Box as="main" py={8} pt="40">
+    <Box as="main" py={8} bg="gray.50">
       <Container maxW="4xl" mx="auto" py={16} color="brandNavy.500">
         <Heading
           as="h1"
