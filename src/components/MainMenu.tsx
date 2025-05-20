@@ -1,32 +1,44 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, } from '@chakra-ui/react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
 import { useNavigation } from "@/src/context/NavigationContext";
 import { usePathname } from 'next/navigation';
+import { useBackground } from '@/src/context/BackgroundContext';
 
 const MainMenu: React.FC = () => {
-  const { isNavOpen, toggleNav, closeNav } = useNavigation();
+  const { isNavOpen, activeMenu, setActiveMenu, resetNav } = useNavigation();
   const pathname = usePathname();
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const { scrollY } = useScroll();
+  const navHeight = 160;
+  const lastScrollY = useRef(0);
+  const [hidden, setHidden] = useState(false);
+  const { backgroundColor } = useBackground();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest < lastScrollY.current) {
+      setHidden(false);
+    } else if (latest > navHeight && latest > lastScrollY.current) {
+      setHidden(true);
+    }
+    lastScrollY.current = latest;
+  });
+
+  const navVariants = {
+    visible: { y: 0 },
+    hidden: { y: -navHeight },
+  };
 
   useEffect(() => {
-    if (!isNavOpen && activeMenu !== null) {
-      console.log("Nav closed — resetting activeMenu");
-      setActiveMenu(null);
-    }
-  }, [isNavOpen, activeMenu]);
+    setActiveMenu(false, null);
+  }, [pathname, setActiveMenu]);
 
   useEffect(() => {
-    console.log("Route changed to:", pathname);
-    if (isNavOpen) {
-      console.log("Closing nav due to route change");
-      closeNav();
-    }
-  }, [pathname]);
+    resetNav();
+  }, [pathname, resetNav]);
 
   const menuItems = [
     { label: 'Platform', hasDropdown: true },
@@ -35,16 +47,17 @@ const MainMenu: React.FC = () => {
     { label: 'Resources', hasDropdown: true },
   ];
 
-
-  const handleMenuClick = (label: string) => {
-    const newActiveMenu = activeMenu === label ? null : label;
-    setActiveMenu(newActiveMenu);
-    if (newActiveMenu) {
-      if (!isNavOpen) toggleNav();
+  const handleMenuClick = useCallback((label: string) => {
+    if (activeMenu === label) {
+      setActiveMenu(false, null);
     } else {
-      closeNav();
+      setActiveMenu(true, label);
     }
-  };
+  }, [activeMenu, setActiveMenu]);
+
+  const handleClose = useCallback(() => {
+    setActiveMenu(false, null);
+  }, [setActiveMenu]);
 
   const menuContent = {
     Platform: {
@@ -52,9 +65,9 @@ const MainMenu: React.FC = () => {
         title: "Platform",
         col: 2,
         links: [
-          { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
-          { label: "InDesign Automation", href: "/adobe-indesign-automation", icon: "SiAdobeindesign" },
-          { label: "After Effects Automation", href: "/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
+          { label: "Figma Automation", href: "/platform/figma-creative-automation", icon: "SiFigma" },
+          { label: "InDesign Automation", href: "/platform/adobe-indesign-automation", icon: "SiAdobeindesign" },
+          { label: "After Effects Automation", href: "/platform/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
           { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop", visible: false },
           { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator", visible: false },
           { label: "HTML Automation", href: "#", icon: "SiHtml5", visible: false },
@@ -65,23 +78,23 @@ const MainMenu: React.FC = () => {
         title: "Features",
         col: 2,
         links: [
-          { label: "Easy Templating", href: "/template-content-creation", icon: "HiTemplate" },
-          { label: "Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
-          { label: "Creative Automation", href: "/creative-automation", icon: "PiRocketFill" },
-          { label: "Workflow Automation", href: "/workflow-automation", icon: "TbArrowsShuffle" },
-          { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },
-          { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
+          { label: "Easy Templating", href: "/features/easy-templating", icon: "HiTemplate" },
+          { label: "Content Creation", href: "/features/content-creation", icon: "HiTemplate" },
+          { label: "Creative Automation", href: "/features/creative-automation", icon: "PiRocketFill" },
+          { label: "Workflow Automation", href: "/features/workflow-automation", icon: "TbArrowsShuffle" },
+          { label: "Libraries & Asset Management", href: "/features/libraries-asset-management", icon: "MdStorage" },
+          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BsBarChartFill" },
           { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill", visible: false },
-          { label: "All Features", href: "/all-features", icon: "FaPlus" },
+          { label: "All Features", href: "/features/all-features", icon: "FaPlus" },
         ],
       },
       column3: {
         title: "Pricing Tiers",
         col: 2,
         links: [
-          { label: "Studio", href: "/pricing" },
-          { label: "Powerhouse", href: "/pricing" },
-          { label: "Enterprise", href: "/pricing" },
+          { label: "Studio", href: "/pricing#studio" },
+          { label: "Powerhouse", href: "/pricing#powerhouse" },
+          { label: "Enterprise", href: "/pricing#enterprise" },
         ],
       },
     },
@@ -156,97 +169,121 @@ const MainMenu: React.FC = () => {
   };
 
   return (
-    <Box
-      position="fixed"
-      top={0}
-      left={0}
-      right={0}
-      zIndex={1000}
-      width="100%"
-      bg="brandNeutral.200"
-      display="flex"
-      alignItems="center"  // This will vertically center the children
-      height="160px"  // Match the height of the inner Box
+    <motion.div
+      initial="visible"
+      animate={hidden ? "hidden" : "visible"}
+      variants={navVariants}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+      }}
     >
       <Box
+        position="fixed"
+        top={0}
+        left={0}
+        right={0}
+        zIndex={1000}
+        width="100%"
         display="flex"
-        width="1440px"
-        padding="0px 24px"
-        justifyContent="center"
-        mx="auto"
+        alignItems="center"
+        height="160px"
+        style={{
+          backgroundColor: backgroundColor
+        }}
       >
-        <Container maxW="1200px" px="0">
-          <Flex justify="space-between" align="center" width="100%">
-            <Box>
-              <Link href="/">
-                <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="47.447px" />
-              </Link>
-            </Box>
-            <Stack direction="row" gap={6} align="center">
+        <Box
+          display="flex"
+          width="1440px"
+          padding="0px 24px"
+          justifyContent="center"
+          mx="auto"
+        >
+          <Container maxW="1200px" px="0">
+            <Flex justify="space-between" align="center" width="100%">
+              <Box>
+                <Link href="/">
+                  <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="47.447px" />
+                </Link>
+              </Box>
+              <Stack direction="row" gap={6} align="center">
 
-              {menuItems.map((item) => (
-                item.hasDropdown ? (
-                  <Popover.Root key={item.label} size="sm">
-                    <Popover.Trigger asChild>
+                {menuItems.map((item) => (
+                  item.hasDropdown ? (
+                    <Popover.Root
+                      key={item.label}
+                      size="sm"
+                      open={isNavOpen && activeMenu === item.label}
+                      onOpenChange={(open) => {
+                        if (!open) handleClose();
+                      }}
+                    >
+                      <Popover.Trigger asChild>
+                        <Button
+                          size="md"
+                          variant="plain"
+                          color="brandNavy.500"
+                          fontSize="1rem"
+                          onClick={() => handleMenuClick(item.label)}
+                          _hover={{
+                            color: "#CA3FC0"
+                          }}
+                        >
+                          {item.label}
+                          <motion.div
+                            animate={{ rotate: isNavOpen && activeMenu === item.label ? 180 : 0 }}
+                            transition={{ duration: 0.2, ease: 'easeInOut' }}
+                            style={{ marginLeft: '5px', display: 'inline-block' }}
+                          >
+                            <HiMiniChevronDown />
+                          </motion.div>
+                        </Button>
+                      </Popover.Trigger>
+                      <Portal>
+                        <Popover.Positioner>
+                          <Popover.Content
+                            css={{ "--popover-bg": "#EDE6DE" }}
+                            width="auto"
+                            maxWidth="1200px"
+                            shadow="realistic"
+                            borderRadius="40px"
+                          >
+                            <Popover.Body color="brandNavy.500">
+                              <DropdownContent activeMenu={item.label} menuContent={menuContent} />
+                            </Popover.Body>
+                          </Popover.Content>
+                        </Popover.Positioner>
+                      </Portal>
+                    </Popover.Root>
+                  ) : (
+                    <Link key={item.label} href={item.href}>
                       <Button
-                        size="sm"
+                        size="md"
                         variant="plain"
                         color="brandNavy.500"
-                        onClick={() => handleMenuClick(item.label)}
+                        fontSize="1rem"
                         _hover={{
                           color: "#CA3FC0"
                         }}
                       >
                         {item.label}
-                        <motion.div
-                          animate={{ rotate: activeMenu === item.label ? 180 : 0 }}
-                          transition={{ duration: 0.2, ease: 'easeInOut' }}
-                          style={{ marginLeft: '5px', display: 'inline-block' }}
-                        >
-                          <HiMiniChevronDown />
-                        </motion.div>
                       </Button>
-                    </Popover.Trigger>
-                    <Portal>
-                      <Popover.Positioner>
-                        <Popover.Content
-                          css={{ "--popover-bg": "#EDE6DE" }}
-                          width="auto"
-                          maxWidth="1200px"
-                          shadow="realistic"
-                          borderRadius="40px"
-                        >
-                          <Popover.Body color="brandNavy.500">
-                            <DropdownContent activeMenu={item.label} menuContent={menuContent} />
-                          </Popover.Body>
-                        </Popover.Content>
-                      </Popover.Positioner>
-                    </Portal>
-                  </Popover.Root>
-                ) : (
-                  <Link key={item.label} href={item.href}>
-                    <Button
-                      size="sm"
-                      variant="plain"
-                      color="brandNavy.500"
-                      _hover={{
-                        color: "#CA3FC0"
-                      }}
-                    >
-                      {item.label}
-                    </Button>
-                  </Link>
-                )
-              ))}
-              <Link href="/get-started">
-                <Button variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">Get started →</Button>
-              </Link>
-            </Stack>
-          </Flex>
-        </Container>
-
+                    </Link>
+                  )
+                ))}
+                <Link href="/get-started">
+                  <Button variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">Get started →</Button>
+                </Link>
+              </Stack>
+            </Flex>
+          </Container>
+        </Box>
       </Box>
-    </Box>
+    </motion.div>
   );
 };
 

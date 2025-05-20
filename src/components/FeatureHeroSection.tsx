@@ -4,8 +4,6 @@ import React from 'react';
 import { Box, Heading, Text, useBreakpointValue, Stack, Flex, Icon, Container } from '@chakra-ui/react';
 import { HiCheckCircle } from "react-icons/hi";
 
-
-
 interface FeatureHeroSectionProps {
   featureGroup: string;
   title: string;
@@ -24,29 +22,12 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   const subheadingFontSize = useBreakpointValue({ base: "md", md: "lg" });
 
   return (
-    <Box
-      bg="brandNeutral.200"
-    >
+    <Box bg="brandNeutral.200">
       <Container maxW="1152px" mb="110px">
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          pt="5"
-        >
-          <Stack
-            gap={6}
-            mx="auto"
-            textAlign="center"
-            alignItems="center"
-            pb="40"
-          >
-            <Box
-              bg="brandPurple.600"
-              p="12px"
-              borderRadius="lg"
-            >
-              <Text fontSize="2xl" fontWeight="bold" color="brandNeutral.500" lineHeight="1">
+        <Box display="flex" justifyContent="center" alignItems="center" pt="5">
+          <Stack gap={6} mx="auto" textAlign="center" alignItems="center" pb="40" >
+            <Box bg="brandPurple.600" p="12px" borderRadius="lg" >
+              <Text fontSize="2xl" fontWeight="bold" color="#brandNeutral.500" lineHeight="1">
                 {featureGroup}
               </Text>
             </Box>

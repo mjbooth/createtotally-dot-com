@@ -57,7 +57,7 @@ export default function TemplateContentCreation() {
   };
 
   return (
-    <Box py={{ base: 12, md: 20 }} px={{ base: 6, md: 12 }} bg="brandNeutral.500" color="brandNavy.500">
+    <Box pt="52" pb={{ base: 12, md: 20 }} px={{ base: 6, md: 12 }} bg="brandNeutral.500" color="brandNavy.500">
       <Flex
         direction={{ base: "column", md: "row" }}
         justify="center"

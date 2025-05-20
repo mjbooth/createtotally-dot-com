@@ -6,11 +6,11 @@ export default function WorkflowAutomation() {
 
   return (
     <Box>
-      <Box bg="brandNeutral.500">
+      <Box pt="40">
         <FeatureHeroSection
           featureGroup="Workflow automation"
-          title="Creative work approved and live without chaos"
-          subtitle="No more version mix-ups, lost feedback, or project delays. Let CreateTOTALLY handle the flow so your team can focus on the work."
+          title="Stop chasing approvals. Start delivering results."
+          subtitle="Automated workflows that transform creative chaos into organised output—without changing how you work."
           features={[
             "Automatic approval routing",
             "Always up-to-date versions",

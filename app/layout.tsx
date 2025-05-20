@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Provider } from "@/src/components/ui/provider"
 import { NavigationProvider } from "@/src/context/NavigationContext";
 import Footer from "@/src/components/Footer"
-import { Box } from "@chakra-ui/react"
 import ClientLayoutWrapper from "@/src/components/ClientLayoutWrapper";
+import { BackgroundProvider } from '@/src/context/BackgroundContext';
 
 export const metadata: Metadata = {
   title: "CreateTOTALLY - NexGen AI Automation",
@@ -43,12 +43,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Provider>
           <NavigationProvider>
-            <Box bg="brandNeutral.200">
+            <BackgroundProvider>
               <ClientLayoutWrapper>
                 {children}
               </ClientLayoutWrapper>
               <Footer />
-            </Box>
+            </BackgroundProvider>
           </NavigationProvider>
         </Provider>
       </body>

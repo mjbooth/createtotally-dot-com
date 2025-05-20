@@ -100,7 +100,7 @@ export const system = createSystem(defaultConfig, {
       color: "#F4F0EB",
       backgroundColor: "rgba(202, 63, 192, 0.75)",
     },
-    h1: {
+    '.prose h1': {
       color: "brandNavy.500",
       fontSize: "4xl",
       fontWeight: "bold",
@@ -108,7 +108,7 @@ export const system = createSystem(defaultConfig, {
       lineHeight: "1",
       mb: "8"
     },
-    h2: {
+    '.prose h2': {
       color: "brandNavy.500",
       fontSize: "4xl",
       fontWeight: "bold",
@@ -116,18 +116,12 @@ export const system = createSystem(defaultConfig, {
       mb: "8",
       mt: "16"
     },
-    h3: {
+    '.prose h3': {
       fontSize: { base: '2xl', md: '3xl' },
       fontWeight: 'semibold',
       mt: 10,
       mb: 4,
       lineHeight: 'short',
-    },
-    li: {
-      fontSize: 'md',
-      color: "brandNavy.500",
-      mb: 2,
-      pl: 2,
     },
     '.prose p': {
       fontSize: "lg",

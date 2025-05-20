@@ -89,7 +89,7 @@ export default function AllFeatures() {
     }, {} as Record<string, typeof features>);
 
     return (
-        <Box bg="brandNeutral.500">
+        <Box bg="brandNeutral.500" pt="40">
             <Box pt="54px">
                 <Box bg="#F4F0EB" w="full" minH="100vh">
                     <Container maxW="container.xl" mx="auto">

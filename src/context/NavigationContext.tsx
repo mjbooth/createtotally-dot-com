@@ -1,32 +1,53 @@
 "use client";
 
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useCallback, ReactNode, useContext, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 type NavigationContextType = {
   isNavOpen: boolean;
-  toggleNav: () => void;
+  activeMenu: string | null;
+  setActiveMenu: (isOpen: boolean, menu: string | null) => void;
+  resetNav: () => void;
   closeNav: () => void;
 };
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 
-export const NavigationProvider = ({ children }: { children: ReactNode }) => {
+export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [activeMenu, setActiveMenuState] = useState<string | null>(null);
+  const pathname = usePathname();
 
-  const toggleNav = () => setIsNavOpen((prev) => !prev);
-  const closeNav = () => setIsNavOpen(false);
+  const setActiveMenu = useCallback((isOpen: boolean, menu: string | null) => {
+    setIsNavOpen(isOpen);
+    setActiveMenuState(menu);
+  }, []);
+
+  const resetNav = useCallback(() => {
+    setIsNavOpen(false);
+    setActiveMenuState(null);
+  }, []);
+
+  const closeNav = useCallback(() => {
+    setIsNavOpen(false);
+    setActiveMenuState(null);
+  }, []);
+
+  useEffect(() => {
+    resetNav();
+  }, [pathname, resetNav]);
 
   return (
-    <NavigationContext.Provider value={{ isNavOpen, toggleNav, closeNav }}>
+    <NavigationContext.Provider value={{ isNavOpen, activeMenu, setActiveMenu, resetNav, closeNav }}>
       {children}
     </NavigationContext.Provider>
   );
 };
 
-export const useNavigation = (): NavigationContextType => {
+export const useNavigation = () => {
   const context = useContext(NavigationContext);
-  if (!context) {
-    throw new Error("useNavigation must be used within a NavigationProvider");
+  if (context === undefined) {
+    throw new Error('useNavigation must be used within a NavigationProvider');
   }
   return context;
 };
