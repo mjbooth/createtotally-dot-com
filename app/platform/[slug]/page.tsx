@@ -5,7 +5,7 @@ import { platformDataBySlug, PlatformSlug } from '@/src/data/platform';
 import PlatformTemplate from '@/app/platform/[slug]/PlatformTemplate';
 
 export default async function PlatformPage({ params }: { params: { slug: PlatformSlug } }) {
-  const { slug } = await params;
+  const { slug } = params;
   const data = platformDataBySlug[slug];
 
   if (!data) {
