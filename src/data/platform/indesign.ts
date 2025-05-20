@@ -1,4 +1,20 @@
 export const InDesignPageData = {
+  metadata: {
+    title: "Adobe InDesign Automation | CreateTOTALLY",
+    description: "Scale design production without sacrificing quality. Keep your creative control and let automation handle the busywork with CreateTOTALLY's InDesign automation.",
+    openGraph: {
+      title: "Adobe InDesign Automation | CreateTOTALLY",
+      description: "Scale design production without sacrificing quality. Keep your creative control and let automation handle the busywork with CreateTOTALLY's InDesign automation.",
+      images: [
+        {
+          url: "/feature-placeholder-FiPenTool-sqr.jpg", // You might want to replace this with a more specific InDesign-related image
+          width: 1200,
+          height: 630,
+          alt: "Adobe InDesign Automation with CreateTOTALLY",
+        },
+      ],
+    },
+  },
   features: [
     {
       title: "Fine-tuned typography control",

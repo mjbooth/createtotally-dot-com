@@ -1,5 +1,20 @@
 export const AfterEffectsPageData = {
-
+  metadata: {
+    title: "Adobe After Effects Automation | CreateTOTALLY",
+    description: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it. Break from video production bottlenecks without sacrificing creative control.",
+    openGraph: {
+      title: "Adobe After Effects Automation | CreateTOTALLY",
+      description: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it. Break from video production bottlenecks without sacrificing creative control.",
+      images: [
+        {
+          url: "/FigmaPlugin.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Adobe After Effects Automation with CreateTOTALLY",
+        },
+      ],
+    },
+  },
   features: [
     {
       title: "Native template compatibility",

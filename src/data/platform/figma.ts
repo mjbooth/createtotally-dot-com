@@ -1,4 +1,21 @@
 export const FigmaPageData = {
+  metadata: {
+    title: "Figma Creative Automation | CreateTOTALLY",
+    description: "Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments. Stop drowning in design edits and start automating your Figma workflow.",
+    openGraph: {
+      title: "Figma Creative Automation | CreateTOTALLY",
+      description: "Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments. Stop drowning in design edits and start automating your Figma workflow.",
+      images: [
+        {
+          url: "/setup_in_figma.png",
+          width: 1200,
+          height: 630,
+          alt: "Figma Creative Automation with CreateTOTALLY",
+        },
+      ],
+    },
+  },
+
   features: [
     {
       title: "Pixel-perfect rendering",
