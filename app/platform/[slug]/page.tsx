@@ -12,9 +12,8 @@ async function getPlatformData(slug: string) {
   return data;
 }
 
-export default async function PlatformPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const data = await getPlatformData(resolvedParams.slug);
+export default async function PlatformPage({ params }: { params: { slug: string } }) {
+  const data = await getPlatformData(params.slug);
   return <PlatformTemplate data={data} />;
 }
 
