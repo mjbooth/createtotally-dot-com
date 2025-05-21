@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, Icon } from '@chakra-ui/react';
+import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
