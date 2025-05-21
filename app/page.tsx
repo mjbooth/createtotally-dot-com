@@ -147,15 +147,10 @@ export default function HomePage() {
           trigger: wrapper,
           start: "top top",
           end: () => `+=${scrollDistanceVal}`,
-          scrub: 1,
+          scrub: true,
           pin: true,
           pinSpacing: false,
           anticipatePin: 1,
-          snap: {
-            snapTo: 1 / (steps.length - 1),
-            duration: 1.5,
-            ease: "power1.inOut"
-          },
           onUpdate: () => {
             // ... (rest of the onUpdate logic)
           },

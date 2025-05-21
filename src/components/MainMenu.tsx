@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal } from '@chakra-ui/react';
+import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, Icon } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
@@ -78,23 +78,23 @@ const MainMenu: React.FC = () => {
         title: "Features",
         col: 2,
         links: [
-          { label: "Easy Templating", href: "/features/easy-templating", icon: "HiTemplate" },
-          { label: "Content Creation", href: "/features/content-creation", icon: "HiTemplate" },
-          { label: "Creative Automation", href: "/features/creative-automation", icon: "PiRocketFill" },
-          { label: "Workflow Automation", href: "/features/workflow-automation", icon: "TbArrowsShuffle" },
-          { label: "Libraries & Asset Management", href: "/features/libraries-asset-management", icon: "MdStorage" },
-          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BsBarChartFill" },
+          { label: "Easy Templating", href: "/features/easy-templating", icon: "FaPencilRuler" },
+          { label: "Content Creation", href: "/features/content-creation", icon: "BiSolidImageAdd", visible: false },
+          { label: "Creative Automation", href: "/features/creative-automation", icon: "FaBolt" },
+          { label: "Workflow Automation", href: "/features/workflow-automation", icon: "MdAccountTree" },
+          { label: "Libraries & Asset Management", href: "/features/libraries-asset-management", icon: "RiFunctionAddFill" },
+          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BiSolidBarChartAlt2" },
           { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill", visible: false },
-          { label: "All Features", href: "/features/all-features", icon: "FaPlus" },
+          { label: "All Features", href: "/features/all-features", icon: "TbCirclePlusFilled" },
         ],
       },
       column3: {
         title: "Pricing Tiers",
         col: 2,
         links: [
-          { label: "Studio", href: "/pricing#studio" },
-          { label: "Powerhouse", href: "/pricing#powerhouse" },
-          { label: "Enterprise", href: "/pricing#enterprise" },
+          { label: "Studio", href: "/pricing#studio", icon: "TiStarOutline" },
+          { label: "Powerhouse", href: "/pricing#powerhouse", icon: "TiStarHalfOutline" },
+          { label: "Enterprise", href: "/pricing#enterprise", icon: "TiStarFullOutline" },
         ],
       },
     },

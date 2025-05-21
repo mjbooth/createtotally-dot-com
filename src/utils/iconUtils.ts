@@ -7,7 +7,11 @@ import * as RiIcons from "react-icons/ri";
 import * as BsIcons from "react-icons/bs";
 import * as TbIcons from "react-icons/tb";
 import * as FaIcons from "react-icons/fa";
-import * as SiIcons from 'react-icons/si';
+import * as SiIcons from "react-icons/si";
+import * as F6Icons from "react-icons/fa6";
+import * as BiIcons from "react-icons/bi";
+import * as TiIcons from "react-icons/ti";
+
 import { IconType } from 'react-icons';
 
 const iconLibraries: { [key: string]: { [key: string]: IconType } } = {
@@ -20,6 +24,9 @@ const iconLibraries: { [key: string]: { [key: string]: IconType } } = {
   Tb: TbIcons,
   Fa: FaIcons,
   Si: SiIcons,
+  F6: F6Icons,
+  Bi: BiIcons,
+  Ti: TiIcons,
 };
 
 export const getIcon = (iconName?: string): IconType | null => {
