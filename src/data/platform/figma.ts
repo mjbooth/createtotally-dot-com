@@ -76,7 +76,7 @@ export const FigmaPageData = {
       label: "Step one",
       title: "Set up in Figma",
       description: "Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.",
-      image: "/setup_in_figma.png"
+      image: "/SetUpInFigma.avif"
     },
     {
       step: 2,

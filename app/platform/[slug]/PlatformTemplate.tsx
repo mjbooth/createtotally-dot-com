@@ -1,49 +1,63 @@
 "use client";
 
-import { Container, Box, Text, Link, Heading, HStack, VStack, IconButton, Button, Image, Flex, SimpleGrid, useBreakpointValue, } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, HStack, VStack, Button, Image, Flex, SimpleGrid, useBreakpointValue, } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useState, useRef, useEffect } from 'react';
-import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
+import { useRef, useLayoutEffect } from 'react';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SwooshDivider } from '@/src/components/SwooshDivider';
 
 import { PlatformPageData } from "@/src/data/platform";
 import IconComponent from '@/app/platform/IconComponent';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
-    const [currentStep, setCurrentStep] = useState(0);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
 
-    const scrollToStep = (stepIndex: number) => {
-        if (scrollContainerRef.current) {
-            const stepWidth = 1152 + 120; // 1152px width + 120px gap
-            const containerWidth = scrollContainerRef.current.clientWidth;
-            const scrollPosition = stepWidth * stepIndex - (containerWidth - 1152) / 2 + (containerWidth - stepWidth) / 2;
-            scrollContainerRef.current.scrollTo({
-                left: scrollPosition,
-                behavior: 'smooth'
+    useLayoutEffect(() => {
+        const wrapper = howItWorksWrapperRef.current;
+        const container = scrollContainerRef.current;
+        if (!wrapper || !container) return;
+
+        // Get the number of steps and width per step (1152px + 120px margin except last)
+        const numSteps = data.HowItWorksSteps.length;
+        const cardWidth = 1152;
+        const cardMargin = 120;
+        const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
+        const extraOffset = (window.innerWidth - cardWidth) / 2;
+        const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
+
+        // Set container width explicitly (in case window resizes)
+        container.style.width = `${containerWidth}px`;
+
+        // GSAP horizontal scroll animation
+        const ctx = gsap.context(() => {
+            gsap.set(container, { x: 0 });
+            ScrollTrigger.killAll(); // Remove previous triggers for hot reload
+            ScrollTrigger.create({
+                trigger: wrapper,
+                start: "top top",
+                end: () => `${scrollDistance}px`,
+                pin: true,
+                anticipatePin: 1,
+                scrub: true,
+                invalidateOnRefresh: true,
+                onUpdate: self => {
+                    gsap.to(container, {
+                        x: -scrollDistance * self.progress,
+                        duration: 0,
+                        overwrite: "auto",
+                    });
+                },
             });
-        }
-    };
+        }, wrapper);
 
-    const nextStep = () => {
-        setCurrentStep((prev) => {
-            const next = (prev + 1) % data.HowItWorksSteps.length;
-            scrollToStep(next);
-            return next;
-        });
-    };
-
-    const prevStep = () => {
-        setCurrentStep((prev) => {
-            const next = (prev - 1 + data.HowItWorksSteps.length) % data.HowItWorksSteps.length;
-            scrollToStep(next);
-            return next;
-        });
-    };
-
-    useEffect(() => {
-        scrollToStep(currentStep);
-    }, [currentStep]);
+        return () => {
+            ctx.revert();
+        };
+    }, [data.HowItWorksSteps.length]);
 
     interface Feature {
         icon: string | { name: string };
@@ -106,8 +120,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
             >
                 <Image src="/bg-bottom-footer-flip.svg" alt="Wave divider" width="100%" />
             </Box>
-
-
             <Container
                 maxW="100%"
                 px="0"
@@ -119,10 +131,20 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                 <Heading as="h2" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" mb="16" mt="0" color="brandNavy.500">
                     Scale your design workflow with<br />InDesign automation
                 </Heading>
-                <Box position="relative">
+                <Box
+                    ref={howItWorksWrapperRef}
+                    position="relative"
+                    overflow="hidden"
+                    height="auto"
+                    minHeight="100vh"
+                >
                     <Flex
                         ref={scrollContainerRef}
-                        overflowX="auto"
+                        position="absolute"
+                        top="50%"
+                        left="0"
+                        transform="translateY(-50%)"
+                        overflow="visible"
                         px={containerPadding}
                         css={{
                             '&::-webkit-scrollbar': {
@@ -130,6 +152,9 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                             },
                             'scrollbarWidth': 'none',
                             'msOverflowStyle': 'none',
+                        }}
+                        style={{
+                            willChange: 'transform'
                         }}
                     >
                         {data.HowItWorksSteps.map((step, index) => (
@@ -142,13 +167,23 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                 width="1152px"
                                 minW="1152px"
                                 mr="120px"
+                                zIndex="9999"
                             >
                                 <Flex>
                                     <Box width="50%" pr={8}>
                                         <Text bg="brandFuchsia.500" color="white" fontWeight="bold" fontSize="sm" px="3" py="1" borderRadius="md" mb={4} display="inline-block">
-                                            Step {step.step}
+                                            {step.label}
                                         </Text>
-                                        <Heading color="white" as="h3" fontSize="4xl" mb={4}>
+                                        <Heading
+                                            color="brandNeutral.500"
+                                            as="h3"
+                                            fontSize={["3xl", "4xl", "5xl"]}
+                                            fontWeight="700"
+                                            lineHeight="100%"
+                                            mt="0"
+                                            mb="0"
+                                            letterSpacing="tight"
+                                        >
                                             {step.title}
                                         </Heading>
                                         <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
@@ -161,41 +196,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                 </Flex>
                             </Box>
                         ))}
-                    </Flex>
-                    <Flex justify="center" mt={4} align="center">
-                        <IconButton
-                            onClick={prevStep}
-                            aria-label="Previous step"
-                            mr={2}
-                            bg="transparent"
-                            color="brandFuchsia.500"
-                        >
-                            <FaCircleChevronLeft />
-                        </IconButton>
-                        {data.HowItWorksSteps.map((_, index) => (
-                            <Box
-                                key={index}
-                                as="button"
-                                w={3}
-                                h={3}
-                                borderRadius="full"
-                                bg={currentStep === index ? "brandFuchsia.500" : "gray.300"}
-                                mx={1}
-                                onClick={() => {
-                                    setCurrentStep(index);
-                                    scrollToStep(index);
-                                }}
-                            />
-                        ))}
-                        <IconButton
-                            onClick={nextStep}
-                            aria-label="Next step"
-                            ml={2}
-                            bg="transparent"
-                            color="brandFuchsia.500"
-                        >
-                            <FaCircleChevronRight />
-                        </IconButton>
                     </Flex>
                 </Box>
                 <Box textAlign="center" mt={8} mb={32}>
@@ -267,7 +267,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                             <Box key={index} textAlign="left" p="10" background="white" borderRadius="2xl" shadow="realistic">
                                 <HStack align="flex-start" gap="5">
                                     <Box color="brandFuchsia.500">
-                                        <IconComponent 
+                                        <IconComponent
                                             name={
                                                 typeof feature.icon === 'string'
                                                     ? feature.icon

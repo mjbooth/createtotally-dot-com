@@ -73,7 +73,7 @@ export default function HomePage() {
       "feature": "Feature name",
       "headline": "Start with Figma & Adobe",
       "subLabel": "Upload existing Figma and Adobe design files, prepared using our suite of plugins.",
-      "image": "/FigmaPlugin.jpg",
+      "image": "/SetUpInFigma.avif",
       "cta": "Explore our design integrations →"
     },
     {
