@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-],
+, "app/platform/[slug]/PlatformTemplate.tsx.old"],
   "exclude": [
     "node_modules"
   ]

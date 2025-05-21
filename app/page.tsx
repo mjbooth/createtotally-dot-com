@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react"
+import { useRef, useLayoutEffect, useEffect, useState } from "react"
 import React from 'react';
-import { Box, Container, Flex, Grid, GridItem, Heading, Image, IconButton, Text, Highlight, useBreakpointValue, Stack, Icon, Link } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, Link } from "@chakra-ui/react";
 import { FaPencilRuler } from "react-icons/fa";
 import Vimeo from '@u-wave/react-vimeo';
 import { SwooshDivider } from '@/src/components/SwooshDivider';
-import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { useBackground } from '@/src/context/BackgroundContext';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const allClientLogos = [
   { src: "/bacardi_logo.png", alt: "Bacardi" },
@@ -23,48 +24,16 @@ const allClientLogos = [
 
 export default function HomePage() {
   const clientLogos = allClientLogos.slice(0, 9);
-  const [currentStep, setCurrentStep] = useState(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { setBackgroundColor } = useBackground();
-
-  const scrollToStep = (stepIndex: number) => {
-    if (scrollContainerRef.current) {
-      const stepWidth = 1152 + 120; // 1152px width + 120px gap
-      const containerWidth = scrollContainerRef.current.clientWidth;
-      const scrollPosition = stepWidth * stepIndex - (containerWidth - 1152) / 2 + (containerWidth - stepWidth) / 2;
-      scrollContainerRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const nextStep = () => {
-    setCurrentStep((prev) => {
-      const next = (prev + 1) % steps.length;
-      scrollToStep(next);
-      return next;
-    });
-  };
-
-  const prevStep = () => {
-    setCurrentStep((prev) => {
-      const next = (prev - 1 + steps.length) % steps.length;
-      scrollToStep(next);
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    scrollToStep(currentStep);
-  }, [currentStep]);
+  const scrollSectionRef = useRef<HTMLDivElement>(null);
+  const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeStep] = useState(0);
 
   useEffect(() => {
     setBackgroundColor("#F4F0EB");
     return () => setBackgroundColor("#FFFCFB"); // Reset on unmount
   }, [setBackgroundColor]);
-
-  const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
 
   const steps = [
     {
@@ -137,6 +106,77 @@ export default function HomePage() {
       <path d="M10.9976 17.2996L18.6226 9.64961L16.3976 7.37461L10.9976 12.7746L8.42263 10.1996L6.17263 12.4746L10.9976 17.2996ZM12.4726 23.1496C10.9286 23.1496 9.47472 22.8613 8.11088 22.2846C6.74722 21.7078 5.5633 20.9173 4.55913 19.9131C3.55497 18.9089 2.76447 17.725 2.18763 16.3614C1.61097 14.9975 1.32263 13.5436 1.32263 11.9996C1.32263 10.4513 1.61147 8.99753 2.18913 7.63836C2.76697 6.27919 3.56013 5.09636 4.56863 4.08986C5.57713 3.08336 6.76105 2.29169 8.12038 1.71486C9.47988 1.13803 10.9306 0.849609 12.4726 0.849609C14.0208 0.849609 15.4748 1.13786 16.8346 1.71436C18.1945 2.29103 19.3775 3.08244 20.3836 4.08861C21.3898 5.09478 22.1812 6.27803 22.7579 7.63836C23.3344 8.99869 23.6226 10.4531 23.6226 12.0016C23.6226 13.5503 23.3342 15.0024 22.7574 16.3579C22.1805 17.7132 21.3889 18.8951 20.3824 19.9036C19.3759 20.9121 18.193 21.7053 16.8339 22.2831C15.4747 22.8608 14.021 23.1496 12.4726 23.1496ZM12.4669 19.7496C14.6459 19.7496 16.4833 19.0037 17.9791 17.5119C19.4748 16.0199 20.2226 14.1844 20.2226 12.0054C20.2226 9.82636 19.4767 7.98894 17.9849 6.49311C16.4929 4.99744 14.6574 4.24961 12.4784 4.24961C10.2994 4.24961 8.46197 4.99553 6.96613 6.48736C5.47047 7.97936 4.72263 9.81486 4.72263 11.9939C4.72263 14.1729 5.46855 16.0103 6.96038 17.5061C8.45238 19.0018 10.2879 19.7496 12.4669 19.7496Z" fill="#853FCA" />
     </svg>
   );
+
+  // GSAP horizontal scroll logic
+  // Seamless pinning: expose scrollDistance for spacer below
+  const [scrollDistance, setScrollDistance] = useState(0);
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const wrapper = scrollWrapperRef.current;
+    const container = scrollContainerRef.current;
+    if (!wrapper || !container) return;
+
+    // Card width + gap (must match rendered!)
+    const CARD_WIDTH = 1152;
+    const CARD_GAP = 120;
+    const numSteps = steps.length;
+    const totalCardsWidth = numSteps * CARD_WIDTH + (numSteps - 1) * CARD_GAP;
+    // Get wrapper width (viewport)
+    const wrapperWidth = wrapper.offsetWidth;
+    // To center first and last cards, add padding at both ends
+    const sidePadding = (wrapperWidth - CARD_WIDTH) / 2;
+    container.style.paddingLeft = `${sidePadding}px`;
+    container.style.paddingRight = `${sidePadding}px`;
+
+    // Set container width
+    container.style.width = `${totalCardsWidth + sidePadding * 2}px`;
+
+    // Horizontal scroll distance (negative)
+    const scrollDistanceVal = totalCardsWidth - wrapperWidth;
+    setScrollDistance(scrollDistanceVal);
+
+    // GSAP horizontal scroll on vertical scroll
+    // GSAP horizontal scroll on vertical scroll
+    const ctx = gsap.context(() => {
+      gsap.set(container, { x: 0 });
+      ScrollTrigger.killAll();
+      const st = gsap.to(container, {
+        x: -scrollDistanceVal,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top top",
+          end: () => `+=${scrollDistanceVal}`,
+          scrub: 1,
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 1,
+          snap: {
+            snapTo: 1 / (steps.length - 1),
+            duration: 1.5,
+            ease: "power1.inOut"
+          },
+          onUpdate: () => {
+            // ... (rest of the onUpdate logic)
+          },
+        },
+      });
+
+      // Return the cleanup function
+      return () => {
+        if (st.scrollTrigger) {
+          st.scrollTrigger.kill();
+        }
+        st.kill();
+      };
+    }, wrapper);
+
+    // Cleanup function for the gsap context
+    return () => {
+      ctx.revert();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box bg="brandNeutral.500" pt="40">
@@ -296,12 +336,14 @@ export default function HomePage() {
       <Container
         maxW="100%"
         px="0"
-        overflow="hidden"
+        overflow="visible"
         position="relative"
         zIndex="2"
+        ref={scrollSectionRef}
+        style={{ minHeight: "800px" }}
       >
         <Box display="flex" justifyContent="center" alignItems="center">
-          <Stack gap={2} mx="auto" textAlign="center" alignItems="center" pb="16">
+          <Stack gap={2} mx="auto" textAlign="center" alignItems="center">
             <Box bg="brandPurple.600" color="brandNeutral.500" mb="2" px="3" py="2" borderRadius="lg" fontWeight="700" fontSize="md">
               <Flex gap="12px" direction="row" alignItems="center">
                 <Icon color="brandNeutral.500" as={FaPencilRuler} fontSize="md" />
@@ -321,18 +363,26 @@ export default function HomePage() {
             </Text>
           </Stack>
         </Box>
-        <Box position="relative">
+        <Box
+          ref={scrollWrapperRef}
+          position="relative"
+          width="100vw"
+          maxWidth="100vw"
+          minHeight="100vh"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Flex
             ref={scrollContainerRef}
-            overflowX="auto"
-            px={containerPadding}
-            css={{
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
-              'scrollbarWidth': 'none',
-              'msOverflowStyle': 'none',
+            position="absolute"
+            left={0}
+            style={{
+              willChange: "transform",
+              alignItems: "center",
+              height: "auto",
             }}
+            gap="120px"
           >
             {steps.map((step, index) => (
               <Box
@@ -343,7 +393,8 @@ export default function HomePage() {
                 p={["4", "6", "60px"]}
                 width={["100%", "100%", "1152px"]}
                 minW={["100%", "100%", "1152px"]}
-                mr={["0", "0", "120px"]}
+                mr={index === steps.length - 1 ? "0" : ["0", "0", "0"]}
+                transition="box-shadow 0.2s"
               >
                 <Stack
                   direction={["column", "column", "row"]}
@@ -414,43 +465,10 @@ export default function HomePage() {
               </Box>
             ))}
           </Flex>
-          <Flex justify="center" mt={4} align="center">
-            <IconButton
-              onClick={prevStep}
-              aria-label="Previous step"
-              mr={2}
-              bg="transparent"
-              color="brandFuchsia.500"
-            >
-              <FaCircleChevronLeft />
-            </IconButton>
-            {steps.map((_, index) => (
-              <Box
-                key={index}
-                as="button"
-                w={3}
-                h={3}
-                borderRadius="full"
-                bg={currentStep === index ? "brandFuchsia.500" : "gray.300"}
-                mx={1}
-                onClick={() => {
-                  setCurrentStep(index);
-                  scrollToStep(index);
-                }}
-              />
-            ))}
-            <IconButton
-              onClick={nextStep}
-              aria-label="Next step"
-              ml={2}
-              bg="transparent"
-              color="brandFuchsia.500"
-            >
-              <FaCircleChevronRight />
-            </IconButton>
-          </Flex>
         </Box>
-        <Box textAlign="center" mt={8} mb={32}>
+        {/* Manual vertical spacer for seamless scroll continuity */}
+        <Box height={`${scrollDistance}px`} />
+        <Box textAlign="center" mt={24} mb={32}>
           <Link
             href="/get-started#figma"
             color="brandFuchsia.500"
@@ -458,7 +476,7 @@ export default function HomePage() {
             fontWeight="bold"
             _hover={{ textDecoration: "underline" }}
           >
-            {steps[currentStep].cta}
+            {steps[activeStep].cta}
           </Link>
         </Box>
       </Container>

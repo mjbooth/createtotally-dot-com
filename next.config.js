@@ -20,23 +20,17 @@ const nextConfig = {
       config.optimization.moduleIds = "deterministic";
       config.optimization.chunkIds = "deterministic";
 
-      // Only add buffer fallback if not in server context
       if (!isServer) {
-        // Convert large strings to buffer - only for client-side
         config.resolve.fallback = {
           ...config.resolve.fallback,
-          buffer: false, // Use false instead of require.resolve
+          buffer: false,
         };
-
-        // Add Buffer polyfill only for browser environments
         config.plugins.push(
           new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
           })
         );
       }
-
-      // Enable WebAssembly output optimization
       config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
       return config;
     },
@@ -64,4 +58,6 @@ const nextConfig = {
     },
   };
 
-  module.exports = nextConfig;
+  module.exports = {
+  output: 'standalone',
+};
