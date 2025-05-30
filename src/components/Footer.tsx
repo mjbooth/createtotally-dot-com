@@ -4,19 +4,19 @@ const footerData = [
     {
         label: 'Product',
         links: [
-            { label: "Figma Automation", href: "/figma-creative-automation", icon: "SiFigma" },
-            { label: "InDesign Automation", href: "#", icon: "SiAdobeindesign" },
-            { label: "After Effects Automation", href: "#", icon: "SiAdobeaftereffects" },
-            { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
-            { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
-            { label: "HTML Automation", href: "#", icon: "SiHtml5" },
-            { label: "Template & Content Creation", href: "/template-content-creation", icon: "HiTemplate" },
-            { label: "Creative Automation", href: "/creative-automation", icon: "PiRocketFill" },
-            { label: "Workflow Automation", href: "/workflow-automation", icon: "TbArrowsShuffle" },
-            { label: "Libraries & Asset Management", href: "/libraries-asset-management", icon: "MdStorage" },
-            { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
-            { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
-            { label: "All Features", href: "/all-features", icon: "FaPlus" }
+            { label: "Figma Automation", href: "/platform/figma-creative-automation", icon: "SiFigma" },
+            { label: "InDesign Automation", href: "/platform/adobe-indesign-automation", icon: "SiAdobeindesign" },
+            { label: "After Effects Automation", href: "/platform/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
+            // { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop" },
+            // { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator" },
+            // { label: "HTML Automation", href: "#", icon: "SiHtml5" },
+            { label: "Easy templating", href: "/features/easy-templating", icon: "HiTemplate" },
+            { label: "Creative Automation", href: "/features/creative-automation", icon: "PiRocketFill" },
+            { label: "Workflow Automation", href: "/features/workflow-automation", icon: "TbArrowsShuffle" },
+            { label: "Libraries & Asset Management", href: "/features/libraries-and-asset-management", icon: "MdStorage" },
+            // { label: "Performance & Insights", href: "/performance-insights", icon: "BsBarChartFill" },
+            // { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill" },
+            // { label: "All Features", href: "/all-features", icon: "FaPlus" }
         ]
     },
     {

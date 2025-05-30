@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal } from '@chakra-ui/react';
+import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, Icon } from '@chakra-ui/react';
 import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
 import { useNavigation } from "@/src/context/NavigationContext";
 import { usePathname } from 'next/navigation';
 import { useBackground } from '@/src/context/BackgroundContext';
+import { HiMenuAlt3 } from 'react-icons/hi';
+import { VscClose } from 'react-icons/vsc';
 
 const MainMenu: React.FC = () => {
   const { isNavOpen, activeMenu, setActiveMenu, resetNav } = useNavigation();
@@ -17,6 +19,7 @@ const MainMenu: React.FC = () => {
   const lastScrollY = useRef(0);
   const [hidden, setHidden] = useState(false);
   const { backgroundColor } = useBackground();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest < lastScrollY.current) {
@@ -59,11 +62,19 @@ const MainMenu: React.FC = () => {
     setActiveMenu(false, null);
   }, [setActiveMenu]);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    if (isNavOpen) {
+      resetNav();
+    }
+  };
+
   const menuContent = {
     Platform: {
       column1: {
         title: "Platform",
         col: 2,
+        visible: true, // Add this line to control visibility of the entire section
         links: [
           { label: "Figma Automation", href: "/platform/figma-creative-automation", icon: "SiFigma" },
           { label: "InDesign Automation", href: "/platform/adobe-indesign-automation", icon: "SiAdobeindesign" },
@@ -77,20 +88,22 @@ const MainMenu: React.FC = () => {
       column2: {
         title: "Features",
         col: 2,
+        visible: true, // Add this line to control visibility of the entire section
         links: [
           { label: "Easy Templating", href: "/features/easy-templating", icon: "FaPencilRuler" },
           { label: "Content Creation", href: "/features/content-creation", icon: "BiSolidImageAdd", visible: false },
           { label: "Creative Automation", href: "/features/creative-automation", icon: "FaBolt" },
           { label: "Workflow Automation", href: "/features/workflow-automation", icon: "MdAccountTree" },
-          { label: "Libraries & Asset Management", href: "/features/libraries-asset-management", icon: "RiFunctionAddFill" },
-          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BiSolidBarChartAlt2" },
+          { label: "Libraries & Asset Management", href: "/features/libraries-and-asset-management", icon: "RiFunctionAddFill" },
+          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BiSolidBarChartAlt2", visible: false },
           { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill", visible: false },
-          { label: "All Features", href: "/features/all-features", icon: "TbCirclePlusFilled" },
+          { label: "All Features", href: "/features/all-features", icon: "TbCirclePlusFilled", visible: false },
         ],
       },
       column3: {
         title: "Pricing Tiers",
         col: 2,
+        visible: true, // Add this line to control visibility of the entire section
         links: [
           { label: "Studio", href: "/pricing#studio", icon: "TiStarOutline" },
           { label: "Powerhouse", href: "/pricing#powerhouse", icon: "TiStarHalfOutline" },
@@ -102,6 +115,7 @@ const MainMenu: React.FC = () => {
       column1: {
         title: "Teams",
         col: 2,
+        visible: false, // Add this line to control visibility of the entire section
         links: [
           { label: "Brand Marketing", href: "#" },
           { label: "In-house Studio Team", href: "#" },
@@ -113,6 +127,7 @@ const MainMenu: React.FC = () => {
       column2: {
         title: "Industries",
         col: 2,
+        visible: false, // Add this line to control visibility of the entire section
         links: [
           { label: "Retail", href: "#" },
           { label: "FMCG", href: "#" },
@@ -124,6 +139,7 @@ const MainMenu: React.FC = () => {
       column3: {
         title: "Integrations",
         col: 2,
+        visible: true, // Add this line to control visibility of the entire section
         links: [
           { label: "Adobe Workfront", href: "/integrations/adobe-workfront" },
           { label: "Monday.com", href: "/integrations/monday-com" },
@@ -168,6 +184,8 @@ const MainMenu: React.FC = () => {
     },
   };
 
+  // ... (previous imports and component setup remain the same)
+
   return (
     <motion.div
       initial="visible"
@@ -191,97 +209,143 @@ const MainMenu: React.FC = () => {
         width="100%"
         display="flex"
         alignItems="center"
-        height="160px"
+        height={{ base: "80px", md: "160px" }}
         style={{
           backgroundColor: backgroundColor
         }}
       >
-        <Box
-          display="flex"
-          width="1440px"
-          padding="0px 24px"
-          justifyContent="center"
-          mx="auto"
-        >
-          <Container maxW="1200px" px="0">
-            <Flex justify="space-between" align="center" width="100%">
-              <Box>
-                <Link href="/">
-                  <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight="47.447px" />
-                </Link>
-              </Box>
-              <Stack direction="row" gap={6} align="center">
+        <Container maxW="1200px" px="24px">
+          <Flex justify="space-between" align="center" width="100%">
+            <Link href="/">
+              <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight={{ base: "30px", md: "47.447px" }} />
+            </Link>
 
-                {menuItems.map((item) => (
-                  item.hasDropdown ? (
-                    <Popover.Root
-                      key={item.label}
-                      size="sm"
-                      open={isNavOpen && activeMenu === item.label}
-                      onOpenChange={(open) => {
-                        if (!open) handleClose();
-                      }}
-                    >
-                      <Popover.Trigger asChild>
-                        <Button
-                          size="md"
-                          variant="plain"
-                          color="brandNavy.500"
-                          fontSize="1rem"
-                          onClick={() => handleMenuClick(item.label)}
-                          _hover={{
-                            color: "#CA3FC0"
-                          }}
-                        >
-                          {item.label}
-                          <motion.div
-                            animate={{ rotate: isNavOpen && activeMenu === item.label ? 180 : 0 }}
-                            transition={{ duration: 0.2, ease: 'easeInOut' }}
-                            style={{ marginLeft: '5px', display: 'inline-block' }}
-                          >
-                            <HiMiniChevronDown />
-                          </motion.div>
-                        </Button>
-                      </Popover.Trigger>
-                      <Portal>
-                        <Popover.Positioner>
-                          <Popover.Content
-                            css={{ "--popover-bg": "#EDE6DE" }}
-                            width="auto"
-                            maxWidth="1200px"
-                            shadow="realistic"
-                            borderRadius="40px"
-                          >
-                            <Popover.Body color="brandNavy.500">
-                              <DropdownContent activeMenu={item.label} menuContent={menuContent} />
-                            </Popover.Body>
-                          </Popover.Content>
-                        </Popover.Positioner>
-                      </Portal>
-                    </Popover.Root>
-                  ) : (
-                    <Link key={item.label} href={item.href}>
+            {/* Desktop Menu */}
+            <Stack direction="row" gap={6} align="center" display={{ base: "none", md: "flex" }}>
+              {menuItems.map((item) => (
+                item.hasDropdown ? (
+                  <Popover.Root
+                    key={item.label}
+                    size="sm"
+                    open={isNavOpen && activeMenu === item.label}
+                    onOpenChange={(open) => {
+                      if (!open) handleClose();
+                    }}
+                  >
+                    <Popover.Trigger asChild>
                       <Button
                         size="md"
                         variant="plain"
                         color="brandNavy.500"
                         fontSize="1rem"
+                        onClick={() => handleMenuClick(item.label)}
                         _hover={{
                           color: "#CA3FC0"
                         }}
                       >
                         {item.label}
+                        <motion.div
+                          animate={{ rotate: isNavOpen && activeMenu === item.label ? 180 : 0 }}
+                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                          style={{ marginLeft: '5px', display: 'inline-block' }}
+                        >
+                          <HiMiniChevronDown />
+                        </motion.div>
                       </Button>
-                    </Link>
-                  )
-                ))}
-                <Link href="/get-started">
-                  <Button variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">Get started →</Button>
-                </Link>
-              </Stack>
-            </Flex>
-          </Container>
-        </Box>
+                    </Popover.Trigger>
+                    <Portal>
+                      <Popover.Positioner>
+                        <Popover.Content
+                          css={{ "--popover-bg": "#EDE6DE" }}
+                          width="auto"
+                          maxWidth="1200px"
+                          shadow="realistic"
+                          borderRadius="40px"
+                        >
+                          <Popover.Body color="brandNavy.500">
+                            <DropdownContent activeMenu={item.label} menuContent={menuContent} />
+                          </Popover.Body>
+                        </Popover.Content>
+                      </Popover.Positioner>
+                    </Portal>
+                  </Popover.Root>
+                ) : (
+                  <Link key={item.label} href={item.href}>
+                    <Button
+                      size="md"
+                      variant="plain"
+                      color="brandNavy.500"
+                      fontSize="1rem"
+                      _hover={{
+                        color: "#CA3FC0"
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  </Link>
+                )
+              ))}
+              <Link href="/get-started">
+                <Button variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">Get started →</Button>
+              </Link>
+            </Stack>
+
+            {/* Mobile Menu Button */}
+            <Box display={{ base: "block", md: "none" }}>
+              <Button onClick={toggleMobileMenu} variant="ghost" color="brandNavy.500">
+                <Icon as={isMobileMenuOpen ? VscClose : HiMenuAlt3} boxSize={6} color="brandNavy.500" />
+              </Button>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
+
+      {/* Mobile Menu */}
+      <Box
+        position="fixed"
+        top="80px"
+        left={0}
+        right={0}
+        bottom={0}
+        bg={backgroundColor}
+        zIndex={999}
+        transform={isMobileMenuOpen ? "translateX(0)" : "translateX(100%)"}
+        transition="transform 0.3s ease-in-out"
+        overflowY="auto"
+        display={{ base: "block", md: "none" }}
+      >
+        <Container maxW="1200px" px="24px">
+          <Stack gap={4} py={4}>
+            {menuItems.map((item) => (
+              <Box key={item.label}>
+                {item.hasDropdown ? (
+                  <Button
+                    width="100%"
+                    justifyContent="space-between"
+                    onClick={() => handleMenuClick(item.label)}
+                  >
+                    {item.label}
+                    <HiMiniChevronDown />
+                  </Button>
+                ) : (
+                  <Link href={item.href} width="100%">
+                    <Button width="100%">{item.label}</Button>
+                  </Link>
+                )}
+                {isNavOpen && activeMenu === item.label && (
+                  <Box mt={2} ml={4}>
+                    <DropdownContent activeMenu={item.label} menuContent={menuContent} />
+                  </Box>
+                )}
+              </Box>
+            ))}
+            <Link href="/get-started" width="100%">
+              <Button width="100%" variant="solid" colorPalette="brandFuchsia" rounded="full">
+                Get started →
+              </Button>
+            </Link>
+          </Stack>
+        </Container>
       </Box>
     </motion.div>
   );

@@ -1,4 +1,18 @@
-export interface PlatformPageData {
+export interface FeaturePageData {
+    metadata: {
+        title: string;
+        description: string;
+        openGraph: {
+            title: string;
+            description: string;
+            images: Array<{
+                url: string;
+                width: number;
+                height: number;
+                alt: string;
+            }>;
+        };
+    };
     heroSectionData: {
         featureGroup: string;
         featureGroupIcon: string;
@@ -6,38 +20,27 @@ export interface PlatformPageData {
         subtitle: string;
         features: string[];
     };
-    Feature: {
-        title: string;
-        description: string;
-        icon: string;
-    };
-    FeatureBlock: {
+    featureBlocks: Array<{
         heading: string;
         text: string;
         image: string;
-    };
-    HowItWorksStep: {
+    }>;
+    HowItWorksSteps: Array<{
         step: number;
         label: string;
         title: string;
         description: string;
         image: string;
-    };
-    HeroSectionData: {
-        featureGroup: string;
-        title: string;
-        subtitle: string;
-        features: string[];
-    };
-    TestimonialData: {
+    }>;
+    testimonialData: {
         quote: string;
         author: string;
         avatar: string;
         role: string;
         company: string;
     };
-    CtaData: {
+    ctaData: {
         title: string;
         buttonText: string;
-    }
+    };
 }

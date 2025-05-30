@@ -99,6 +99,7 @@ export const AfterEffectsPageData = {
   ],
   heroSectionData: {
     featureGroup: "Adobe After Effects Automation",
+    featureGroupIcon: "SiAdobeaftereffects",
     title: "Break from video production bottlenecks - without sacrificing creative control",
     subtitle: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it.",
     features: [

@@ -94,6 +94,7 @@ export const InDesignPageData = {
   ],
   heroSectionData: {
     featureGroup: "Adobe InDesign Automation",
+    featureGroupIcon: "SiAdobeindesign",
     title: "Scale design production without sacrificing quality.",
     subtitle: "Keep your creative control. Let automation handle the busywork.",
     features: [

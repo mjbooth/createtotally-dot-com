@@ -1,14 +1,17 @@
 "use client";
 
-import { useRef, useLayoutEffect, useEffect, useState } from "react"
-import React from 'react';
-import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, Link } from "@chakra-ui/react";
+import React, { useRef, useLayoutEffect, useEffect, lazy } from "react";
+import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue } from "@chakra-ui/react";
 import { FaPencilRuler } from "react-icons/fa";
-import Vimeo from '@u-wave/react-vimeo';
 import { SwooshDivider } from '@/src/components/SwooshDivider';
 import { useBackground } from '@/src/context/BackgroundContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Lazy load components and heavy dependencies
+const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
 
 const allClientLogos = [
   { src: "/bacardi_logo.png", alt: "Bacardi" },
@@ -25,10 +28,9 @@ const allClientLogos = [
 export default function HomePage() {
   const clientLogos = allClientLogos.slice(0, 9);
   const { setBackgroundColor } = useBackground();
-  const scrollSectionRef = useRef<HTMLDivElement>(null);
-  const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [activeStep] = useState(0);
+  const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     setBackgroundColor("#F4F0EB");
@@ -107,72 +109,65 @@ export default function HomePage() {
     </svg>
   );
 
-  // GSAP horizontal scroll logic
-  // Seamless pinning: expose scrollDistance for spacer below
-  const [scrollDistance, setScrollDistance] = useState(0);
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 100) {
+        heading.classList.add('hidden');
+      } else {
+        heading.classList.remove('hidden');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const wrapper = scrollWrapperRef.current;
+    const wrapper = howItWorksWrapperRef.current;
     const container = scrollContainerRef.current;
     if (!wrapper || !container) return;
 
-    // Card width + gap (must match rendered!)
-    const CARD_WIDTH = 1152;
-    const CARD_GAP = 120;
     const numSteps = steps.length;
-    const totalCardsWidth = numSteps * CARD_WIDTH + (numSteps - 1) * CARD_GAP;
-    // Get wrapper width (viewport)
-    const wrapperWidth = wrapper.offsetWidth;
-    // To center first and last cards, add padding at both ends
-    const sidePadding = (wrapperWidth - CARD_WIDTH) / 2;
-    container.style.paddingLeft = `${sidePadding}px`;
-    container.style.paddingRight = `${sidePadding}px`;
+    const cardWidth = 1152;
+    const cardMargin = 120;
+    const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
+    const extraOffset = (window.innerWidth - cardWidth) / 2;
+    const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
 
-    // Set container width
-    container.style.width = `${totalCardsWidth + sidePadding * 2}px`;
+    container.style.width = `${containerWidth}px`;
 
-    // Horizontal scroll distance (negative)
-    const scrollDistanceVal = totalCardsWidth - wrapperWidth;
-    setScrollDistance(scrollDistanceVal);
-
-    // GSAP horizontal scroll on vertical scroll
-    // GSAP horizontal scroll on vertical scroll
     const ctx = gsap.context(() => {
       gsap.set(container, { x: 0 });
       ScrollTrigger.killAll();
-      const st = gsap.to(container, {
-        x: -scrollDistanceVal,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top top",
-          end: () => `+=${scrollDistanceVal}`,
-          scrub: true,
-          pin: true,
-          pinSpacing: false,
-          anticipatePin: 1,
-          onUpdate: () => {
-            // ... (rest of the onUpdate logic)
-          },
+
+      ScrollTrigger.create({
+        trigger: wrapper,
+        start: "top top",
+        end: () => `+=${scrollDistance}px`,
+        pin: true,
+        anticipatePin: 1,
+        scrub: true,
+        invalidateOnRefresh: true,
+        onUpdate: self => {
+          gsap.to(container, {
+            x: -scrollDistance * self.progress,
+            duration: 0,
+            overwrite: "auto",
+          });
         },
       });
-
-      // Return the cleanup function
-      return () => {
-        if (st.scrollTrigger) {
-          st.scrollTrigger.kill();
-        }
-        st.kill();
-      };
     }, wrapper);
 
-    // Cleanup function for the gsap context
     return () => {
       ctx.revert();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [steps.length]);
 
+  const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
   return (
     <Box bg="brandNeutral.500" pt="40">
       <Box>
@@ -327,154 +322,125 @@ export default function HomePage() {
         </Box>
       </Box>
 
-      {/* How It Works Section */}
-      <Container
-        maxW="100%"
-        px="0"
-        overflow="visible"
+
+      <Box
         position="relative"
+        bg="brandNeutral.200"
         zIndex="2"
-        ref={scrollSectionRef}
-        style={{ minHeight: "800px" }}
+        backgroundImage="url('/bg-bottom-footer-flip.svg')"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="top center"
+        backgroundSize="100% auto"
+        pt="100px"
       >
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Stack gap={2} mx="auto" textAlign="center" alignItems="center">
-            <Box bg="brandPurple.600" color="brandNeutral.500" mb="2" px="3" py="2" borderRadius="lg" fontWeight="700" fontSize="md">
-              <Flex gap="12px" direction="row" alignItems="center">
-                <Icon color="brandNeutral.500" as={FaPencilRuler} fontSize="md" />
-                <Text>Workflow-automation</Text>
-              </Flex>
-            </Box>
-            <Heading as="h2" m="0" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="100%" letterSpacing="tight" color="brandNavy.500">
-              How it works
-            </Heading>
-            <Text
-              fontSize="md"
-              color="brandNavy.500"
-              fontWeight="400"
-              maxW={{ base: "full", md: "sm" }}
-            >
-              Streamline your content creation process with our powerful automation tools.
-            </Text>
-          </Stack>
-        </Box>
-        <Box
-          ref={scrollWrapperRef}
+        <Container
+          maxW="100%"
+          px="0"
+          overflow="hidden"
           position="relative"
-          width="100vw"
-          maxWidth="100vw"
-          minHeight="100vh"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
         >
-          <Flex
-            ref={scrollContainerRef}
-            position="absolute"
-            left={0}
-            style={{
-              willChange: "transform",
-              alignItems: "center",
-              height: "auto",
-            }}
-            gap="120px"
+          <Heading
+            as="h2"
+            pt="16"
+            fontSize="3rem"
+            fontWeight="700"
+            textAlign="center"
+            lineHeight="102.811%"
+            color="brandNavy.500"
+            zIndex="10"
+            position="sticky"
+            top="0"
+            ref={headingRef}
+            className="scroll-out-heading"
+            opacity="1"
+            pb="16"
           >
-            {steps.map((step, index) => (
-              <Box
-                key={index}
-                flex="0 0 auto"
-                bg="brandNavy.500"
-                borderRadius={["24px", "36px"]}
-                p={["4", "6", "60px"]}
-                width={["100%", "100%", "1152px"]}
-                minW={["100%", "100%", "1152px"]}
-                mr={index === steps.length - 1 ? "0" : ["0", "0", "0"]}
-                transition="box-shadow 0.2s"
-              >
-                <Stack
-                  direction={["column", "column", "row"]}
-                  gap={["4", "6", "60px"]}
-                  align="stretch"
-                >
+            How it works
+          </Heading>
+          <Box
+            ref={howItWorksWrapperRef}
+            position="relative"
+            overflow="hidden"
+            height="100vh"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Flex
+              ref={scrollContainerRef}
+              position="absolute"
+              left="0"
+              overflow="visible"
+              px={containerPadding}
+              height="100%"
+              alignItems="center"
+            >
+              <Flex alignItems="center">
+                {steps.map((step, index) => (
                   <Flex
-                    direction="column"
-                    width={["100%", "100%", "calc(50% - 30px)"]}
-                    justify="center"
+                    key={index}
+                    flexShrink={0}
+                    bg="brandNavy.500"
+                    borderRadius="xxl"
+                    p="15"
+                    width="1152px"
+                    minW="1152px"
+                    mr="30"
+                    zIndex="9999"
+                    boxShadow="realistic"
                   >
-                    <Box pb="2">
-                      <Text
-                        bg="brandFuchsia.500"
-                        color="brandNeutral.500"
-                        fontWeight="bold"
-                        fontSize={["md", "2xl"]}
-                        px="3"
-                        py="1"
-                        borderRadius="md"
-                        display="inline-block"
-                      >
-                        {step.step}
-                      </Text>
-                    </Box>
-                    <Flex direction="column" justify="center" height="100%" gap="2">
-                      <Heading
-                        color="brandNeutral.500"
-                        as="h3"
-                        fontSize={["3xl", "4xl", "5xl"]}
-                        fontWeight="700"
-                        lineHeight="100%"
-                        mt="0"
-                        mb="0"
-                        letterSpacing="tight"
-                      >
-                        {step.headline}
-                      </Heading>
-                      <Text
-                        color="brandNeutral.500"
-                        fontSize={["md", "md"]}
-                        lineHeight="1.6"
-                      >
-                        {step.subLabel}
-                      </Text>
+                    <Flex width="100%" gap="15">
+                      <Flex width="50%" direction="column" gap="2">
+                        <Flex
+                          bg="brandPurple.600"
+                          p="3"
+                          borderRadius="md"
+                          display="inline-flex"
+                          alignSelf="flex-start"
+                        >
+                          <Text
+                            color="white"
+                            fontWeight="bold"
+                            fontSize="2xl"
+                            lineHeight={1}
+                            whiteSpace="nowrap"
+                          >
+                            {step.step}
+                          </Text>
+                        </Flex>
+                        <Flex gap="2" direction="column" justify="center" height="100%">
+                          <Heading
+                            color="brandNeutral.500"
+                            as="h3"
+                            fontSize={["3xl", "4xl", "5xl"]}
+                            fontWeight="700"
+                            lineHeight="100%"
+                            mt="0"
+                            mb="0"
+                            letterSpacing="tight"
+                          >
+                            {step.headline}
+                          </Heading>
+                          <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
+                            {step.subLabel}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                      <Flex width="50%">
+                        <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                      </Flex>
                     </Flex>
                   </Flex>
-                  <Box
-                    width={["100%", "100%", "calc(50% - 30px)"]}
-                    paddingBottom={["64.6245%", "64.6245%", "47.0931%"]}
-                    position="relative"
-                    overflow="hidden"
-                    borderRadius="2xl"
-                  >
-                    <Image
-                      src={step.image}
-                      alt={`Step ${step.step}`}
-                      position="absolute"
-                      top="0"
-                      left="0"
-                      width="100%"
-                      height="100%"
-                      objectFit="cover"
-                      loading="lazy"
-                    />
-                  </Box>
-                </Stack>
-              </Box>
-            ))}
-          </Flex>
-        </Box>
-        {/* Manual vertical spacer for seamless scroll continuity */}
-        <Box height={`${scrollDistance}px`} />
-        <Box textAlign="center" mt={24} mb={32}>
-          <Link
-            href="/get-started#figma"
-            color="brandFuchsia.500"
-            fontSize="lg"
-            fontWeight="bold"
-            _hover={{ textDecoration: "underline" }}
-          >
-            {steps[activeStep].cta}
-          </Link>
-        </Box>
-      </Container>
+                ))}
+              </Flex>
+            </Flex>
+          </Box>
+        </Container>
+      </Box>
+
+
+      {/* How It Works Section */}
+      
     </Box>
   );
 }

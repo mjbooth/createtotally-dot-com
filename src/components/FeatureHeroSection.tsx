@@ -3,9 +3,11 @@
 import React from 'react';
 import { Box, Heading, Text, useBreakpointValue, Stack, Flex, Icon, Container } from '@chakra-ui/react';
 import { HiCheckCircle } from "react-icons/hi";
+import { renderIcon } from '@/src/utils/iconUtils';
 
 interface FeatureHeroSectionProps {
   featureGroup: string;
+  featureGroupIcon: string;
   title: string;
   subtitle: string;
   features: string[];
@@ -13,6 +15,7 @@ interface FeatureHeroSectionProps {
 
 export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   featureGroup,
+  featureGroupIcon,
   title,
   subtitle,
   features,
@@ -21,16 +24,19 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   const h1FontSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "80px" });
   const subheadingFontSize = useBreakpointValue({ base: "md", md: "lg" });
 
+  const IconComponent = renderIcon(featureGroupIcon);
+
   return (
     <Box bg="brandNeutral.200">
       <Container maxW="1152px" mb="110px">
         <Box display="flex" justifyContent="center" alignItems="center" pt="5">
           <Stack gap={6} mx="auto" textAlign="center" alignItems="center" pb="40" >
-            <Box bg="brandPurple.600" p="12px" borderRadius="lg" >
-              <Text fontSize="2xl" fontWeight="bold" color="#brandNeutral.500" lineHeight="1">
+            <Flex bg="brandPurple.600" px="3" py="2" borderRadius="lg" gap="3" alignItems="center">
+              {IconComponent && <Icon as={IconComponent} size="md" color="brandNeutral.500" />}
+              <Text fontSize="2xl" fontWeight="bold" color="#brandNeutral.500" lineHeight="160%">
                 {featureGroup}
               </Text>
-            </Box>
+            </Flex>
             <Heading
               as="h1"
               fontSize={h1FontSize}

@@ -1,21 +1,34 @@
 export const FigmaPageData = {
   metadata: {
     title: "Figma Creative Automation | CreateTOTALLY",
-    description: "Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments. Stop drowning in design edits and start automating your Figma workflow.",
+    description: "Automate your Figma designs at scale. CreateTOTALLY’s Figma integration helps creative teams adapt, localise, and deliver assets faster - without touching design again.",
     openGraph: {
-      title: "Figma Creative Automation | CreateTOTALLY",
-      description: "Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments. Stop drowning in design edits and start automating your Figma workflow.",
+      title: "Figma automation that scales with your creative team",
+      description: "From one Figma file to hundreds of localised assets. CreateTOTALLY gives creative teams the control to scale - fast, flexible, and design-true.",
       images: [
         {
           url: "/setup_in_figma.png",
           width: 1200,
           height: 630,
-          alt: "Figma Creative Automation with CreateTOTALLY",
+          alt: "Figma automation that scales with your creative team",
         },
       ],
     },
   },
-
+  heroSectionData: {
+    featureGroup: "Figma Creative Automation",
+    featureGroupIcon: "SiFigma",
+    title: "Stop Drowning in design edits. Start automating your Figma workflow.",
+    subtitle: "Turn a single Figma file into hundreds of on-brand assets, without endless manual adjustments or late nights at your desk.",
+    features: [
+      "Automate entire Figmaaaaaa files",
+      "Adapt for every market in seconds",
+      "One-click content generation",
+      "Self-serve adaptation",
+      "Eliminate manual versioning",
+      "Empower your entire team"
+    ]
+  },
   features: [
     {
       title: "Pixel-perfect rendering",
@@ -56,17 +69,17 @@ export const FigmaPageData = {
   featureBlocks: [
     {
       heading: "The localisation bottleneck",
-      text: "You’ve designed the perfect campaign in Figma. Then the requests flood in: “Can we get this in 12 languages?” “We need all the CTAs adapted for each market.” “The legal copy needs updating for France.” Your team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn’t use your creative talents.",
+      text: "You’ve designed the perfect campaign in Figma. Then the requests flood in: “Can we get this in 12 languages?” “We need all the CTAs adapted for each market.”\n\nYour team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn’t use your creative talents.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     },
     {
       heading: "The format explosion",
-      text: "Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers... Each adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.",
+      text: "Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers... \n\nEach adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.",
       image: "/feature-placeholder-FiLayout-sqr.jpg"
     },
     {
       heading: "The approval-revision loop",
-      text: "You send assets for review. Then come the change requests: “Can we try a different image?” “The headline’s too long.” “Legal wants different disclaimers for each market.” Each small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.",
+      text: "You send assets for review. Then come the change requests: “Can we try a different image?” “The headline’s too long.” “Legal wants different disclaimers for each market.” \n\nEach small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     }
   ],
@@ -90,22 +103,9 @@ export const FigmaPageData = {
       label: "Step three",
       title: "Scale endlessly",
       description: "With CreateTOTALLY, you can scale your design workflow to handle thousands of assets, hundreds of projects, or even tens of thousands of clients. Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.",
-      image: "/scale_endlessly_in_figma.png"
+      image: "/ScaleEndlessly.webp"
     }
   ],
-  heroSectionData: {
-    featureGroup: "Figma Creative Automation",
-    title: "Stop Drowning in design edits. Start automating your Figma workflow.",
-    subtitle: "Turn a single Figma file into hundreds of on-brand assets—without endless manual adjustments or late nights at your desk.",
-    features: [
-      "Automate entire Figmaaaaaa files",
-      "Adapt for every market in seconds",
-      "One-click content generation",
-      "Self-serve adaptation",
-      "Eliminate manual versioning",
-      "Empower your entire team"
-    ]
-  },
   testimonialData: {
     quote: "We used to spend days on adaptation. Now it takes minutes.",
     author: "",

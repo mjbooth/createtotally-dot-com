@@ -66,6 +66,14 @@ export const system = createSystem(defaultConfig, {
       },
       sizes: {
         FullWidth: { value: "1200px" },
+        ctContainer: { value: "1152px" },
+      },
+      radii: {
+        xxl: { value: "3rem" },
+      },
+      spacing: {
+        15: { value: "3.75rem" },
+        30: { value: "7.5rem" },
       },
     },
     semanticTokens: {
@@ -155,6 +163,14 @@ export const system = createSystem(defaultConfig, {
     },
     "*::marker": {
       color: "rgba(202, 63, 192, 1)",
-    }
+    },
+    ".scroll-out-heading": {
+      transition: "transform 0.3s ease-out",
+      opacity: "0.3s ease-out",
+    },
+    ".scroll-out-heading.hidden": {
+      transition: "translateY(-100%)",
+      opacity: "0",
+    },
   }
 });

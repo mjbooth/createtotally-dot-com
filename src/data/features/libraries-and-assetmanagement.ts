@@ -1,0 +1,94 @@
+export const LibrariesAndAssetManagementPageData = {
+  metadata: {
+    title: "Manage Creative Libraries & Assets at Scale | CreateTOTALLY",
+    description: "Control your global creative assets across campaigns and formats. Manage usage, updates, and distribution from one source of truth.",
+    openGraph: {
+      title: "Creative Asset Management Made Simple",
+      description: "Keep every team and campaign on-brand with powerful creative libraries and asset management tools.",
+      images: [
+        {
+          url: "/feature-placeholder-FiPenTool-sqr.jpg",
+          width: 1200,
+          height: 630,
+          alt: "",
+        },
+      ],
+    },
+  },
+  heroSectionData: {
+    featureGroup: "Libraries & Asset Management",
+    featureGroupIcon: "RiFunctionAddFill",
+    title: "Centralise your assets to amplify your creative output",
+    subtitle: "Organise, tag, and connect your creative content without extra tools or confusion. Power your templates with a single source of truth that makes automation simple, consistent and scalable.",
+    features: [
+      "Effortless approvals.",
+      "Automatic delivery.",
+      "Complete control.",
+      "Zero friction.",
+    ]
+  },
+  featureBlocks: [
+    {
+      heading: "Buried under content chaos",
+      text: "Creative automation stalls when your assets are scattered across shared drives, DAMs and email attachments. Your team wastes hours searching for, adapting and checking versions instead of creating impactful work.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    },
+    {
+      heading: "Disconnected from your templates",
+      text: "Without clear connections between content and templates, even brilliant designs struggle to deliver their potential. Copy lives in spreadsheets while images hide in folders, creating a frustrating disconnect in your production process.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    },
+    {
+      heading: "Trapped in manual translation cycles",
+      text: "Localisation becomes a copy-paste nightmare across disconnected documents. Each market adaptation requires repetitive work, introducing errors and inconsistencies that damage your brand and drain resources.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    },
+    {
+      heading: "Connect your content directly to production",
+      text: "CreateTOTALLY's integrated libraries transform how you manage creative content. Upload, organise and connect your assets directly within the platform. The result? A seamless production engine where content flows exactly where and when it's needed.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    }
+  ],
+  HowItWorksSteps: [
+    {
+      step: 1,
+      label: "Step one",
+      title: "Asset Library centralises all visual elements",
+      description: "Store, tag and deploy logos, packshots, background images, video files and design elements in one central hub. Each file can be tagged, grouped and reused across multiple templates. Upload once, use everywhere.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    },
+    {
+      step: 2,
+      label: "Step two",
+      title: "Copy Library manages text across markets",
+      description: "Store approved messaging by market, campaign or product to ensure copy is consistent, on-brand and ready to use. Manage translations and variations in one place, connecting directly to template fields using tags.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    },
+    {
+      step: 3,
+      label: "Step three",
+      title: "Auto-generate translation workflows",
+      description: "When you upload a template, CreateTOTALLY analyses the design and creates an editable copy document. Each text layer appears in an organised Excel file. Add translations in separate columns and import back to update all linked templates.",
+      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+    }
+  ],
+  testimonialData: {
+    quote: "In just a few days we created 750+ videos using\nCreateTOTALLY. It’s cheaper, more consistent and speedy...\nit’ll be an important tool for Lukkien in the future.",
+    author: "Mattijs van Moorsel",
+    role: "Head of Production",
+    avatar: "/feature-placeholder-FiPenTool-sqr.jpg",
+    company: "Lukkien",
+  },
+  ctaData: {
+    title: "Built for automation, designed for simplicity",
+    buttonText: "Get started today →"
+  },
+};
+
+export const {
+  featureBlocks,
+  HowItWorksSteps,
+  heroSectionData,
+  testimonialData,
+  ctaData
+} = LibrariesAndAssetManagementPageData;

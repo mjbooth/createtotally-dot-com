@@ -2,11 +2,11 @@
 
 import { Container, Box, Text, Link, Heading, HStack, VStack, Button, Image, Flex, SimpleGrid, useBreakpointValue, } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect } from 'react';
+import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SwooshDivider } from '@/src/components/SwooshDivider';
-
 import { PlatformPageData } from "@/src/data/platform";
 import IconComponent from '@/app/platform/IconComponent';
 
@@ -15,13 +15,30 @@ gsap.registerPlugin(ScrollTrigger);
 export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
+    const headingRef = useRef<HTMLHeadingElement>(null);
+
+    useEffect(() => {
+        const heading = headingRef.current;
+        if (!heading) return;
+
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 100) {
+                heading.classList.add('hidden');
+            } else {
+                heading.classList.remove('hidden');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useLayoutEffect(() => {
         const wrapper = howItWorksWrapperRef.current;
         const container = scrollContainerRef.current;
         if (!wrapper || !container) return;
 
-        // Get the number of steps and width per step (1152px + 120px margin except last)
         const numSteps = data.HowItWorksSteps.length;
         const cardWidth = 1152;
         const cardMargin = 120;
@@ -29,17 +46,16 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
         const extraOffset = (window.innerWidth - cardWidth) / 2;
         const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
 
-        // Set container width explicitly (in case window resizes)
         container.style.width = `${containerWidth}px`;
 
-        // GSAP horizontal scroll animation
         const ctx = gsap.context(() => {
             gsap.set(container, { x: 0 });
-            ScrollTrigger.killAll(); // Remove previous triggers for hot reload
+            ScrollTrigger.killAll();
+
             ScrollTrigger.create({
                 trigger: wrapper,
                 start: "top top",
-                end: () => `${scrollDistance}px`,
+                end: () => `+=${scrollDistance}px`,
                 pin: true,
                 anticipatePin: 1,
                 scrub: true,
@@ -71,6 +87,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
             <Box bg="brandNeutral.500">
                 <FeatureHeroSection
                     featureGroup={data.heroSectionData.featureGroup}
+                    featureGroupIcon={data.heroSectionData.featureGroupIcon}
                     title={data.heroSectionData.title}
                     subtitle={data.heroSectionData.subtitle}
                     features={data.heroSectionData.features}
@@ -86,7 +103,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                     >
                         <Image src="/bg-top-footer.svg" alt="Wave divider" width="100%" />
                     </Box>
-                    <Container width="1152px" mx="auto" px="0">
+                    <Container width="1152px" mx="auto" px="0" zIndex="9999">
                         <Flex gap="120px" direction="column">
                             {data.featureBlocks.map((block, index) => (
                                 <Flex key={index} display="flex" align="center" gap="60px" flexDirection={index % 2 === 0 ? "row" : "row-reverse"}>
@@ -96,7 +113,12 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                                 {block.heading}
                                             </Heading>
                                             <Text color="brandNavy.500" fontSize="1rem" fontWeight="400" lineHeight="161.345%">
-                                                {block.text}
+                                                {block.text.split('\n').map((line, index) => (
+                                                    <React.Fragment key={index}>
+                                                        {line}
+                                                        {index < block.text.split('\n').length - 1 && <br />}
+                                                    </React.Fragment>
+                                                ))}
                                             </Text>
                                         </Flex>
                                     </Box>
@@ -120,94 +142,102 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
             >
                 <Image src="/bg-bottom-footer-flip.svg" alt="Wave divider" width="100%" />
             </Box>
-            <Container
-                maxW="100%"
-                px="0"
-                overflow="hidden"
-                position="relative"
-                zIndex="2"
-                marginTop="-340px" // Adjust this value to control the overlap
-            >
-                <Heading as="h2" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" mb="16" mt="0" color="brandNavy.500">
-                    Scale your design workflow with<br />InDesign automation
+            <Container maxW="100%" px="0" overflow="hidden" position="relative" zIndex="2">
+                <Heading
+                    as="h2"
+                    pt="16"
+                    fontSize="3rem"
+                    fontWeight="700"
+                    textAlign="center"
+                    lineHeight="102.811%"
+                    color="brandNavy.500"
+                    zIndex="10"
+                    bg="brandNeutral.200"
+                    position="sticky"
+                    top="0"
+                    ref={headingRef}
+                    className="scroll-out-heading"
+                    opacity="1"
+                >
+                    Scale your design workflow with<br />InDesign automationnnnn
                 </Heading>
                 <Box
                     ref={howItWorksWrapperRef}
                     position="relative"
                     overflow="hidden"
-                    height="auto"
-                    minHeight="100vh"
+                    height="100vh"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                 >
                     <Flex
                         ref={scrollContainerRef}
                         position="absolute"
-                        top="50%"
                         left="0"
-                        transform="translateY(-50%)"
                         overflow="visible"
                         px={containerPadding}
-                        css={{
-                            '&::-webkit-scrollbar': {
-                                display: 'none',
-                            },
-                            'scrollbarWidth': 'none',
-                            'msOverflowStyle': 'none',
-                        }}
-                        style={{
-                            willChange: 'transform'
-                        }}
+                        height="100%"
+                        alignItems="center"
                     >
-                        {data.HowItWorksSteps.map((step, index) => (
-                            <Box
-                                key={index}
-                                flex="0 0 auto"
-                                bg="brandNavy.500"
-                                borderRadius="36px"
-                                p="60px"
-                                width="1152px"
-                                minW="1152px"
-                                mr="120px"
-                                zIndex="9999"
-                            >
-                                <Flex>
-                                    <Box width="50%" pr={8}>
-                                        <Text bg="brandFuchsia.500" color="white" fontWeight="bold" fontSize="sm" px="3" py="1" borderRadius="md" mb={4} display="inline-block">
-                                            {step.label}
-                                        </Text>
-                                        <Heading
-                                            color="brandNeutral.500"
-                                            as="h3"
-                                            fontSize={["3xl", "4xl", "5xl"]}
-                                            fontWeight="700"
-                                            lineHeight="100%"
-                                            mt="0"
-                                            mb="0"
-                                            letterSpacing="tight"
-                                        >
-                                            {step.title}
-                                        </Heading>
-                                        <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
-                                            {step.description}
-                                        </Text>
-                                    </Box>
-                                    <Box width="50%">
-                                        <Image src={step.image} alt={`Step ${step.step}`} borderRadius="2xl" width="100%" height="100%" objectFit="cover" />
-                                    </Box>
+                        <Flex alignItems="center">
+                            {data.HowItWorksSteps.map((step, index) => (
+                                <Flex
+                                    key={index}
+                                    flexShrink={0}
+                                    bg="brandNavy.500"
+                                    borderRadius="xxl"
+                                    p="15"
+                                    width="1152px"
+                                    minW="1152px"
+                                    mr="30"
+                                    zIndex="9999"
+                                    boxShadow="realistic"
+                                >
+                                    <Flex width="100%" gap="15">
+                                        <Flex width="50%" direction="column" gap="2">
+                                            <Flex
+                                                bg="brandPurple.600"
+                                                p="3"
+                                                borderRadius="md"
+                                                display="inline-flex"
+                                                alignSelf="flex-start"
+                                            >
+                                                <Text
+                                                    color="white"
+                                                    fontWeight="bold"
+                                                    fontSize="2xl"
+                                                    lineHeight={1}
+                                                    whiteSpace="nowrap"
+                                                >
+                                                    {step.label}
+                                                </Text>
+                                            </Flex>
+                                            <Flex gap="2" direction="column" justify="center" height="100%">
+                                                <Heading
+                                                    color="brandNeutral.500"
+                                                    as="h3"
+                                                    fontSize={["3xl", "4xl", "5xl"]}
+                                                    fontWeight="700"
+                                                    lineHeight="100%"
+                                                    mt="0"
+                                                    mb="0"
+                                                    letterSpacing="tight"
+                                                >
+                                                    {step.title}
+                                                </Heading>
+                                                <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
+                                                    {step.description}
+                                                </Text>
+                                            </Flex>
+                                        </Flex>
+                                        <Flex width="50%">
+                                            <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                                        </Flex>
+                                    </Flex>
                                 </Flex>
-                            </Box>
-                        ))}
+                            ))}
+                        </Flex>
                     </Flex>
-                </Box>
-                <Box textAlign="center" mt={8} mb={32}>
-                    <Link
-                        href="/get-started"
-                        color="brandFuchsia.500"
-                        fontSize="lg"
-                        fontWeight="bold"
-                        _hover={{ textDecoration: "underline" }}
-                    >
-                        Set up your first automation →
-                    </Link>
                 </Box>
             </Container>
 

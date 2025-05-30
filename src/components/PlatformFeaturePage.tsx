@@ -39,6 +39,7 @@ interface CTAData {
 
 interface HeroSectionData {
   featureGroup: string;
+  featureGroupIcon: string;
   title: string;
   subtitle: string;
   features: string[];

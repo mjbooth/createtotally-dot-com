@@ -1,4 +1,3 @@
-import React from 'react';
 import * as GoIcons from "react-icons/go";
 import * as HiIcons from "react-icons/hi";
 import * as PiIcons from "react-icons/pi";
@@ -29,28 +28,26 @@ const iconLibraries: { [key: string]: { [key: string]: IconType } } = {
   Ti: TiIcons,
 };
 
-export const getIcon = (iconName?: string): IconType | null => {
-  if (!iconName) return null;
+export const getIcon = (iconName?: string): IconType | undefined => {
+  if (!iconName) return undefined;
 
   const prefix = iconName.slice(0, 2);
   const library = iconLibraries[prefix];
 
   if (!library) {
     console.warn(`Unknown icon prefix for "${iconName}"`);
-    return null;
+    return undefined;
   }
 
   const IconComponent = library[iconName];
 
   if (!IconComponent) {
     console.warn(`Icon "${iconName}" not found in ${prefix}Icons`);
-    return null;
+    return undefined;
   }
 
   return IconComponent;
 };
 
-export const renderIcon = (iconName?: string) => {
-  const IconComponent = getIcon(iconName);
-  return IconComponent ? React.createElement(IconComponent) : null;
-};
+export const renderIcon = getIcon;
+
