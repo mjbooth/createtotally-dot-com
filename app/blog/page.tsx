@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Box, Heading, Text, Container, Image, SimpleGrid } from '@chakra-ui/react';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 
+
 export default async function BlogPage() {
   try {
     await testConnection();
@@ -15,6 +16,7 @@ export default async function BlogPage() {
         <Box pt="40">
           <FeatureHeroSection
             featureGroup="Resources"
+            featureGroupIcon="MdArticle"
             title="Stories, work, and what's sparking our curiosity."
             subtitle=""
             features={[]}
