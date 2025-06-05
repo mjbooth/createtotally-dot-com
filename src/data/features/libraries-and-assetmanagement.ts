@@ -21,10 +21,10 @@ export const LibrariesAndAssetManagementPageData = {
     title: "Centralise your assets to amplify your creative output",
     subtitle: "Organise, tag, and connect your creative content without extra tools or confusion. Power your templates with a single source of truth that makes automation simple, consistent and scalable.",
     features: [
-      "Effortless approvals.",
-      "Automatic delivery.",
-      "Complete control.",
-      "Zero friction.",
+      "Complete control",
+      "Instant access",
+      "Maximum reuse",
+      "Zero duplication",
     ]
   },
   featureBlocks: [
@@ -44,11 +44,12 @@ export const LibrariesAndAssetManagementPageData = {
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     },
     {
-      heading: "Connect your content directly to production",
+      heading: "Solution: Connect your content directly to production",
       text: "CreateTOTALLY's integrated libraries transform how you manage creative content. Upload, organise and connect your assets directly within the platform. The result? A seamless production engine where content flows exactly where and when it's needed.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     }
   ],
+  howItWorksHeading: "Ready to scale your designs without compromise?",
   HowItWorksSteps: [
     {
       step: 1,
@@ -67,7 +68,7 @@ export const LibrariesAndAssetManagementPageData = {
     {
       step: 3,
       label: "Step three",
-      title: "Auto-generate translation workflows",
+      title: "Auto-generate translation documents",
       description: "When you upload a template, CreateTOTALLY analyses the design and creates an editable copy document. Each text layer appears in an organised Excel file. Add translations in separate columns and import back to update all linked templates.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     }
@@ -80,7 +81,7 @@ export const LibrariesAndAssetManagementPageData = {
     company: "Lukkien",
   },
   ctaData: {
-    title: "Built for automation, designed for simplicity",
+    title: "Built for automation, designed for simplicity.",
     buttonText: "Get started today →"
   },
 };

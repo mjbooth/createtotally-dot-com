@@ -107,9 +107,11 @@ export const FigmaPageData = {
     }
   ],
   testimonialData: {
-    quote: "We used to spend days on adaptation. Now it takes minutes.",
-    author: "",
-    company: "PerfectDraft"
+    quote: "In just a few days we created 750+ videos using\nCreateTOTALLY. It’s cheaper, more consistent and speedy...\nit’ll be an important tool for Lukkien in the future.",
+    author: "Mattijs van Moorsel",
+    role: "Head of Production",
+    avatar: "/feature-placeholder-FiPenTool-sqr.jpg",
+    company: "Lukkien",
   },
   ctaData: {
     title: "Ready to reclaim your creative time?",

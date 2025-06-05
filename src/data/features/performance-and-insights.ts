@@ -15,6 +15,7 @@ export const PerformanceAndInsightsPageData = {
       ],
     },
   },
+  howItWorksHeading: "Ready to scale your designs without compromise?",
   heroSectionData: {
     featureGroup: "Performance & Insights",
     featureGroupIcon: "BiSolidBarChartAlt2",

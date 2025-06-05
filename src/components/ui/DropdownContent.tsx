@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Stack, Heading, Button, Flex, HStack, Icon } from '@chakra-ui/react';
+import { Box, Heading, Button, Flex, HStack, Icon, VStack } from '@chakra-ui/react';
 import { renderIcon } from '@/src/utils/iconUtils';
 import NextLink from 'next/link';
 
@@ -9,7 +9,7 @@ interface MenuContent {
     links: Array<{ label: string; href: string; icon?: string; visible?: boolean; }>;
     col?: number;
     wrapAfter?: number;
-    visible?: boolean; // Add this line
+    visible?: boolean;
   };
 }
 
@@ -25,55 +25,52 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
   if (!content) return null;
 
   return (
-    <Flex flexWrap="wrap" gap={20} p={20}>
+    <Flex flexWrap="wrap" gap={{ base: 4, md: 20 }} p={{ base: 4, md: 20 }} direction={{ base: "column", md: "row" }}>
       {Object.entries(content).map(([key, column]) => (
-        column.visible !== false && ( // Add this line
-          <Box key={key}>
+        column.visible !== false && (
+          <Box key={key} width={{ base: "100%", md: "auto" }}>
             <Box fontSize="14px">
               <Heading color="brandNavy.500" as="h3" size="md" m={0} textTransform="normal" fontSize="md" fontWeight="700">
                 {column.title}
               </Heading>
-              <Flex mt={2}>
-                <Stack gap={1} flex={1} overflowY="hidden">
-                  {column.links.map((link, index) => (
-                    link.visible !== false && (
-
-                      <Button
-                        asChild
-                        key={index}
-                        color="brandNavy.500"
-                        bg="transparent"
-                        _hover={{ color: "brandFuchsia.500", bg: "transparent", fontWeight: "500" }}
-                        _active={{ color: "brandFuchsia.700", bg: "brandPurple.100" }}
-                        whiteSpace="nowrap"
-                        overflow="hidden"
-                        textOverflow="ellipsis"
-                        px="0"
-                      >
-                        <NextLink href={link.href} style={{
-                          display: 'flex',
-                          width: '100%',
-                          textAlign: 'left',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center'
-                        }}>
-                          <HStack gap={2}>
-                            {link.icon && (
-                              <Icon
-                                as={renderIcon(link.icon)}
-                                boxSize="18px"
-                                color="currentColor"
-                              />
-                            )}
-                            <Box as="span">{link.label}</Box>
-                          </HStack>
-                        </NextLink>
-                      </Button>
-
-                    )
-                  ))}
-                </Stack>
-              </Flex>
+              <VStack mt={2} align="stretch" gap={1}>
+                {column.links.map((link, index) => (
+                  link.visible !== false && (
+                    <Button
+                      asChild
+                      key={index}
+                      color="brandNavy.500"
+                      bg="transparent"
+                      _hover={{ color: "brandFuchsia.500", bg: "transparent", fontWeight: "500" }}
+                      _active={{ color: "brandFuchsia.700", bg: "brandPurple.100" }}
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      px="0"
+                      justifyContent="flex-start"
+                    >
+                      <NextLink href={link.href} style={{
+                        display: 'flex',
+                        width: '100%',
+                        textAlign: 'left',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
+                      }}>
+                        <HStack gap={2}>
+                          {link.icon && (
+                            <Icon
+                              as={renderIcon(link.icon)}
+                              boxSize="18px"
+                              color="currentColor"
+                            />
+                          )}
+                          <Box as="span">{link.label}</Box>
+                        </HStack>
+                      </NextLink>
+                    </Button>
+                  )
+                ))}
+              </VStack>
             </Box>
           </Box>
         )

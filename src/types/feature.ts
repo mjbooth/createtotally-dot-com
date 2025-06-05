@@ -24,7 +24,9 @@ export interface FeaturePageData {
         heading: string;
         text: string;
         image: string;
+        vimeoId?: string;
     }>;
+    howItWorksHeading: string; // Add this new property
     HowItWorksSteps: Array<{
         step: number;
         label: string;

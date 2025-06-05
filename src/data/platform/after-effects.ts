@@ -112,9 +112,11 @@ export const AfterEffectsPageData = {
     ]
   },
   testimonialData: {
-    quote: "A lovely quote from someone at Miele",
-    author: "",
-    company: "Miele"
+    quote: "In just a few days we created 750+ videos using\nCreateTOTALLY. It’s cheaper, more consistent and speedy...\nit’ll be an important tool for Lukkien in the future.",
+    author: "Mattijs van Moorsel",
+    role: "Head of Production",
+    avatar: "/feature-placeholder-FiPenTool-sqr.jpg",
+    company: "Lukkien",
   },
   ctaData: {
     title: "Ready to reclaim your creative time?",

@@ -1,20 +1,27 @@
 "use client";
 
-import { Container, Box, Text, Link, Heading, Button, Image, Flex, Avatar, useBreakpointValue, } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, Button, Image, Flex, Avatar, useBreakpointValue, AspectRatio, } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useRef, useLayoutEffect, useEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState, lazy, } from 'react';
 import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SwooshDivider } from '@/src/components/SwooshDivider';
 import { FeaturePageData } from "@/src/types/feature";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
+const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
 
 export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
+
+    const [currentStep, setCurrentStep] = useState(0);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+
+    const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
 
     useEffect(() => {
         const heading = headingRef.current;
@@ -36,7 +43,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     useLayoutEffect(() => {
         const wrapper = howItWorksWrapperRef.current;
         const container = scrollContainerRef.current;
-        if (!wrapper || !container) return;
+        if (!wrapper || !container || isMobile()) return;
 
         const numSteps = data.HowItWorksSteps.length;
         const cardWidth = 1152;
@@ -74,9 +81,108 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
         };
     }, [data.HowItWorksSteps.length]);
 
-    const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (touchStart === null) {
+            return;
+        }
+
+        const currentTouch = e.touches[0].clientX;
+        const diff = touchStart - currentTouch;
+
+        if (diff > 50) {
+            // Swipe left
+            setCurrentStep((prev) => Math.min(prev + 1, data.HowItWorksSteps.length - 1));
+        }
+
+        if (diff < -50) {
+            // Swipe right
+            setCurrentStep((prev) => Math.max(prev - 1, 0));
+        }
+
+        setTouchStart(null);
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile()) {
+                resetLayoutForMobile();
+            } else {
+                setupGSAPForDesktop();
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [data.HowItWorksSteps.length]);
+
+    const setupGSAPForDesktop = () => {
+        const wrapper = howItWorksWrapperRef.current;
+        const container = scrollContainerRef.current;
+        if (!wrapper || !container || isMobile()) return;
+
+        const existingPinSpacer = document.querySelector('.pin-spacer');
+        if (existingPinSpacer) {
+            const parent = existingPinSpacer.parentNode;
+            while (existingPinSpacer.firstChild) parent?.insertBefore(existingPinSpacer.firstChild, existingPinSpacer);
+            parent?.removeChild(existingPinSpacer);
+        }
+
+        const numSteps = data.HowItWorksSteps.length;
+        const cardWidth = 1152;
+        const cardMargin = 120;
+        const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
+        const extraOffset = (window.innerWidth - cardWidth) / 2;
+        const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
+
+        container.style.width = `${containerWidth}px`;
+
+        gsap.set(container, { x: 0 });
+        ScrollTrigger.killAll();
+
+        ScrollTrigger.create({
+            trigger: wrapper,
+            start: "top top",
+            end: () => `+=${scrollDistance}px`,
+            pin: true,
+            anticipatePin: 1,
+            scrub: true,
+            invalidateOnRefresh: true,
+            onUpdate: self => {
+                gsap.to(container, {
+                    x: -scrollDistance * self.progress,
+                    duration: 0,
+                    overwrite: "auto",
+                });
+            },
+        });
+    };
+
+    const resetLayoutForMobile = () => {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.style.width = '100%';
+            scrollContainerRef.current.style.transform = 'none';
+        }
+        if (howItWorksWrapperRef.current) {
+            howItWorksWrapperRef.current.style.height = 'auto';
+            howItWorksWrapperRef.current.style.overflow = 'visible';
+        }
+        // Remove pin-spacer
+        const pinSpacer = document.querySelector('.pin-spacer');
+        if (pinSpacer) {
+            const parent = pinSpacer.parentNode;
+            while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
+            parent?.removeChild(pinSpacer);
+        }
+    };
+
     return (
-        <Box bg="brandNeutral.200" pt="40">
+        <Box bg="brandNeutral.200" pt={{ base: "24", md: "40" }}>
             <Box bg="brandNeutral.500">
                 <FeatureHeroSection
                     featureGroup={data.heroSectionData.featureGroup}
@@ -85,34 +191,77 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     subtitle={data.heroSectionData.subtitle}
                     features={data.heroSectionData.features}
                 />
-                <Box position="relative" pb="120px">
-                    <Box
-                        position="absolute"
-                        top="-110px"  // Adjust this value to position the wave exactly where you want it
-                        left="50%"
-                        transform="translateX(-50%)"
-                        width="100vw"
-                        zIndex="1"
-                    >
-                        <Image src="/bg-top-footer.svg" alt="Wave divider" width="100%" />
-                    </Box>
-                    <Container width="1152px" mx="auto" px="0" zIndex="9999">
-                        <Flex gap="120px" direction="column">
+                <Box
+                    position="relative"
+                    bg="brandNeutral.500"
+                    zIndex="2"
+                    backgroundImage="url('/wave-FFFCFB-F4F0EB.svg')"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="top center"
+                    backgroundSize="100% auto"
+                    css={{
+                        transform: 'scaleX(-1)',
+                        '& > *': {
+                            transform: 'scaleX(-1)'
+                        }
+                    }}
+                >
+                    <Container maxW={{ base: "100%", md: "1152px" }} mx="auto" px={{ base: 4, md: 0 }} zIndex="9999">
+                        <Flex gap={{ base: "15", md: "32" }} direction="column" pt="32">
                             {data.featureBlocks.map((block, index) => {
                                 const isLastItem = index === data.featureBlocks.length - 1;
 
                                 if (isLastItem) {
                                     // Special layout for the last item
                                     return (
-                                        <Flex key={index} direction="column" align="center" textAlign="center">
-                                            <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="700" mb="4" lineHeight="100%" letterSpacing="tight">
+                                        <Flex
+                                            key={index}
+                                            direction="column"
+                                            align="center"
+                                            textAlign="center"
+                                            px={{ base: 4, md: 0 }}
+                                            pb="8"
+                                        >
+                                            <Heading
+                                                as="h2"
+                                                color="brandNavy.500"
+                                                fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                                                fontWeight="700"
+                                                mb={{ base: 3, md: 4 }}
+                                                lineHeight="100%"
+                                                letterSpacing="tight"
+                                            >
                                                 {block.heading}
                                             </Heading>
-                                            <Text color="brandNavy.500" fontSize="1rem" fontWeight="400" lineHeight="160%" mb="8" maxW="3xl">
+                                            <Text
+                                                color="brandNavy.500"
+                                                fontSize={{ base: "sm", md: "md", lg: "1rem" }}
+                                                fontWeight="400"
+                                                lineHeight="160%"
+                                                mb={{ base: 6, md: 8 }}
+                                                maxW={{ base: "full", md: "3xl" }}
+                                            >
                                                 {block.text}
                                             </Text>
-                                            <Box overflow="hidden" borderRadius="xxl" boxShadow="realistic" maxW="3xl">
-                                                <Image src={block.image} alt={block.heading} width="100%" />
+                                            <Box
+                                                overflow="hidden"
+                                                borderRadius={{ base: "xl", md: "xxl" }}
+                                                maxW={{ base: "full", md: "3xl" }}
+                                                width="100%"
+                                            >
+                                                {block.vimeoId ? (
+                                                    <Vimeo
+                                                        video={`https://vimeo.com/${block.vimeoId}`}
+                                                        responsive={true}
+                                                        autopause={false}
+                                                        autoplay={false}
+                                                        loop={true}
+                                                        controls={true}
+                                                        muted={true}
+                                                    />
+                                                ) : (
+                                                    <Image src={block.image} alt={block.heading} width="100%" />
+                                                )}
                                             </Box>
                                         </Flex>
                                     );
@@ -120,13 +269,34 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
                                 // Original layout for other items
                                 return (
-                                    <Flex key={index} display="flex" align="center" gap="60px" flexDirection={index % 2 === 0 ? "row" : "row-reverse"}>
-                                        <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
-                                            <Flex gap="8px" direction="column">
-                                                <Heading as="h2" color="brandNavy.500" fontSize="5xl" fontWeight="700" textAlign="left" lineHeight="100%" mb="0" mt="0">
+                                    <Flex
+                                        key={index}
+                                        direction={{ base: "column", md: index % 2 === 0 ? "row" : "row-reverse" }}
+                                        align={{ base: "center", md: "center" }}
+                                        gap={{ base: "8", md: "15" }}
+                                        px={{ base: 4, md: 0 }}
+                                    >
+                                        <Box flex={{ base: "1", md: "1" }} width={{ base: "100%", md: "50%" }}>
+                                            <Flex gap="4" direction="column">
+                                                <Heading
+                                                    as="h2"
+                                                    color="brandNavy.500"
+                                                    fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                                                    fontWeight="700"
+                                                    textAlign={{ base: "center", md: "left" }}
+                                                    lineHeight="100%"
+                                                    mb="0"
+                                                    mt="0"
+                                                >
                                                     {block.heading}
                                                 </Heading>
-                                                <Text color="brandNavy.500" fontSize="1rem" fontWeight="400" lineHeight="161.345%">
+                                                <Text
+                                                    color="brandNavy.500"
+                                                    fontSize={{ base: "sm", md: "md", lg: "1rem" }}
+                                                    fontWeight="400"
+                                                    lineHeight="161.345%"
+                                                    textAlign={{ base: "center", md: "left" }}
+                                                >
                                                     {block.text.split('\n').map((line, lineIndex) => (
                                                         <React.Fragment key={lineIndex}>
                                                             {line}
@@ -136,9 +306,14 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                 </Text>
                                             </Flex>
                                         </Box>
-                                        <Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
+                                        <Box flex={{ base: "1", md: "1" }} width={{ base: "100%", md: "50%" }}>
                                             <Box width="100%" overflow="hidden">
-                                                <Image src={block.image} alt={block.heading} width="100%" borderRadius="4xl" />
+                                                <Image
+                                                    src={block.image}
+                                                    alt={block.heading}
+                                                    width="100%"
+                                                    borderRadius={{ base: "xl", md: "4xl" }}
+                                                />
                                             </Box>
                                         </Box>
                                     </Flex>
@@ -149,50 +324,97 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 </Box>
             </Box>
 
-            <Box
-                position="relative"
-                bg="brandNeutral.200"
-                zIndex="2"
-                backgroundImage="url('/bg-bottom-footer-flip.svg')"
-                backgroundRepeat="no-repeat"
-                backgroundPosition="top center"
-                backgroundSize="100% auto"
-                pt="100px"
-            >
-                <Container
-                    maxW="100%"
-                    px="0"
-                    overflow="hidden"
-                    position="relative"
-                >
-                    <Heading
-                        as="h2"
-                        pt="16"
-                        fontSize="3rem"
-                        fontWeight="700"
-                        textAlign="center"
-                        lineHeight="102.811%"
-                        color="brandNavy.500"
-                        zIndex="10"
-                        position="sticky"
-                        top="0"
-                        ref={headingRef}
-                        className="scroll-out-heading"
-                        opacity="1"
-                        pb="16"
-                    >
-                        Scale your design workflow with<br />InDesign automation
+            {/* How it works copy/paste */}
+            <Box position="relative" bg="brandNeutral.200" zIndex="2" backgroundImage="url('/bg-bottom-footer-flip.svg')" backgroundRepeat="no-repeat" backgroundPosition="top center" backgroundSize="100% auto" pt="100px" >
+                <Container maxW="100%" px="0" overflow="hidden" position="relative" >
+                    <Heading as="h2" pt="16" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" color="brandNavy.500" zIndex="10" position="sticky" top="0" ref={headingRef} className="scroll-out-heading" opacity="1" pb="16" >
+                        How it works
                     </Heading>
                     <Box
                         ref={howItWorksWrapperRef}
                         position="relative"
                         overflow="hidden"
-                        height="100vh"
+                        height={{ base: "auto", md: "100vh" }}
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
                     >
+                        {/* Mobile view */}
+                        <Box
+                            display={{ base: "block", md: "none" }}
+                            width="100%"
+                            px="4"
+                            position="relative"
+                            overflow="hidden"
+                        >
+                            <Flex
+                                direction="row"
+                                width={`${data.HowItWorksSteps.length * 100}%`}
+                                transform={`translateX(-${currentStep * (100 / data.HowItWorksSteps.length)}%)`}
+                                transition="transform 0.3s ease"
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                            >
+                                {data.HowItWorksSteps.map((step, index) => (
+                                    <Box
+                                        key={index}
+                                        width={`${100 / data.HowItWorksSteps.length}%`}
+                                        flexShrink={0}
+                                        px="2"
+                                    >
+                                        <Box
+                                            bg="brandNavy.500"
+                                            borderRadius="xl"
+                                            p="6"
+                                            boxShadow="realistic"
+                                        >
+                                            <Flex gap="6" direction="column">
+                                                <AspectRatio ratio={1 / 1}>
+                                                    <Image
+                                                        src={step.image}
+                                                        alt={`Step ${step.step}`}
+                                                        borderRadius="lg"
+                                                        width="100%"
+                                                        height="auto"
+                                                        objectFit="cover"
+                                                    />
+                                                </AspectRatio>
+                                                <Flex gap="3" direction="column">
+                                                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
+                                                        <Text color="brandNeutral.200" fontWeight="bold" fontSize="md" lineHeight={1} whiteSpace="nowrap">
+                                                            {step.label}
+                                                        </Text>
+                                                    </Flex>
+                                                    <Heading color="brandNeutral.500" as="h3" fontSize="2xl" fontWeight="700">
+                                                        {step.title}
+                                                    </Heading>
+                                                    <Text color="brandNeutral.500" fontSize="md">
+                                                        {step.description}
+                                                    </Text>
+                                                </Flex>
+                                            </Flex>
+                                        </Box>
+                                    </Box>
+                                ))}
+                            </Flex>
+                            <Flex justify="center" mt="8" mb="8">
+                                {data.HowItWorksSteps.map((_, index) => (
+                                    <Box
+                                        key={index}
+                                        w="4"
+                                        h="4"
+                                        borderRadius="full"
+                                        bg={currentStep === index ? "brandPurple.500" : "gray.300"}
+                                        mx="1"
+                                        onClick={() => setCurrentStep(index)}
+                                    />
+                                ))}
+                            </Flex>
+                        </Box>
+
+                        {/* Desktop view */}
                         <Flex
+                            display={{ base: "none", md: "flex" }}
                             ref={scrollContainerRef}
                             position="absolute"
                             left="0"
@@ -216,35 +438,14 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                         boxShadow="realistic"
                                     >
                                         <Flex width="100%" gap="15">
-                                            <Flex width="50%" direction="column" gap="2">
-                                                <Flex
-                                                    bg="brandPurple.600"
-                                                    p="3"
-                                                    borderRadius="md"
-                                                    display="inline-flex"
-                                                    alignSelf="flex-start"
-                                                >
-                                                    <Text
-                                                        color="white"
-                                                        fontWeight="bold"
-                                                        fontSize="2xl"
-                                                        lineHeight={1}
-                                                        whiteSpace="nowrap"
-                                                    >
+                                            <Flex width="50%" direction="column" gap="4">
+                                                <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
+                                                    <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
                                                         {step.label}
                                                     </Text>
                                                 </Flex>
                                                 <Flex gap="2" direction="column" justify="center" height="100%">
-                                                    <Heading
-                                                        color="brandNeutral.500"
-                                                        as="h3"
-                                                        fontSize={["3xl", "4xl", "5xl"]}
-                                                        fontWeight="700"
-                                                        lineHeight="100%"
-                                                        mt="0"
-                                                        mb="0"
-                                                        letterSpacing="tight"
-                                                    >
+                                                    <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
                                                         {step.title}
                                                     </Heading>
                                                     <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
@@ -261,6 +462,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                             </Flex>
                         </Flex>
                     </Box>
+
                 </Container>
             </Box>
 
@@ -271,22 +473,22 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="center"
-                        p="6.25rem"
+                        p={{ base: "4", md: "16", lg: "24" }}
                     >
                         <Flex
                             bg="#EBDFF6"
                             borderRadius="xxl"
                             maxW="ctContainer"
-                            p="15"
+                            p={{ base: "8", md: "16", lg: "15" }}
                         >
                             <Flex
                                 flexDirection="column"
                                 alignItems="left"
                                 justifyContent="center"
-                                gap="15"
+                                gap={{ base: "8", md: "16", lg: "15" }}
                             >
                                 <Text
-                                    fontSize="4xl"
+                                    fontSize={{ base: "2xl", md: "4xl", lg: "4xl" }}
                                     fontWeight="700"
                                     color="brandPurple.600"
                                     letterSpacing="tight"
@@ -319,7 +521,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                             fontWeight="400"
                                             color="brandPurple.600"
                                             textAlign="left"
-                                            fontSize="xl"
+                                            fontSize={{ base: "md", md: "lg", lg: "xl" }}
                                             fontStyle="normal"
                                             lineHeight="110%"
                                             letterSpacing="-0.12px"
@@ -336,18 +538,19 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 </Box>
             </Container>
 
-
-
-            <Box position="relative" bg="brandNeutral.200" pb="15">
-                <Box bg="brandNeutral.200">
-                    <SwooshDivider fill="#F4F0EB" />
-                </Box>
+            <Box
+                position="relative"
+                bg="brandNeutral.200"
+                zIndex="2"
+                backgroundImage="url('/wave-F4F0EB.svg')"
+                backgroundRepeat="no-repeat"
+                backgroundPosition="top center"
+                backgroundSize="100% auto"
+            >
                 <Container position="relative">
                     <Box
-                        position="relative"
-                        marginTop={{ base: "-120px", md: "-220px" }}
-                        zIndex={1}
-                        px={4}
+                        px={{ base: "0", md: "4", lg: "4" }}
+                        py={{ base: "16", md: "30", lg: "30" }}
                     >
                         <Flex
                             maxW="3xl"
@@ -356,13 +559,13 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                             borderRadius="xxl"
                             boxShadow="realistic"
                             textAlign="center"
-                            p="15"
+                            p={{ base: "8", md: "15", lg: "15" }}
                             gap="15"
                             direction="column"
                             alignItems="center"
                         >
                             <Text
-                                fontSize={{ base: "xl", md: "3xl", lg: "3rem" }}
+                                fontSize={{ base: "4xl", md: "3xl", lg: "3rem" }}
                                 fontWeight="bold"
                                 color="brandNeutral.500"
                                 lineHeight="100%"
@@ -373,7 +576,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                             <Link href="/get-started">
                                 <Button
                                     py="6"
-                                    px="10"
+                                    px={{ base: "4", md: "10", lg: "10" }}
                                     fontSize={{ base: "md", md: "lg", lg: "xl" }}
                                     variant="solid"
                                     colorPalette="brandFuchsia"
@@ -386,6 +589,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     </Box>
                 </Container>
             </Box>
-        </Box>
+        </Box >
     );
 }

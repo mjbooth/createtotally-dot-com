@@ -35,63 +35,60 @@ export const EasyTemplatingPageData = {
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     },
     {
-      heading: "Converting designs into templates shouldn't require a developer",
-      text: "Right now, turning a finished design into a flexible template demands coding skills or technical expertise. This dependency hits precisely when production pressure peaks—leaving your creative team waiting instead of creating, and your campaigns delayed when speed matters most.",
+      heading: "Work with your actual design files",
+      text: "Our StudioCraft plugins integrate directly with the creative tools your team already uses.  \n\nNo coding. No workflow changes. No learning curve. Just automated template creation that preserves every design detail.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg"
     },
     {
-      heading: "Scale without sacrificing your brand",
+      heading: "Solution: Scale without creative sacrifice",
       text: "Your current system creates a false choice between creative integrity and production speed. As you expand across markets and channels, you're stuck doing time-consuming manual work or accepting watered-down designs. Meanwhile, content demand keeps growing and your team falls further behind.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      vimeoId: "1062060057"
     },
-    {
-      heading: "Work with your actual design files,\nnot rebuilding simplified versions",
-      text: "Our StudioCraft plugins integrate directly with the creative tools your team already uses. No workflow changes. No learning curve. Just automated template creation that preserves every design detail.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
-    }
   ],
+  howItWorksHeading: "Ready to scale your designs without compromise?",
   HowItWorksSteps: [
     {
       step: 1,
       label: "Step one",
       title: "Create your design as normal",
       description: "Work in Figma, InDesign, or other Adobe tools exactly as you always do.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/use-your-actual-design-files.png"
     },
     {
       step: 2,
       label: "Step two",
       title: "Install our StudioCraft plugin",
       description: "Access templating controls directly within your existing design environment.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/studiocraft-plugins.png"
     },
     {
       step: 3,
       label: "Step three",
       title: "Mark customisable elements",
-      description: "Identify which text, images, and components will vary across versions.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      description: "Identify which text, images, and components can vary across versions.",
+      image: "/mark-customisable-elements.png"
     },
     {
       step: 4,
       label: "Step four",
       title: "Set intelligent resizing rules",
       description: "Define how your design adapts to different formats and dimensions.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/resizing-rules.png"
     },
     {
       step: 5,
       label: "Step five",
       title: "Upload to CreateTOTALLY",
       description: "Our system analyses your file structure, preserving all layers and design features.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/upload-to-ct.png"
     },
     {
       step: 6,
       label: "Step six",
       title: "Generate content variations at scale",
-      description: "Use content plans to create hundreds of on-brand adaptations automatically",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      description: "Use content plans to create hundreds of on-brand adaptations, automatically.",
+      image: "/content-variations-at-scale.png"
     }
   ],
   testimonialData: {
@@ -109,6 +106,7 @@ export const EasyTemplatingPageData = {
 
 export const {
   featureBlocks,
+  howItWorksHeading,
   HowItWorksSteps,
   heroSectionData,
   testimonialData,

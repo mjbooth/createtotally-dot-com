@@ -1,4 +1,18 @@
 export interface PlatformPageData {
+    metadata: {
+        title: string;
+        description: string;
+        openGraph: {
+            title: string;
+            description: string;
+            images: Array<{
+                url: string;
+                width: number;
+                height: number;
+                alt: string;
+            }>;
+        };
+    };
     heroSectionData: {
         featureGroup: string;
         featureGroupIcon: string;
@@ -16,6 +30,7 @@ export interface PlatformPageData {
         text: string;
         image: string;
     };
+    howItWorksHeading: string;
     HowItWorksStep: {
         step: number;
         label: string;
