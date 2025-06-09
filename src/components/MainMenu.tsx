@@ -36,20 +36,21 @@ const MainMenu: React.FC = () => {
     hidden: { y: -navHeight },
   };
 
-  useEffect(() => {
-    setActiveMenu(false, null);
-  }, [pathname, setActiveMenu]);
-
-  useEffect(() => {
-    resetNav();
-  }, [pathname, resetNav]);
-
   const menuItems = [
     { label: 'Platform', hasDropdown: true },
     { label: 'Solutions', hasDropdown: true },
     { label: 'Pricing', hasDropdown: false, href: '/pricing' },
     { label: 'Resources', hasDropdown: true },
   ];
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setActiveMenu(false, null);
+  }, [pathname, setActiveMenu]);
+
+  useEffect(() => {
+    resetNav();
+  }, [pathname, resetNav]);
 
   const handleMenuClick = useCallback((label: string) => {
     if (activeMenu === label) {
@@ -63,12 +64,14 @@ const MainMenu: React.FC = () => {
     setActiveMenu(false, null);
   }, [setActiveMenu]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => {
+      return !prev;
+    });
     if (isNavOpen) {
       resetNav();
     }
-  };
+  }, [isNavOpen, resetNav]);
 
   const menuContent = {
     Platform: {
@@ -106,9 +109,9 @@ const MainMenu: React.FC = () => {
         col: 2,
         visible: true,
         links: [
-          { label: "Overview", href: "/pricing", icon: "TiStarOutline" },
-          { label: "Ways to Engage", href: "/pricing#ways-to-engage", icon: "TiStarHalfOutline" },
-          { label: "Compare Models", href: "/pricing#compare", icon: "TiStarFullOutline" },
+          { label: "Overview", href: "/pricing", icon: "MdViewInAr" },
+          { label: "Ways to Engage", href: "/pricing#ways-to-engage", icon: "TiStarFullOutline" },
+          { label: "Compare Models", href: "/pricing#compare", icon: "MdCompareArrows" },
         ],
       },
     },

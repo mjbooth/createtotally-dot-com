@@ -61,7 +61,7 @@ export const AfterEffectsPageData = {
     {
       heading: "Too many versions,\ntoo little time",
       text: "Every small text change, every asset swap, every language variant means reopening projects, hunting down layers, and manually adjusting compositions. Your skilled designers become glorified text editors, burning creative energy on monotonous tasks.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/too-many-versions.png"
     },
     {
       heading: "Rigid systems that fight your flow",
@@ -71,7 +71,7 @@ export const AfterEffectsPageData = {
     {
       heading: "Quality drops as speed climbs",
       text: "What looks perfect in a test render falls apart when you need to produce hundreds of variations. Typography issues, missing assets, plugin compatibility problems - suddenly, your streamlined process becomes a quality control nightmare.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/quality-drops.png"
     }
   ],
   HowItWorksSteps: [

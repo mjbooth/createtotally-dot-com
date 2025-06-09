@@ -23,6 +23,24 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
     const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
 
+    const [maxStepHeight, setMaxStepHeight] = useState(0);
+    const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
+        const calculateMaxHeight = () => {
+            const heights = stepRefs.current.map(ref => ref?.offsetHeight || 0);
+            const maxHeight = Math.max(...heights);
+            setMaxStepHeight(maxHeight);
+        };
+
+        calculateMaxHeight();
+        window.addEventListener('resize', calculateMaxHeight);
+
+        return () => {
+            window.removeEventListener('resize', calculateMaxHeight);
+        };
+    }, [data.HowItWorksSteps]);
+
     useEffect(() => {
         const heading = headingRef.current;
         if (!heading) return;
@@ -41,44 +59,61 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     }, []);
 
     useLayoutEffect(() => {
-        const wrapper = howItWorksWrapperRef.current;
-        const container = scrollContainerRef.current;
-        if (!wrapper || !container || isMobile()) return;
+        const runScrollTrigger = () => {
+            console.log("[HowItWorks] runScrollTrigger() called");
+            const wrapper = howItWorksWrapperRef.current;
+            const container = scrollContainerRef.current;
+            if (!wrapper || !container || isMobile()) {
+                console.warn("[HowItWorks] Skipped ScrollTrigger setup – wrapper or container not ready, or is mobile.");
+                return;
+            }
 
-        const numSteps = data.HowItWorksSteps.length;
-        const cardWidth = 1152;
-        const cardMargin = 120;
-        const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
-        const extraOffset = (window.innerWidth - cardWidth) / 2;
-        const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
+            const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
+            if (!isMobile()) {
+                container.style.width = `${container.scrollWidth}px`;
+            }
+            try {
+                console.log("[HowItWorks] Creating ScrollTrigger...");
+                const ctx = gsap.context(() => {
+                    gsap.set(container, { x: 0 });
+                    ScrollTrigger.getById('howItWorks')?.kill();
 
-        container.style.width = `${containerWidth}px`;
-
-        const ctx = gsap.context(() => {
-            gsap.set(container, { x: 0 });
-            ScrollTrigger.killAll();
-
-            ScrollTrigger.create({
-                trigger: wrapper,
-                start: "top top",
-                end: () => `+=${scrollDistance}px`,
-                pin: true,
-                anticipatePin: 1,
-                scrub: true,
-                invalidateOnRefresh: true,
-                onUpdate: self => {
-                    gsap.to(container, {
-                        x: -scrollDistance * self.progress,
-                        duration: 0,
-                        overwrite: "auto",
+                    ScrollTrigger.create({
+                        id: 'howItWorks',
+                        trigger: wrapper,
+                        start: "top top",
+                        end: () => `+=${scrollDistance}px`,
+                        pin: true,
+                        anticipatePin: 1,
+                        scrub: true,
+                        fastScrollEnd: true,         // ✅ Add this line
+                        invalidateOnRefresh: true,
+                        onUpdate: self => {
+                            gsap.to(container, {
+                                x: -scrollDistance * self.progress,
+                                duration: 0,
+                                overwrite: "auto",
+                            });
+                        },
                     });
-                },
-            });
-        }, wrapper);
+                    ScrollTrigger.refresh();
+                    setTimeout(() => ScrollTrigger.refresh(), 100);
+                }, wrapper);
+                console.log("[HowItWorks] ScrollTrigger created successfully.");
 
-        return () => {
-            ctx.revert();
+                return () => {
+                    ctx.revert();
+                };
+            } catch (error) {
+                console.error("[HowItWorks] ScrollTrigger setup failed:", error);
+            }
         };
+
+        if (document?.fonts?.ready) {
+            document.fonts.ready.then(runScrollTrigger);
+        } else {
+            runScrollTrigger();
+        }
     }, [data.HowItWorksSteps.length]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
@@ -132,14 +167,11 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
             parent?.removeChild(existingPinSpacer);
         }
 
-        const numSteps = data.HowItWorksSteps.length;
-        const cardWidth = 1152;
-        const cardMargin = 120;
-        const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
-        const extraOffset = (window.innerWidth - cardWidth) / 2;
-        const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
-
-        container.style.width = `${containerWidth}px`;
+        // Calculate scroll distance using scrollWidth and offsetWidth
+        const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
+        if (!isMobile()) {
+            container.style.width = `${container.scrollWidth}px`;
+        }
 
         gsap.set(container, { x: 0 });
         ScrollTrigger.killAll();
@@ -335,6 +367,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                         position="relative"
                         overflow="hidden"
                         height={{ base: "auto", md: "100vh" }}
+                        minHeight={{ base: "auto", md: "700px" }}
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
@@ -363,10 +396,13 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                         px="2"
                                     >
                                         <Box
+                                            ref={(el: HTMLDivElement | null) => stepRefs.current[index] = el}
                                             bg="brandNavy.500"
                                             borderRadius="xl"
                                             p="6"
                                             boxShadow="realistic"
+                                            height={maxStepHeight > 0 ? `${maxStepHeight}px` : 'auto'}
+                                            overflowY="auto"
                                         >
                                             <Flex gap="6" direction="column">
                                                 <AspectRatio ratio={1 / 1}>
@@ -433,7 +469,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                         p="15"
                                         width="1152px"
                                         minW="1152px"
-                                        mr="30"
+                                        mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
                                         zIndex="9999"
                                         boxShadow="realistic"
                                     >
