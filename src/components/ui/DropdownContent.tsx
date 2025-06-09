@@ -1,27 +1,15 @@
 import React from 'react';
-import {
-  Box,
-  Stack,
-  Grid,
-  GridItem,
-  Heading,
-  Link,
-  Flex,
-  Separator
-} from '@chakra-ui/react';
-import * as GoIcons from "react-icons/go";
-import * as HiIcons from "react-icons/hi";
-import * as PiIcons from "react-icons/pi";
-import * as MdIcons from "react-icons/md";
-import * as RiIcons from "react-icons/ri";
-import * as BsIcons from "react-icons/bs";
+import { Box, Heading, Button, Flex, HStack, Icon, VStack } from '@chakra-ui/react';
+import { renderIcon } from '@/src/utils/iconUtils';
+import NextLink from 'next/link';
 
 interface MenuContent {
   [key: string]: {
     title: string;
-    links: Array<{ label: string; href: string; icon?: string }>;
+    links: Array<{ label: string; href: string; icon?: string; visible?: boolean; }>;
     col?: number;
     wrapAfter?: number;
+    visible?: boolean;
   };
 }
 
@@ -31,79 +19,63 @@ interface DropdownContentProps {
     [key: string]: MenuContent;
   };
 }
-
 const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuContent }) => {
   const content = menuContent[activeMenu];
 
   if (!content) return null;
 
-  const renderIcon = (iconName?: string) => {
-    if (!iconName) return null;
-    
-    const prefix = iconName.slice(0, 2);
-    let IconComponent;
-
-    switch (prefix) {
-      case 'Go':
-        IconComponent = (GoIcons as any)[iconName];
-        break;
-      case 'Hi':
-        IconComponent = (HiIcons as any)[iconName];
-        break;
-      case 'Pi':
-        IconComponent = (PiIcons as any)[iconName];
-        break;
-      case 'Md':
-        IconComponent = (MdIcons as any)[iconName];
-        break;
-      case 'Ri':
-        IconComponent = (RiIcons as any)[iconName];
-          break;
-      case 'Bs':
-        IconComponent = (BsIcons as any)[iconName];
-          break;
-      // Add more cases for other icon libraries as needed
-      default:
-        console.warn(`Unknown icon prefix: ${prefix}`);
-        return null;
-    }
-
-    return IconComponent ? <IconComponent /> : null;
-  };
-
   return (
-    <Grid templateColumns="repeat(8, 1fr)" gap={16}>
+    <Flex flexWrap="wrap" gap={{ base: 4, md: 20 }} p={{ base: 4, md: 20 }} direction={{ base: "column", md: "row" }}>
       {Object.entries(content).map(([key, column]) => (
-        <GridItem key={key} colSpan={column.col || 1}>
-          <Box fontSize="14px">
-            <Heading color="gray.900" as="h3" size="md" mb={2} textTransform="uppercase" fontSize="14px">
-              {column.title}
-            </Heading>
-            <Separator size="xs" borderColor="gray.400" />
-            <Flex mt={2}>
-              <Stack gap={5} pl={1} flex={1}>
-                {column.links.slice(0, column.wrapAfter || column.links.length).map((link, index) => (
-                  <Link color="gray.900" key={index} href={link.href}>
-                    {renderIcon(link.icon)}
-                    {link.label}
-                  </Link>
+        column.visible !== false && (
+          <Box key={key} width={{ base: "100%", md: "auto" }}>
+            <Box fontSize="14px">
+              <Heading color="brandNavy.500" as="h3" size="md" m={0} textTransform="normal" fontSize="md" fontWeight="700">
+                {column.title}
+              </Heading>
+              <VStack mt={2} align="stretch" gap={1}>
+                {column.links.map((link, index) => (
+                  link.visible !== false && (
+                    <Button
+                      asChild
+                      key={index}
+                      color="brandNavy.500"
+                      bg="transparent"
+                      _hover={{ color: "brandFuchsia.500", bg: "transparent", fontWeight: "500" }}
+                      _active={{ color: "brandFuchsia.700", bg: "brandPurple.100" }}
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      px="0"
+                      justifyContent="flex-start"
+                    >
+                      <NextLink href={link.href} style={{
+                        display: 'flex',
+                        width: '100%',
+                        textAlign: 'left',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
+                      }}>
+                        <HStack gap={2}>
+                          {link.icon && (
+                            <Icon
+                              as={renderIcon(link.icon)}
+                              boxSize="18px"
+                              color="currentColor"
+                            />
+                          )}
+                          <Box as="span">{link.label}</Box>
+                        </HStack>
+                      </NextLink>
+                    </Button>
+                  )
                 ))}
-              </Stack>
-              {column.wrapAfter && column.col && column.col > 1 && (
-                <Stack gap={5} pl={1} flex={1}>
-                  {column.links.slice(column.wrapAfter).map((link, index) => (
-                    <Link color="gray.900" key={index + (column.wrapAfter ?? 0)} href={link.href}>
-                    {renderIcon(link.icon)}
-                    {link.label}
-                    </Link>
-                  ))}
-                </Stack>
-              )}
-            </Flex>
+              </VStack>
+            </Box>
           </Box>
-        </GridItem>
+        )
       ))}
-    </Grid>
+    </Flex>
   );
 };
 
