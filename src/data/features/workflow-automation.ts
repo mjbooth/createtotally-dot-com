@@ -68,17 +68,17 @@ export const WorkflowAutomationPageData = {
     {
       step: 3,
       label: "Step three",
-      title: "Automate file naming",
+      title: "Automate file naming and delivery",
       description: "File naming follows your defined naming structure - from language codes to product SKUs - removing manual renaming.",
       image: "/final-assets-delivered.png"
     },
-    {
-      step: 4,
-      label: "Step four",
-      title: "Files are delivered exactly where needed",
-      description: "Once approved, we deliver assets formatted to specification: to your DAM, to publishers, or downloaded directly from the platform.",
-      image: "/final-assets-delivered.png"
-    }
+    // {
+    //   step: 4,
+    //   label: "Step four",
+    //   title: "Files are delivered exactly where needed",
+    //   description: "Once approved, we deliver assets formatted to specification: to your DAM, to publishers, or downloaded directly from the platform.",
+    //   image: "/final-assets-delivered.png"
+    // }
   ],
   testimonialData: {
     quote: "In just a few days we created 750+ videos using\nCreateTOTALLY. It’s cheaper, more consistent and speedy...\nit’ll be an important tool for Lukkien in the future.",

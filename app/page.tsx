@@ -195,6 +195,13 @@ export default function HomePage() {
 
       if (scrollDistance <= 0) {
         console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
+        // Retry once if layout may not have settled
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            console.log("[ScrollTrigger] Retrying runScrollTrigger after delay");
+            runScrollTrigger();
+          }, 50);
+        });
         return;
       }
 

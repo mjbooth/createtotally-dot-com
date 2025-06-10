@@ -7,7 +7,7 @@ export const CreativeAutomationPageData = {
       description: "Accelerate content creation and free up your design team with powerful creative automation tools built for Figma and Adobe workflows.",
       images: [
         {
-          url: "/feature-placeholder-FiPenTool-sqr.jpg",
+          url: "/intuitive-content-creation.png",
           width: 1200,
           height: 630,
           alt: "",

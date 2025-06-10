@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Image, Link, Avatar } from "@chakra-ui/react";
 import { LuCircleCheck } from "react-icons/lu";
-import { renderIcon } from '@/src/utils/iconUtils';  // Make sure to import this
+import { renderIcon } from '@/src/utils/iconUtils';
 import { TbCoinPoundFilled } from "react-icons/tb";
 
 const CustomCheckIcon = () => (
@@ -12,7 +12,6 @@ const CustomCheckIcon = () => (
   </svg>
 );
 
-// Add this array at the top of your file, outside of the component
 const pricingBenefits = [
   { benefit: 1, headline: "Unlimited users", subline: "Add your whole team, no per-seat charges" },
   { benefit: 2, headline: "All modules unlocked", subline: "No feature gates or \"premium\" tiers" },

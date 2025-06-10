@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "CreateTOTALLY",
     images: [
       {
-        url: "/FigmaPlugin.jpg", // Ensure this exists in public/
+        url: "/OpenGraph.jpg",
         width: 1200,
         height: 630,
       },
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CreateTOTALLY - NexGen AI Automation",
+    title: "Creative Automation for Figma & Adobe Teams | CreateTOTALLY",
     description: "Effortlessly scale creative production in Figma & Adobe. CreateTOTALLY powers high-velocity marketing with automated assets built for every channel.",
-    images: ["/FigmaPlugin.jpg"],
+    images: ["/TwitterSummaryCard.jpg"],
   },
   alternates: {
     canonical: "https://www.createtotally.com/",
