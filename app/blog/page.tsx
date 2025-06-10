@@ -130,13 +130,13 @@ export default async function BlogPage() {
         </Box>
         <Box
           bg="brandNeutral.200"
-          pb={{ base: "60px", md: "120px" }}
+          pb={{ base: "60px", md: "360x" }}
           backgroundImage="url('/wave-F4F0EB.svg')"
           backgroundRepeat="no-repeat"
           backgroundPosition="top center"
           backgroundSize="100% auto"
         >
-          <Container
+          {/* <Container
             pt="7.5rem"
           >
             <Box
@@ -177,7 +177,7 @@ export default async function BlogPage() {
                 </Link>
               </Flex>
             </Box>
-          </Container>
+          </Container> */}
         </Box>
       </Box>
     );
