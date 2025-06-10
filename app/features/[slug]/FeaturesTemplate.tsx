@@ -2,7 +2,7 @@
 
 import { Container, Box, Text, Link, Heading, Button, Image, Flex, Avatar, useBreakpointValue, AspectRatio, } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useRef, useLayoutEffect, useEffect, useState, lazy, } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState, useCallback, lazy, } from 'react';
 import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,21 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
 
-function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const update = () => {
-      setIsMobile(window.matchMedia("(max-width: 767px)").matches);
-    };
-
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  return isMobile;
-}
 
 export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     const isMobile = useBreakpointValue({ base: true, md: false });
@@ -182,7 +167,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 }, 0);
             });
         }
-    }, [data.HowItWorksSteps.length]);
+    }, [data.HowItWorksSteps.length, isMobile]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
         setTouchStart(e.touches[0].clientX);
@@ -209,21 +194,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
         setTouchStart(null);
     };
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (isMobile) {
-                resetLayoutForMobile();
-            } else {
-                setupGSAPForDesktop();
-            }
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [data.HowItWorksSteps.length, isMobile]);
-
-    const setupGSAPForDesktop = () => {
+    const setupGSAPForDesktop = useCallback(() => {
         const wrapper = howItWorksWrapperRef.current;
         const container = scrollContainerRef.current;
         if (!wrapper || !container || isMobile) return;
@@ -243,9 +214,9 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
         gsap.set(container, { x: 0 });
 
-//console.log("[GSAP] scrollWidth:", container.scrollWidth);
-//console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
-//console.log("[GSAP] scrollDistance:", scrollDistance);
+        //console.log("[GSAP] scrollWidth:", container.scrollWidth);
+        //console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
+        //console.log("[GSAP] scrollDistance:", scrollDistance);
 
         ScrollTrigger.create({
             trigger: wrapper,
@@ -263,7 +234,21 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 });
             },
         });
-    };
+    }, [isMobile]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (isMobile) {
+                resetLayoutForMobile();
+            } else {
+                setupGSAPForDesktop();
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [data.HowItWorksSteps.length, isMobile, setupGSAPForDesktop]);
 
     const resetLayoutForMobile = () => {
         // Debug: log before cleanup
