@@ -103,12 +103,11 @@ export const AfterEffectsPageData = {
     title: "Break from video production bottlenecks - without sacrificing creative control",
     subtitle: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it.",
     features: [
-      "Automate entire Figma files",
-      "Adapt for every market in seconds",
-      "One-click content generation",
-      "Self-serve adaptation",
-      "Eliminate manual versioning",
-      "Empower your entire team"
+      "Intelligent composition analysis",
+      "Flexible output control",
+      "Linked asset integrity",
+      "Native template compatibility",
+      "Automatic layout adaptation",
     ]
   },
   testimonialData: {

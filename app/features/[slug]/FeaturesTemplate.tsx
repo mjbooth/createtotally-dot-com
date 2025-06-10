@@ -2,15 +2,13 @@
 
 import { Container, Box, Text, Link, Heading, Button, Image, Flex, Avatar, useBreakpointValue, AspectRatio, } from "@chakra-ui/react"
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useRef, useLayoutEffect, useEffect, useState, useCallback, lazy, } from 'react';
+import { useRef, useLayoutEffect, useEffect, useState, useCallback, } from 'react';
 import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FeaturePageData } from "@/src/types/feature";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
 
 export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     const isMobile = useBreakpointValue({ base: true, md: false });
@@ -347,19 +345,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                 maxW={{ base: "full", md: "3xl" }}
                                                 width="100%"
                                             >
-                                                {block.vimeoId ? (
-                                                    <Vimeo
-                                                        video={`https://vimeo.com/${block.vimeoId}`}
-                                                        responsive={true}
-                                                        autopause={false}
-                                                        autoplay={false}
-                                                        loop={true}
-                                                        controls={true}
-                                                        muted={true}
-                                                    />
-                                                ) : (
-                                                    <Image src={block.image} alt={block.heading} width="100%" />
-                                                )}
+                                                <Image src={block.image} alt={block.heading} width="100%" />
                                             </Box>
                                         </Flex>
                                     );

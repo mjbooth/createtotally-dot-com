@@ -23,8 +23,8 @@ export interface FeaturePageData {
     featureBlocks: Array<{
         heading: string;
         text: string;
-        image: string;
-        vimeoId?: string;
+        image?: string;
+        lottie?: string;
     }>;
     howItWorksHeading: string; // Add this new property
     HowItWorksSteps: Array<{

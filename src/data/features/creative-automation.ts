@@ -46,7 +46,7 @@ export const CreativeAutomationPageData = {
     {
       heading: "Solution: Intelligent content scaling",
       text: "Connect your existing templates to powerful automation rules that determine exactly what changes and what stays consistent across every format, language, and market. Whether you're building 20 versions or 2,000, you maintain complete control over how content scales—from initial logic to final output.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/scale.png"
     }
   ],
   howItWorksHeading: "Ready to scale your designs without compromise?", // Add this line
