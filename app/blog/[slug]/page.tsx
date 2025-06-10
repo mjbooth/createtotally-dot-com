@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getPostBySlug } from '@/lib/hygraph';
-import { Box, Container, Heading, Image, Stack, Flex, Text, Button, Link } from "@chakra-ui/react";
+import { Box, Container, Heading, Image, Stack } from "@chakra-ui/react";
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

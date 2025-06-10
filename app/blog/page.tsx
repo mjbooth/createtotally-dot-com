@@ -2,7 +2,7 @@
 
 import { getAllPosts, testConnection } from '@/lib/hygraph';
 import Link from 'next/link';
-import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import { MdArticle } from "react-icons/md";
 
 export default async function BlogPage() {
