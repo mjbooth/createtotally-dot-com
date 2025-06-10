@@ -68,12 +68,10 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                 return;
             }
 
-            // Calculate scroll distance using scrollWidth and offsetWidth
             const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
             if (!isMobile()) {
                 container.style.width = `${container.scrollWidth}px`;
             }
-
             try {
                 console.log("[HowItWorks] Creating ScrollTrigger...");
                 const ctx = gsap.context(() => {
@@ -99,7 +97,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                         },
                     });
                     ScrollTrigger.refresh();
-                    // Add delayed refresh to ensure layout is fully measured after paint
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
                 console.log("[HowItWorks] ScrollTrigger created successfully.");

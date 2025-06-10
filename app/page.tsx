@@ -39,7 +39,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "No-code Templating",
     "subLabel": "Set up templates easily, without writing any code. Just click and customise.",
-    "image": "/TemplateDesigner.jpg",
+    "image": "/upload-to-ct.png",
     "cta": "See how templates work →"
   },
   {
@@ -48,7 +48,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Content Planning",
     "subLabel": "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.",
-    "image": "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png",
+    "image": "/content-variations-at-scale.png",
     "cta": "Discover content planning tools →"
   },
   {
@@ -57,7 +57,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Automate at Scale",
     "subLabel": "The system quickly creates all your designs, perfectly formatted every time.",
-    "image": "/purple.svg",
+    "image": "/format-explosion.png",
     "cta": "Learn about scalable automation →"
   },
   {
@@ -66,7 +66,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Approve Without the Back-and-Forth",
     "subLabel": "Share for review in one place. Get feedback, make changes, and approve quickly.",
-    "image": "/TaskNotification.jpg",
+    "image": "/trapped-in-approval-purgatory.png",
     "cta": "View our approval workflows →"
   },
   {
@@ -75,7 +75,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Deliver Instantly",
     "subLabel": "Send your files where they need to go—no extra steps, no renaming.",
-    "image": "/blue.svg",
+    "image": "/final-assets-delivered.png",
     "cta": "See delivery options →"
   },
   {

@@ -66,7 +66,7 @@ export const InDesignPageData = {
     {
       heading: "Traditional templates create frustrating dependencies",
       text: "When you rely on external vendors, ticketing systems or lengthy implementation cycles, you lose control precisely when deadlines are tightest. The handoff process itself creates the bottleneck.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/variant-logic.png"
     }
   ],
   HowItWorksSteps: [
@@ -82,7 +82,7 @@ export const InDesignPageData = {
       label: "Step two",
       title: "Upload to CreateTOTALLY",
       description: "Your InDesign templates become intelligent production systems that work like a designer - placing every element exactly where you'd expect, from multilingual formats to dynamic image swaps, while maintaining full visual control.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/indesign-upload.png"
     },
     {
       step: 3,

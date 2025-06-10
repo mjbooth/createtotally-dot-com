@@ -66,7 +66,7 @@ export const AfterEffectsPageData = {
     {
       heading: "Rigid systems that fight your flow",
       text: "Other tools demand rigid token systems and obscure naming conventions that limit your creative freedom. You're forced to adapt your design process to fit their technical constraints, not the other way around.",
-      image: "/feature-placeholder-FiLayout-sqr.jpg"
+      image: "/rigid-systems.png"
     },
     {
       heading: "Quality drops as speed climbs",
