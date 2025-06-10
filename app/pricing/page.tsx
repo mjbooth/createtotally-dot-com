@@ -5,6 +5,31 @@ import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, Si
 import { LuCircleCheck } from "react-icons/lu";
 import { renderIcon } from '@/src/utils/iconUtils';  // Make sure to import this
 import { TbCoinPoundFilled } from "react-icons/tb";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Pricing That Scales With Your Creative Output | CreateTOTALLY',
+  description: 'See how CreateTOTALLY’s flexible pricing adapts to your creative needs. Pay per asset, not per seat—perfect for growing teams and high-volume output.',
+  openGraph: {
+    title: 'Pricing That Scales With Your Creative Output | CreateTOTALLY',
+    description: 'See how CreateTOTALLY’s flexible pricing adapts to your creative needs. Pay per asset, not per seat—perfect for growing teams and high-volume output.',
+    url: 'https://www.createtotally.com/pricing',
+    images: [
+      {
+        url: "/OpenGraph.jpg",
+        width: 1200,
+        height: 630,
+        alt: 'CreateTOTALLY Pricing Overview',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pricing That Scales With Your Creative Output | CreateTOTALLY',
+    description: 'Automate more, pay less. Flexible pricing for creative automation.',
+    images: ["/TwitterSummaryCard.jpg"],
+  },
+};
 
 const CustomCheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -12,7 +37,6 @@ const CustomCheckIcon = () => (
   </svg>
 );
 
-// Add this array at the top of your file, outside of the component
 const pricingBenefits = [
   { benefit: 1, headline: "Unlimited users", subline: "Add your whole team, no per-seat charges" },
   { benefit: 2, headline: "All modules unlocked", subline: "No feature gates or \"premium\" tiers" },
