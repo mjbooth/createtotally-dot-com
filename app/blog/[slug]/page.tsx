@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getPostBySlug } from '@/lib/hygraph';
-import { Box, Container, Heading, Image, Stack, Flex, Text, Button, Link } from "@chakra-ui/react";
+import { Box, Container, Heading, Image, Stack } from "@chakra-ui/react";
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -120,14 +120,14 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
       </Box>
       <Box
         bg="brandNeutral.200"
-        pb={{ base: "60px", md: "120px" }}
+        pb={{ base: "60px", md: "360px" }}
         backgroundImage="url('/wave-F4F0EB.svg')"
         backgroundRepeat="no-repeat"
         backgroundPosition="top center"
         backgroundSize="100% auto"
 
       >
-        <Container pt="16">
+        {/* <Container pt="16">
           <Box
             px={4}
           >
@@ -166,7 +166,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
               </Link>
             </Flex>
           </Box>
-        </Container>
+        </Container> */}
       </Box>
     </Box>
 

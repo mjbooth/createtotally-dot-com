@@ -2,7 +2,7 @@
 
 import { getAllPosts, testConnection } from '@/lib/hygraph';
 import Link from 'next/link';
-import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import { MdArticle } from "react-icons/md";
 
 export default async function BlogPage() {
@@ -130,13 +130,13 @@ export default async function BlogPage() {
         </Box>
         <Box
           bg="brandNeutral.200"
-          pb={{ base: "60px", md: "120px" }}
+          pb={{ base: "60px", md: "360x" }}
           backgroundImage="url('/wave-F4F0EB.svg')"
           backgroundRepeat="no-repeat"
           backgroundPosition="top center"
           backgroundSize="100% auto"
         >
-          <Container
+          {/* <Container
             pt="7.5rem"
           >
             <Box
@@ -177,7 +177,7 @@ export default async function BlogPage() {
                 </Link>
               </Flex>
             </Box>
-          </Container>
+          </Container> */}
         </Box>
       </Box>
     );
