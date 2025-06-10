@@ -12,7 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
 
-
 export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +25,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
     const [maxStepHeight, setMaxStepHeight] = useState(0);
     const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
 
     useEffect(() => {
         const calculateMaxHeight = () => {
@@ -422,7 +422,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 </Box>
             </Box>
 
-            {/* How it works copy/paste */}
+            {/* How it works */}
             <Box position="relative" bg="brandNeutral.200" zIndex="2" backgroundImage="url('/bg-bottom-footer-flip.svg')" backgroundRepeat="no-repeat" backgroundPosition="top center" backgroundSize="100% auto" pt="100px" >
                 <Container maxW="100%" px="0" overflow="hidden" position="relative" >
                     <Heading as="h2" pt="16" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" color="brandNavy.500" zIndex="10" position="sticky" top="0" ref={headingRef} className="scroll-out-heading" opacity="1" pb="16" >
