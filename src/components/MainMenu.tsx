@@ -156,7 +156,7 @@ const MainMenu: React.FC = () => {
         links: [
           { label: "Hasbro Transformers", href: "#", visible: false },
           { label: "Miele", href: "/blog/miele-x-createtotally", visible: true },
-          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally#" },
+          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally" },
           { label: "Patek Philippe", href: "#", visible: false },
         ],
       },
@@ -173,10 +173,10 @@ const MainMenu: React.FC = () => {
         title: "Case Studies",
         col: 2,
         links: [
-          { label: "Hasbro Transformers", href: "#" },
+          { label: "Hasbro Transformers", href: "#", visible: false },
           { label: "Miele", href: "/blog/miele-x-createtotally" },
-          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally#" },
-          { label: "Patek Philippe", href: "#" },
+          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally" },
+          { label: "Patek Philippe", href: "#", visible: false },
         ],
       },
     },
