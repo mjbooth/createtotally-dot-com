@@ -98,12 +98,11 @@ export const InDesignPageData = {
     title: "Scale design production without sacrificing quality.",
     subtitle: "Keep your creative control. Let automation handle the busywork.",
     features: [
-      "Something",
-      "Something else a bit longer",
-      "Something else here",
-      "Another word or two",
-      "A little bit longer",
-      "That's enough to show you"
+      "Outputs for every channel",
+      "Smart text behaviour",
+      "Alpha channel precision",
+      "Centralised font management",
+      "Fine-tuned typography control"
     ]
   },
   testimonialData: {

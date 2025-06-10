@@ -281,7 +281,7 @@ const PricingPage = () => {
               >
                 {model.modelBlock ? (
                   <Flex gap="6" direction="column" alignItems="left">
-                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
+                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" color="brandNeutral.500">
                       <Text color="brandNeutral.200" fontWeight="bold" fontSize="xl" lineHeight={1} whiteSpace="nowrap">
                         {model.icon && (
                           <Icon
@@ -293,16 +293,16 @@ const PricingPage = () => {
                       </Text>
                     </Flex>
                     <Flex gap="4" direction="column" alignItems="left" py="3">
-                      <Heading as="h3" fontSize={{ base: "4xl", md: "5xl", lg: "5xl" }} fontWeight="700" lineHeight="100%" letterSpacing="tight">
+                      <Heading as="h3" fontSize={{ base: "4xl", md: "5xl", lg: "5xl" }} fontWeight="700" lineHeight="100%" letterSpacing="tight" color="brandNeutral.500">
                         {model.headline}
                       </Heading>
-                      <Text fontSize="md" fontWeight="400" lineHeight="160%">
+                      <Text fontSize="md" fontWeight="400" lineHeight="160%" color="brandNeutral.500">
                         {model.body}
                       </Text>
 
-                      <List.Root gap="2" variant="plain" align="center">
+                      <List.Root gap="2" variant="plain" align="center" color="brandNeutral.500">
                         {model.highlights && model.highlights.map((highlight, hIndex) => (
-                          <List.Item key={hIndex}>
+                          <List.Item key={hIndex} color="brandNeutral.500">
                             <List.Indicator asChild color="brandNeutral.500">
                               <LuCircleCheck />
                             </List.Indicator>
@@ -311,7 +311,7 @@ const PricingPage = () => {
                         ))}
                       </List.Root>
 
-                      <Text fontSize="lg" fontWeight="600" lineHeight="160%">
+                      <Text fontSize="lg" fontWeight="600" lineHeight="160%" color="brandNeutral.500">
                         {model.useCase}
                       </Text>
                     </Flex>
@@ -324,12 +324,14 @@ const PricingPage = () => {
                     justifyContent="center"
                     height="100%"
                   >
-                    <Heading as="h3" textAlign="center" fontSize="5xl" fontWeight="700" lineHeight="100%" letterSpacing="-1.2px">
+                    <Heading as="h3" textAlign="center" fontSize="5xl" fontWeight="700" lineHeight="100%" letterSpacing="-1.2px" color="brandNeutral.500">
                       {model.headline}
                     </Heading>
-                    <Button alignSelf="center" variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">
-                      {model.cta}
-                    </Button>
+                    <Link href="/get-started">
+                      <Button alignSelf="center" variant="solid" fontWeight="600" colorPalette="brandFuchsia" rounded="full" px="5" py="2">
+                        {model.cta}
+                      </Button>
+                    </Link>
                   </Flex>
                 )}
               </Box>
@@ -378,7 +380,7 @@ const PricingPage = () => {
                   bg={
                     cardIndex === 0
                       ? "transparent"
-                      : cardIndex === 2  // This targets the middle column
+                      : cardIndex === 2
                         ? "rgba(235, 223, 246, 0.62)"
                         : "#EBDFF6"
                   }

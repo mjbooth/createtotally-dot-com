@@ -37,12 +37,12 @@ export const EasyTemplatingPageData = {
     {
       heading: "Work with your actual design files",
       text: "Our StudioCraft plugins integrate directly with the creative tools your team already uses.  \n\nNo coding. No workflow changes. No learning curve. Just automated template creation that preserves every design detail.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/resizing-rules.png"
     },
     {
       heading: "Solution: Scale without creative sacrifice",
       text: "Your current system creates a false choice between creative integrity and production speed. As you expand across markets and channels, you're stuck doing time-consuming manual work or accepting watered-down designs. Meanwhile, content demand keeps growing and your team falls further behind.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      image: "/AutomationSuite.svg",
     },
   ],
   howItWorksHeading: "Ready to scale your designs without compromise?",
