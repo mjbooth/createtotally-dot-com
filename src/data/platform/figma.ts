@@ -18,10 +18,10 @@ export const FigmaPageData = {
   heroSectionData: {
     featureGroup: "Figma Creative Automation",
     featureGroupIcon: "SiFigma",
-    title: "Stop Drowning in design edits. Start automating your Figma workflow.",
+    title: "Stop drowning in design edits. Start automating your Figma workflow.",
     subtitle: "Turn a single Figma file into hundreds of on-brand assets, without endless manual adjustments or late nights at your desk.",
     features: [
-      "Automate entire Figmaaaaaa files",
+      "Automate entire Figma files",
       "Adapt for every market in seconds",
       "One-click content generation",
       "Self-serve adaptation",
@@ -70,17 +70,17 @@ export const FigmaPageData = {
     {
       heading: "The localisation bottleneck",
       text: "You’ve designed the perfect campaign in Figma. Then the requests flood in: “Can we get this in 12 languages?” “We need all the CTAs adapted for each market.”\n\nYour team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn’t use your creative talents.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/snapchat.png"
     },
     {
       heading: "The format explosion",
       text: "Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers... \n\nEach adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.",
-      image: "/feature-placeholder-FiLayout-sqr.jpg"
+      image: "/format-explosion.png"
     },
     {
       heading: "The approval-revision loop",
       text: "You send assets for review. Then come the change requests: “Can we try a different image?” “The headline’s too long.” “Legal wants different disclaimers for each market.” \n\nEach small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/approval-revision-loop.png"
     }
   ],
   HowItWorksSteps: [

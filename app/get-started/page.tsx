@@ -11,10 +11,9 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { FaStar } from 'react-icons/fa';
+import { FaStar,FaPlay } from 'react-icons/fa';
 import Link from "next/link";
 import { FaCircleCheck } from "react-icons/fa6"
-import { TbCoinPoundFilled } from "react-icons/tb";
 import { useBackground } from '@/src/context/BackgroundContext';
 
 const allClientLogos = [
@@ -96,7 +95,7 @@ export default function TemplateContentCreation() {
               >
 
                 <Icon
-                  as={TbCoinPoundFilled}
+                  as={FaPlay}
                   boxSize={{ base: "18px", sm: "24px" }}
                   color="brandNeutral.500"
                 />
@@ -169,6 +168,7 @@ export default function TemplateContentCreation() {
                 width="100%"
                 justifyContent={{ base: "center", md: "flex-start" }}
                 alignItems={{ base: "center", md: "flex-start" }}
+                display="none"
               >
                 {[
                   { rating: 4.7, platform: "G2 Crowd", url: "https://www.g2.com/" },

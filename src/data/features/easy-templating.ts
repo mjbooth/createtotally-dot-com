@@ -32,7 +32,7 @@ export const EasyTemplatingPageData = {
     {
       heading: "Your current templating process kills creative quality",
       text: "Most templating tools force an impossible choice: rebuild simplified versions of your sophisticated designs, or hand everything off to specialists who become production bottlenecks. Your creative team ends up frustrated, your timelines stretch, and your brand suffers across different markets and channels.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/templates-kill-creative-quality.png"
     },
     {
       heading: "Work with your actual design files",
@@ -43,7 +43,6 @@ export const EasyTemplatingPageData = {
       heading: "Solution: Scale without creative sacrifice",
       text: "Your current system creates a false choice between creative integrity and production speed. As you expand across markets and channels, you're stuck doing time-consuming manual work or accepting watered-down designs. Meanwhile, content demand keeps growing and your team falls further behind.",
       image: "/feature-placeholder-FiPenTool-sqr.jpg",
-      vimeoId: "1062060057"
     },
   ],
   howItWorksHeading: "Ready to scale your designs without compromise?",

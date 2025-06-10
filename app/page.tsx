@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useLayoutEffect, useEffect, lazy } from "react";
+import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
 import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
 import { FaPencilRuler } from "react-icons/fa";
 import { useBackground } from '@/src/context/BackgroundContext';
@@ -39,7 +39,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "No-code Templating",
     "subLabel": "Set up templates easily, without writing any code. Just click and customise.",
-    "image": "/TemplateDesigner.jpg",
+    "image": "/upload-to-ct.png",
     "cta": "See how templates work →"
   },
   {
@@ -48,7 +48,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Content Planning",
     "subLabel": "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.",
-    "image": "/CreateTOTALLY-Content-planning-02-27-2025_04_32_PM.png",
+    "image": "/content-variations-at-scale.png",
     "cta": "Discover content planning tools →"
   },
   {
@@ -57,7 +57,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Automate at Scale",
     "subLabel": "The system quickly creates all your designs, perfectly formatted every time.",
-    "image": "/purple.svg",
+    "image": "/format-explosion.png",
     "cta": "Learn about scalable automation →"
   },
   {
@@ -66,7 +66,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Approve Without the Back-and-Forth",
     "subLabel": "Share for review in one place. Get feedback, make changes, and approve quickly.",
-    "image": "/TaskNotification.jpg",
+    "image": "/trapped-in-approval-purgatory.png",
     "cta": "View our approval workflows →"
   },
   {
@@ -75,7 +75,7 @@ const steps = [
     "feature": "Feature name",
     "headline": "Deliver Instantly",
     "subLabel": "Send your files where they need to go—no extra steps, no renaming.",
-    "image": "/blue.svg",
+    "image": "/final-assets-delivered.png",
     "cta": "See delivery options →"
   },
   {
@@ -97,6 +97,7 @@ const CustomCheckIcon = () => (
 export default function HomePage() {
   const clientLogos = allClientLogos.slice(0, 9);
   const { setBackgroundColor } = useBackground();
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
@@ -107,6 +108,8 @@ export default function HomePage() {
 
   const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
 
+  const [maxStepHeight, setMaxStepHeight] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     setBackgroundColor("#F4F0EB");
@@ -130,46 +133,147 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useLayoutEffect(() => {
-    const wrapper = howItWorksWrapperRef.current;
-    const container = scrollContainerRef.current;
-    if (!wrapper || !container || window.innerWidth < 768) return;
+  useEffect(() => {
+    const calculateMaxHeight = () => {
+      const heights = stepRefs.current.map(ref => ref?.offsetHeight || 0);
+      const maxHeight = Math.max(...heights);
+      setMaxStepHeight(maxHeight);
+    };
 
-    const numSteps = steps.length;
-    const cardWidth = 1152;
-    const cardMargin = 120;
-    const containerWidth = numSteps * cardWidth + (numSteps - 1) * cardMargin;
-    const extraOffset = (window.innerWidth - cardWidth) / 2;
-    const scrollDistance = containerWidth - window.innerWidth + extraOffset * 2;
-
-    container.style.width = `${containerWidth}px`;
-
-    const ctx = gsap.context(() => {
-      gsap.set(container, { x: 0 });
-      ScrollTrigger.killAll();
-
-      ScrollTrigger.create({
-        trigger: wrapper,
-        start: "top top",
-        end: () => `+=${scrollDistance}px`,
-        pin: true,
-        anticipatePin: 1,
-        scrub: true,
-        invalidateOnRefresh: true,
-        onUpdate: self => {
-          gsap.to(container, {
-            x: -scrollDistance * self.progress,
-            duration: 0,
-            overwrite: "auto",
-          });
-        },
-      });
-    }, wrapper);
+    calculateMaxHeight();
+    window.addEventListener('resize', calculateMaxHeight);
 
     return () => {
-      ctx.revert();
+      window.removeEventListener('resize', calculateMaxHeight);
     };
-  }, [steps.length]);
+  }, []);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 100) {
+        heading.classList.add('hidden');
+      } else {
+        heading.classList.remove('hidden');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useLayoutEffect(() => {
+    console.log("[ScrollTrigger] useLayoutEffect start", Date.now());
+
+    const runScrollTrigger = () => {
+      console.log("[ScrollTrigger] runScrollTrigger called", Date.now());
+
+      const wrapper = howItWorksWrapperRef.current;
+      const container = scrollContainerRef.current;
+
+      if (isMobile) {
+        console.log("[ScrollTrigger] Skipped because isMobile === true");
+      }
+      if (!wrapper || !container || isMobile) {
+        console.warn("[ScrollTrigger] Skipped: wrapper or container missing, or mobile");
+        return;
+      }
+
+      // Early return guard for zero offsetWidth
+      if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
+        console.warn("[ScrollTrigger] Aborted: container or wrapper offsetWidth === 0");
+        return;
+      }
+
+      // Force container width early
+      container.style.width = `${container.scrollWidth}px`;
+
+      const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
+
+      if (scrollDistance <= 0) {
+        console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
+        return;
+      }
+
+      try {
+        console.log("[HowItWorks] Creating ScrollTrigger...");
+        const ctx = gsap.context(() => {
+          // --- Wrapper height diagnostic and guard ---
+          const wrapperHeight = wrapper.clientHeight;
+          console.log("[ScrollTrigger] Wrapper clientHeight:", wrapperHeight);
+          if (wrapperHeight < 200) {
+            console.warn("[ScrollTrigger] Aborted: wrapper height too small", wrapperHeight);
+            return;
+          }
+
+          // Clean up all ScrollTriggers targeting this wrapper
+          ScrollTrigger.getAll().forEach(trigger => {
+            if (trigger.trigger === wrapper || trigger.vars.id === 'howItWorks') {
+              trigger.kill();
+            }
+          });
+          // container.style.transform = "none";
+          container.style.transform = "none";
+          const pinSpacers = document.querySelectorAll('.pin-spacer');
+          pinSpacers.forEach(pinSpacer => {
+            const parent = pinSpacer.parentNode;
+            while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
+            parent?.removeChild(pinSpacer);
+          });
+          gsap.set(container, { x: 0 });
+
+          ScrollTrigger.create({
+            id: 'howItWorks',
+            trigger: wrapper,
+            scroller: window, // explicitly set the scroller
+            start: "top top",
+            end: () => `+=${scrollDistance}px`,
+            pin: true,
+            anticipatePin: 1,
+            scrub: true,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true,
+            onUpdate: self => {
+              gsap.to(container, {
+                x: -scrollDistance * self.progress,
+                duration: 0,
+                overwrite: "auto",
+              });
+            },
+          });
+          ScrollTrigger.refresh();
+          setTimeout(() => ScrollTrigger.refresh(), 100);
+        }, wrapper);
+        console.log("[HowItWorks] ScrollTrigger created successfully.");
+
+        return () => {
+          ctx.revert();
+        };
+      } catch (error) {
+        console.error("[HowItWorks] ScrollTrigger setup failed:", error);
+      }
+    };
+
+    if (document?.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        console.log("[ScrollTrigger] Fonts ready");
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            runScrollTrigger();
+          }, 0);
+        });
+      });
+    } else {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          runScrollTrigger();
+        }, 0);
+      });
+    }
+  }, [isMobile]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -194,6 +298,91 @@ export default function HomePage() {
     }
 
     setTouchStart(null);
+  };
+
+  const setupGSAPForDesktop = useCallback(() => {
+    const wrapper = howItWorksWrapperRef.current;
+    const container = scrollContainerRef.current;
+    if (!wrapper || !container || isMobile) return;
+
+    const existingPinSpacer = document.querySelector('.pin-spacer');
+    if (existingPinSpacer) {
+      const parent = existingPinSpacer.parentNode;
+      while (existingPinSpacer.firstChild) parent?.insertBefore(existingPinSpacer.firstChild, existingPinSpacer);
+      parent?.removeChild(existingPinSpacer);
+    }
+
+    // Calculate scroll distance using scrollWidth and offsetWidth
+    const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
+    if (!isMobile) {
+      container.style.width = `${container.scrollWidth}px`;
+    }
+
+    gsap.set(container, { x: 0 });
+
+    //console.log("[GSAP] scrollWidth:", container.scrollWidth);
+    //console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
+    //console.log("[GSAP] scrollDistance:", scrollDistance);
+
+    ScrollTrigger.create({
+      trigger: wrapper,
+      start: "top top",
+      end: () => `+=${scrollDistance}px`,
+      pin: true,
+      anticipatePin: 1,
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: self => {
+        gsap.to(container, {
+          x: -scrollDistance * self.progress,
+          duration: 0,
+          overwrite: "auto",
+        });
+      },
+    });
+  }, [isMobile]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (isMobile) {
+        resetLayoutForMobile();
+      } else {
+        setupGSAPForDesktop();
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile, setupGSAPForDesktop]);
+
+  const resetLayoutForMobile = () => {
+    // Debug: log before cleanup
+    console.log("[ResetMobile] clearing wrapper height:", howItWorksWrapperRef.current?.style.height);
+    console.log("[ResetMobile] killing all ScrollTriggers...");
+    ScrollTrigger.killAll();
+
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.width = '100%';
+      scrollContainerRef.current.style.transform = 'none';
+    }
+    if (howItWorksWrapperRef.current) {
+      howItWorksWrapperRef.current.style.height = 'auto';
+      howItWorksWrapperRef.current.style.overflow = 'visible';
+      howItWorksWrapperRef.current.style.minHeight = 'auto';
+    }
+    // Remove pin-spacer
+    const pinSpacer = document.querySelector('.pin-spacer');
+    if (pinSpacer) {
+      const parent = pinSpacer.parentNode;
+      while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
+      parent?.removeChild(pinSpacer);
+    }
+    // Remove any pinned inline styles by targeting .pin-spacer > *
+    const pinnedChildren = document.querySelectorAll('.pin-spacer > *');
+    pinnedChildren.forEach(el => {
+      (el as HTMLElement).style.position = 'relative';
+    });
   };
 
   return (
@@ -357,6 +546,7 @@ export default function HomePage() {
         </Container>
       </Box>
 
+      {/* How it works */}
       <Box position="relative" bg="brandNeutral.200" zIndex="2" backgroundImage="url('/bg-bottom-footer-flip.svg')" backgroundRepeat="no-repeat" backgroundPosition="top center" backgroundSize="100% auto" pt="100px" >
         <Container maxW="100%" px="0" overflow="hidden" position="relative" >
           <Heading as="h2" pt="16" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" color="brandNavy.500" zIndex="10" position="sticky" top="0" ref={headingRef} className="scroll-out-heading" opacity="1" pb="16" >
@@ -395,23 +585,15 @@ export default function HomePage() {
                     px="2"
                   >
                     <Box
+                      ref={(el: HTMLDivElement | null) => stepRefs.current[index] = el}
                       bg="brandNavy.500"
                       borderRadius="xl"
                       p="6"
                       boxShadow="realistic"
+                      height={maxStepHeight > 0 ? `${maxStepHeight}px` : 'auto'}
+                      overflowY="auto"
                     >
-                      <Flex gap="3" direction="column">
-                        <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
-                          <Text color="brandNeutral.200" fontWeight="bold" fontSize="xl" lineHeight={1} whiteSpace="nowrap">
-                            {step.step}
-                          </Text>
-                        </Flex>
-                        <Heading color="brandNeutral.500" as="h3" fontSize="2xl" fontWeight="700">
-                          {step.headline}
-                        </Heading>
-                        <Text color="brandNeutral.500" fontSize="md" mb="4">
-                          {step.subLabel}
-                        </Text>
+                      <Flex gap="6" direction="column">
                         <AspectRatio ratio={1 / 1}>
                           <Image
                             src={step.image}
@@ -422,6 +604,19 @@ export default function HomePage() {
                             objectFit="cover"
                           />
                         </AspectRatio>
+                        <Flex gap="3" direction="column">
+                          <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
+                            <Text color="brandNeutral.200" fontWeight="bold" fontSize="md" lineHeight={1} whiteSpace="nowrap">
+                              {step.step}
+                            </Text>
+                          </Flex>
+                          <Heading color="brandNeutral.500" as="h3" fontSize="2xl" fontWeight="700">
+                            {step.headline}
+                          </Heading>
+                          <Text color="brandNeutral.500" fontSize="md">
+                            {step.subLabel}
+                          </Text>
+                        </Flex>
                       </Flex>
                     </Box>
                   </Box>
@@ -443,54 +638,55 @@ export default function HomePage() {
             </Box>
 
             {/* Desktop view */}
-            <Flex
-              display={{ base: "none", md: "flex" }}
-              ref={scrollContainerRef}
-              position="absolute"
-              left="0"
-              overflow="visible"
-              px={containerPadding}
-              height="100%"
-              alignItems="center"
-            >
-              <Flex alignItems="center">
-                {steps.map((step, index) => (
-                  <Flex
-                    key={index}
-                    flexShrink={0}
-                    bg="brandNavy.500"
-                    borderRadius="xxl"
-                    p="15"
-                    width="1152px"
-                    minW="1152px"
-                    mr="30"
-                    zIndex="9999"
-                    boxShadow="realistic"
-                  >
-                    <Flex width="100%" gap="15">
-                      <Flex width="50%" direction="column" gap="4">
-                        <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
-                          <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
-                            {step.step}
-                          </Text>
+            {!isMobile && (
+              <Flex
+                ref={scrollContainerRef}
+                position="absolute"
+                left="0"
+                overflow="visible"
+                px={containerPadding}
+                height="100%"
+                alignItems="center"
+              >
+                <Flex alignItems="center">
+                  {steps.map((step, index) => (
+                    <Flex
+                      key={index}
+                      flexShrink={0}
+                      bg="brandNavy.500"
+                      borderRadius="xxl"
+                      p="15"
+                      width="1152px"
+                      minW="1152px"
+                      mr="30"
+                      zIndex="9999"
+                      boxShadow="realistic"
+                    >
+                      <Flex width="100%" gap="15">
+                        <Flex width="50%" direction="column" gap="4">
+                          <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
+                            <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
+                              {step.step}
+                            </Text>
+                          </Flex>
+                          <Flex gap="2" direction="column" justify="center" height="100%">
+                            <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
+                              {step.headline}
+                            </Heading>
+                            <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
+                              {step.subLabel}
+                            </Text>
+                          </Flex>
                         </Flex>
-                        <Flex gap="2" direction="column" justify="center" height="100%">
-                          <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
-                            {step.headline}
-                          </Heading>
-                          <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
-                            {step.subLabel}
-                          </Text>
+                        <Flex width="50%">
+                          <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
                         </Flex>
-                      </Flex>
-                      <Flex width="50%">
-                        <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
                       </Flex>
                     </Flex>
-                  </Flex>
-                ))}
+                  ))}
+                </Flex>
               </Flex>
-            </Flex>
+            )}
           </Box>
 
         </Container>
