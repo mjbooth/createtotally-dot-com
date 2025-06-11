@@ -58,46 +58,47 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     }, []);
 
     useLayoutEffect(() => {
-        console.log("[ScrollTrigger] useLayoutEffect start", Date.now());
+        const scrollTriggerStart = performance.now();
+        console.log("[ScrollTrigger] useLayoutEffect start", scrollTriggerStart);
 
         const runScrollTrigger = () => {
-            console.log("[ScrollTrigger] runScrollTrigger called", Date.now());
+            const elapsed = (performance.now() - scrollTriggerStart).toFixed(2);
+            console.log(`[ScrollTrigger] runScrollTrigger called after ${elapsed}ms`);
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
-
-            if (isMobile) {
-                console.log("[ScrollTrigger] Skipped because isMobile === true");
-            }
-            if (!wrapper || !container || isMobile) {
-                console.warn("[ScrollTrigger] Skipped: wrapper or container missing, or mobile");
-                return;
-            }
-
-            // Early return guard for zero offsetWidth
-            if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
-                console.warn("[ScrollTrigger] Aborted: container or wrapper offsetWidth === 0");
-                return;
-            }
-
-            // Force container width early
-            container.style.width = `${container.scrollWidth}px`;
-
-            const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
-
-            if (scrollDistance <= 0) {
-                console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
-                // Retry once if layout may not have settled
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        console.log("[ScrollTrigger] Retrying runScrollTrigger after delay");
-                        runScrollTrigger();
-                    }, 50);
-                });
-                return;
-            }
-
             try {
+                if (isMobile) {
+                    console.log("[ScrollTrigger] Skipped because isMobile === true");
+                }
+                if (!wrapper || !container || isMobile) {
+                    console.warn("[ScrollTrigger] Skipped: wrapper or container missing, or mobile");
+                    return;
+                }
+
+                // Early return guard for zero offsetWidth
+                if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
+                    console.warn("[ScrollTrigger] Aborted: container or wrapper offsetWidth === 0");
+                    return;
+                }
+
+                // Force container width early
+                container.style.width = `${container.scrollWidth}px`;
+
+                const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
+
+                if (scrollDistance <= 0) {
+                    console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
+                    // Retry once if layout may not have settled
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            console.log("[ScrollTrigger] Retrying runScrollTrigger after delay");
+                            runScrollTrigger();
+                        }, 50);
+                    });
+                    return;
+                }
+
                 console.log("[HowItWorks] Creating ScrollTrigger...");
                 const ctx = gsap.context(() => {
                     // --- Wrapper height diagnostic and guard ---
@@ -114,7 +115,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                             trigger.kill();
                         }
                     });
-                    // container.style.transform = "none";
                     container.style.transform = "none";
                     const pinSpacers = document.querySelectorAll('.pin-spacer');
                     pinSpacers.forEach(pinSpacer => {
@@ -146,32 +146,53 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     ScrollTrigger.refresh();
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
-                console.log("[HowItWorks] ScrollTrigger created successfully.");
+                const setupElapsed = (performance.now() - scrollTriggerStart).toFixed(2);
+                console.log(`[ScrollTrigger] ScrollTrigger created successfully after ${setupElapsed}ms`);
 
                 return () => {
                     ctx.revert();
                 };
             } catch (error) {
                 console.error("[HowItWorks] ScrollTrigger setup failed:", error);
+            } finally {
+                // Always restore scroll if for any reason it was locked
+                document.body.style.overflow = '';
             }
         };
 
-        if (document?.fonts?.ready) {
-            document.fonts.ready.then(() => {
-                console.log("[ScrollTrigger] Fonts ready");
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        runScrollTrigger();
-                    }, 0);
-                });
-            });
-        } else {
+        // SPA-safe layout readiness check function
+        const whenLayoutIsReady = async () => {
+            document.body.style.overflow = 'hidden';
+
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+                console.log(`[ScrollTrigger] Fonts ready after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
+            }
+
+            const wrapper = howItWorksWrapperRef.current;
+            if (wrapper) {
+                const images = Array.from(wrapper.querySelectorAll("img"));
+                await Promise.all(
+                    images.map((img) => {
+                        if (img.complete) return Promise.resolve();
+                        return new Promise<void>((resolve) => {
+                            img.onload = () => resolve();
+                            img.onerror = () => resolve();
+                        });
+                    })
+                );
+                console.log(`[ScrollTrigger] All images loaded after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
+            }
+
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     runScrollTrigger();
+                    document.body.style.overflow = '';
                 }, 0);
             });
-        }
+        };
+
+        whenLayoutIsReady();
     }, [data.HowItWorksSteps.length, isMobile]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
