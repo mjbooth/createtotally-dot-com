@@ -7,7 +7,7 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [], // Add external image domains
+    domains: ['eu-west-2.graphassets.com'],
   },
   distDir: ".next",
 

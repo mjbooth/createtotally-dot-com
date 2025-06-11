@@ -2,7 +2,7 @@
 
 import { gql } from 'graphql-request';
 import { client } from './client';
-import { PostSummary, PostDetail, Page } from './types';
+import { PostSummary, PostDetail, Page, Integration } from './types';
 
 const TEST_QUERY = gql`
   query {
@@ -128,5 +128,69 @@ export const getPageBySlug = async (slug: string): Promise<Page> => {
   } catch (error) {
     console.error(`Error fetching page with slug ${slug}:`, error);
     throw error;
+  }
+};
+
+const GET_ALL_INTEGRATIONS = `
+  query GetAllIntegrations {
+    pages(where: { slug_contains: "integration-" }) {
+      id
+      title
+      subtitle
+      slug
+      icon {
+        url
+      }
+      coverImage {
+        url
+      }
+    }
+  }
+`;
+
+const GET_INTEGRATION_BY_SLUG = `
+  query GetIntegrationBySlug($slug: String!) {
+    page(where: { slug: $slug }) {
+      id
+      title
+      subtitle
+      slug
+      icon {
+        url
+      }
+      coverImage {
+        url
+      }
+      content {
+        raw
+      }
+      seoOverride {
+        title
+        description
+        image {
+          url
+        }
+      }
+    }
+  }
+`;
+
+export const getAllIntegrations = async (): Promise<Integration[]> => {
+  try {
+    const { pages } = await client.request<{ pages: Integration[] }>(GET_ALL_INTEGRATIONS);
+    return pages;
+  } catch (error) {
+    console.error('Error fetching all integrations:', error);
+    throw error;
+  }
+};
+
+export const getIntegrationBySlug = async (slug: string): Promise<Integration | null> => {
+  try {
+    const { page } = await client.request<{ page: Integration }>(GET_INTEGRATION_BY_SLUG, { slug });
+    return page;
+  } catch (error) {
+    console.error(`Error fetching integration with slug ${slug}:`, error);
+    return null;
   }
 };
