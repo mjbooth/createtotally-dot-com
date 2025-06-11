@@ -67,7 +67,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
-            let scrollLocked = false;
             try {
                 if (isMobile) {
                     console.log("[ScrollTrigger] Skipped because isMobile === true");
