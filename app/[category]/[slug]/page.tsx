@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation';
-import { getPostBySlug } from '@/lib/hygraph';
+import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { Box, Container, Heading, Image, Stack } from "@chakra-ui/react";
-import { Metadata } from 'next';
+import IntegrationLayout from '@/src/components/layouts/IntegrationLayout';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getPostBySlug(slug);
+export async function generateMetadata(context: { params: Promise<{ slug: string; category: string }> }) {
+  const { slug, category } = await context.params;
+  const post = await getPostByCategoryAndSlug(category, slug);
 
   if (!post) {
     return {
@@ -25,12 +25,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = await getPostBySlug(slug);
+export default async function BlogPage(context: { params: Promise<{ slug: string; category: string }> }) {
+  let slug: string = '';
+  let category: string = '';
 
-  if (!post) {
-    notFound();
+  try {
+    const resolvedParams = await context.params;
+    slug = resolvedParams.slug;
+    category = resolvedParams.category;
+  } catch (err) {
+    throw err;
+  }
+
+  let post;
+  try {
+    post = await getPostByCategoryAndSlug(category, slug);
+    if (!post) {
+      notFound();
+    }
+  } catch (err) {
+    throw err;
+  }
+
+  if (category === 'integrations') {
+    return <IntegrationLayout post={post} />;
   }
 
   return (

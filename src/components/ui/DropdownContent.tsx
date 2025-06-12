@@ -3,14 +3,25 @@ import { Box, Heading, Button, Flex, HStack, Icon, VStack } from '@chakra-ui/rea
 import { renderIcon } from '@/src/utils/iconUtils';
 import NextLink from 'next/link';
 
+interface MenuLink {
+  label: string;
+  href: string;
+  icon?: string;
+  visible?: boolean;
+  style?: React.CSSProperties;
+}
+
+interface MenuColumn {
+  title: string;
+  links: MenuLink[];
+  col?: number;
+  wrapAfter?: number;
+  visible?: boolean;
+  style?: React.CSSProperties;
+}
+
 interface MenuContent {
-  [key: string]: {
-    title: string;
-    links: Array<{ label: string; href: string; icon?: string; visible?: boolean; }>;
-    col?: number;
-    wrapAfter?: number;
-    visible?: boolean;
-  };
+  [key: string]: MenuColumn;
 }
 
 interface DropdownContentProps {
@@ -19,6 +30,7 @@ interface DropdownContentProps {
     [key: string]: MenuContent;
   };
 }
+
 const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuContent }) => {
   const content = menuContent[activeMenu];
 
@@ -28,8 +40,8 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
     <Flex flexWrap="wrap" gap={{ base: 4, md: 20 }} p={{ base: 4, md: 20 }} direction={{ base: "column", md: "row" }}>
       {Object.entries(content).map(([key, column]) => (
         column.visible !== false && (
-          <Box key={key} width={{ base: "100%", md: "auto" }}>
-            <Box fontSize="14px">
+          <Box key={key} width={{ base: "100%", md: "auto" }} {...(column.style as React.ComponentProps<typeof Box>)}>
+            <Box fontSize="md">
               <Heading color="brandNavy.500" as="h3" size="md" m={0} textTransform="normal" fontSize="md" fontWeight="700">
                 {column.title}
               </Heading>

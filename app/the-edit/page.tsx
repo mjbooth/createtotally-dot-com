@@ -1,6 +1,4 @@
-// /app/blog/page.tsx
-
-import { getAllPosts, testConnection } from '@/lib/hygraph';
+import { getAllBlogPosts, testConnection } from '@/lib/hygraph';
 import Link from 'next/link';
 import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import { MdArticle } from "react-icons/md";
@@ -8,7 +6,7 @@ import { MdArticle } from "react-icons/md";
 export default async function BlogPage() {
   try {
     await testConnection();
-    const posts = await getAllPosts();
+    const posts = await getAllBlogPosts();
 
     return (
       <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
@@ -46,7 +44,7 @@ export default async function BlogPage() {
                     color="brandNeutral.500"
                     lineHeight="160%"
                   >
-                    Resources
+                    The Edit
                   </Text>
                 </Flex>
                 <Heading
@@ -59,7 +57,7 @@ export default async function BlogPage() {
                   letterSpacing="tight"
                   mb="0"
                 >
-                  Stories, work, and what&apos;s sparking our curiosity.
+                  Explore what we&apos;re learning, building, and sharing.
                 </Heading>
               </Stack>
             </Box>

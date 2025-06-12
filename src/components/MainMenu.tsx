@@ -145,39 +145,42 @@ const MainMenu: React.FC = () => {
         col: 2,
         visible: true,
         links: [
-          { label: "Adobe Workfront", href: "/integrations/adobe-workfront", visible: false },
-          { label: "Monday.com", href: "/integrations/monday-com", visible: false },
-          { label: "Google Drive", href: "/integrations/google-drive", visible: false },
+          { label: "Adobe Workfront", href: "/integrations/adobe-workfront" },
+          { label: "Monday.com", href: "/integrations/monday-com" },
+          { label: "Google Drive", href: "/integrations/google-drive" },
         ],
       },
       column4: {
-        title: "Success Stories",
+        title: "Automation in Action",
         col: 2,
         links: [
           { label: "Hasbro Transformers", href: "#", visible: false },
-          { label: "Miele", href: "/blog/miele-x-createtotally", visible: true },
-          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally" },
+          { label: "Miele", href: "/automation-in-action/miele-x-createtotally" },
+          { label: "The Wine Society", href: "/automation-in-action/the-wine-society-x-createtotally" },
           { label: "Patek Philippe", href: "#", visible: false },
         ],
       },
     },
     Resources: {
       column1: {
-        title: "Knowledge Base",
-        col: 2,
-        links: [
-          { label: "Blog", href: "/blog" },
-        ],
-      },
-      column2: {
-        title: "Case Studies",
+        title: "Automation in Action",
         col: 2,
         links: [
           { label: "Hasbro Transformers", href: "#", visible: false },
-          { label: "Miele", href: "/blog/miele-x-createtotally" },
-          { label: "The Wine Society", href: "/blog/the-wine-society-x-createtotally" },
+          { label: "Miele", href: "/automation-in-action/miele-x-createtotally" },
+          { label: "The Wine Society", href: "/automation-in-action/the-wine-society-x-createtotally" },
           { label: "Patek Philippe", href: "#", visible: false },
         ],
+      },
+      column2: {
+        title: "The Edit",
+        col: 2,
+        links: [
+          { label: "Perspectives", href: "/perspectives" },
+          { label: "Integrations", href: "/integrations" },
+          { label: "Glossary", href: "/glossary" },
+          { label: "View all", href: "/the-edit" },
+        ]
       },
     },
   };
@@ -224,8 +227,6 @@ const MainMenu: React.FC = () => {
               </Button>
             ) : (
               // Desktop Menu
-
-
               <Stack direction="row" gap={6} align="center" display={{ base: "none", md: "flex" }}>
                 {menuItems.map((item) => (
                   item.hasDropdown ? (

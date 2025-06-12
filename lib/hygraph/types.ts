@@ -50,3 +50,27 @@ export interface UserPainPoint {
     height?: number;
   };
 }
+
+
+export interface Integration {
+  id: string;
+  title: string;
+  subtitle?: string;
+  slug: string;
+  content: {
+    raw: string;
+  };
+  icon?: {
+    url: string;
+  };
+  coverImage?: {
+    url: string;
+  };
+  seoOverride?: {
+    title?: string;
+    description?: string;
+    image?: {
+      url: string;
+    };
+  };
+}
