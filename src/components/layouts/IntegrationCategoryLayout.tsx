@@ -1,16 +1,7 @@
 import Link from 'next/link';
 import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import { PiPlugsFill } from "react-icons/pi";
-
-type Post = {
-  id: string;
-  slug: string;
-  title?: string;
-  coverImage?: {
-    url: string;
-  };
-  integrationThirdParty?: string;
-};
+import type { Post } from '@/src/types/hygraph';
 
 export default function IntegrationCategoryLayout({
   posts,

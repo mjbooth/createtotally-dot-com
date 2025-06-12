@@ -2,6 +2,7 @@ import { Box, Container, Heading, Image, Stack, Text, Flex, Icon } from "@chakra
 import { Metadata } from 'next';
 import { ImCross } from "react-icons/im";
 import { getIntegrationBySlug } from '@/lib/hygraph/index';
+import type { Post } from '@/src/types/hygraph';
 
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -30,20 +31,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 
-type Post = {
-  title: string;
-  excerpt?: string;
-  coverImage: {
-    url: string;
-  };
-  content: {
-    html: string;
-  };
-};
-
-export default function IntegrationPage({ post, category }: { post: Post; category: string }) {
-    console.log('🧭 IntegrationPage loaded with post:', post);
-    console.log('🧭 IntegrationPage loaded with category:', category);
+export default function IntegrationPage({ post }: { post: Post }) {
     return (
         <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
             <Box bg="brandNeutral.200">
@@ -59,7 +47,13 @@ export default function IntegrationPage({ post, category }: { post: Post; catego
                         >
                             <Flex gap="16" justifyContent="center" alignItems="center" width="100%" my="4" align="center">
                                 <Box width="36">
-                                    <Image src={post.coverImage.url} objectFit="contain" alt={post.title} />
+                                    {post.coverImage?.url && (
+                                        <Image
+                                            src={post.coverImage.url}
+                                            objectFit="contain"
+                                            alt={post.title || 'Integration cover image'}
+                                        />
+                                    )}
                                 </Box>
                                 <Icon size="2xl" color="brandNavy.500">
                                     <ImCross />
@@ -103,12 +97,14 @@ export default function IntegrationPage({ post, category }: { post: Post; catego
                 >
                     <Container maxW={{ base: "100%", md: "1152px" }} mx="auto" px={{ base: 4, md: 10 }} zIndex="9999">
                         <Box maxW="3xl" mx="auto">
-                            <Box
+                            {post.content?.html && (
+                              <Box
                                 className="prose"
                                 mx="auto"
                                 color="brandNavy.500"
                                 dangerouslySetInnerHTML={{ __html: post.content.html }}
-                            />
+                              />
+                            )}
                         </Box>
                     </Container>
                 </Box>

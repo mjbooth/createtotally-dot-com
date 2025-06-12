@@ -16,7 +16,6 @@ const GET_POST_BY_CATEGORY_AND_SLUG = gql`
     }
   }
 `;
-// /lib/hygraph/index.ts
 
 import { gql } from 'graphql-request';
 import { client } from './client';

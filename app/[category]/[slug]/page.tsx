@@ -1,4 +1,3 @@
-console.log('🧭 Entering BlogPage...');
 import { notFound } from 'next/navigation';
 import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { Box, Container, Heading, Image, Stack } from "@chakra-ui/react";
@@ -27,19 +26,14 @@ export async function generateMetadata(context: { params: Promise<{ slug: string
 }
 
 export default async function BlogPage(context: { params: Promise<{ slug: string; category: string }> }) {
-  console.log('📦 Awaiting context.params...');
   let slug: string = '';
   let category: string = '';
 
   try {
     const resolvedParams = await context.params;
-    console.log('✅ Resolved params:', resolvedParams);
     slug = resolvedParams.slug;
     category = resolvedParams.category;
-    console.log('✅ Extracted slug:', slug);
-    console.log('✅ Extracted category:', category);
   } catch (err) {
-    console.error('🔥 Error resolving or accessing context.params:', err);
     throw err;
   }
 
@@ -47,21 +41,16 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
   try {
     post = await getPostByCategoryAndSlug(category, slug);
     if (!post) {
-      console.warn(`⚠️ Post not found for category "${category}" and slug "${slug}"`);
       notFound();
     }
-    console.log('📄 Post retrieved:', post.title);
   } catch (err) {
-    console.error('🔥 Error fetching post:', err);
     throw err;
   }
 
   if (category === 'integrations') {
-    console.log('🧩 Using IntegrationLayout...');
-    return <IntegrationLayout post={post} category={category} />;
+    return <IntegrationLayout post={post} />;
   }
 
-  console.log('🚦 Rendering standard blog layout...');
   return (
     <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
       <Box bg="brandNeutral.200">
