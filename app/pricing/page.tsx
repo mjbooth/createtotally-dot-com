@@ -100,7 +100,7 @@ const pricingModels = [
   {
     modelBlock: true,
     icon: "FaPencilAlt",
-    headline: "Consultency",
+    headline: "Consultancy",
     body: "For teams scaling automation across functions or regions, looking to drive greater efficiencies.",
     highlights: [
       "Discovery interviews & workflow mapping",

@@ -1,3 +1,21 @@
+const GET_POST_BY_CATEGORY_AND_SLUG = gql`
+  query PostByCategoryAndSlug($slug: String!, $postType: String!) {
+    posts(where: { slug: $slug, postType: $postType }) {
+      id
+      title
+      slug
+      content {
+        html
+      }
+      coverImage {
+        url
+      }
+      excerpt
+      publishedAt
+      postType
+    }
+  }
+`;
 // /lib/hygraph/index.ts
 
 import { gql } from 'graphql-request';
@@ -24,14 +42,22 @@ export const testConnection = async () => {
   }
 };
 
-const GET_ALL_POSTS = gql`
-  query GetAllPosts {
-    posts(orderBy: publishedAt_DESC) {
+const GET_ALL_BLOG_POSTS = gql`
+  query GetAllBlogPosts {
+    posts(
+      where: { 
+        NOT: { 
+          postType_in: ["glossary", "integrations"] 
+        } 
+      }
+      orderBy: publishedAt_DESC
+    ) {
       id
       title
       slug
       excerpt
       publishedAt
+      postType
       coverImage {
         url
       }
@@ -39,9 +65,38 @@ const GET_ALL_POSTS = gql`
   }
 `;
 
-export const getAllPosts = async (): Promise<PostSummary[]> => {
+export const getAllBlogPosts = async (): Promise<PostSummary[]> => {
   try {
-    const { posts } = await client.request<{ posts: PostSummary[] }>(GET_ALL_POSTS);
+    const { posts } = await client.request<{ posts: PostSummary[] }>(GET_ALL_BLOG_POSTS);
+    return posts;
+  } catch (error) {
+    console.error('Error fetching all posts:', error);
+    throw error;
+  }
+};
+
+const GET_ALL_IN_ACTION_POSTS = gql`
+  query getAllInActionPosts {
+    posts(
+      where: { postType: "automation-in-action" }
+      orderBy: publishedAt_DESC
+    ) {
+      id
+      title
+      slug
+      excerpt
+      publishedAt
+      postType
+      coverImage {
+        url
+      }
+    }
+  }
+`;
+
+export const getAllInActionPosts = async (): Promise<PostSummary[]> => {
+  try {
+    const { posts } = await client.request<{ posts: PostSummary[] }>(GET_ALL_IN_ACTION_POSTS);
     return posts;
   } catch (error) {
     console.error('Error fetching all posts:', error);
@@ -55,6 +110,7 @@ const GET_POST_BY_SLUG = gql`
       id
       title
       slug
+      integrationThirdParty
       content {
         html
       }
@@ -74,6 +130,16 @@ export const getPostBySlug = async (slug: string): Promise<PostDetail> => {
   } catch (error) {
     console.error(`Error fetching post with slug ${slug}:`, error);
     throw error;
+  }
+};
+
+export const getPostByCategoryAndSlug = async (category: string, slug: string): Promise<PostDetail | null> => {
+  try {
+    const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POST_BY_CATEGORY_AND_SLUG, { slug, postType: category });
+    return posts.length > 0 ? posts[0] : null;
+  } catch (error) {
+    console.error(`Error fetching post with slug ${slug} and category ${category}:`, error);
+    return null;
   }
 };
 
@@ -108,6 +174,7 @@ const GET_PAGE_BY_SLUG = gql`
       title
       slug
       subtitle
+      postType
       content {
         html
       }
@@ -193,4 +260,29 @@ export const getIntegrationBySlug = async (slug: string): Promise<Integration | 
     console.error(`Error fetching integration with slug ${slug}:`, error);
     return null;
   }
+};
+
+
+export const getPostsByCategory = async (category: string): Promise<PostDetail[]> => {
+  const GET_POSTS_BY_CATEGORY = gql`
+    query PostsByCategory($postType: String!) {
+      posts(where: { postType: $postType }, orderBy: publishedAt_DESC) {
+        id
+        title
+        slug
+        excerpt
+        integrationThirdParty
+        publishedAt
+        coverImage {
+          url
+        }
+      }
+    }
+  `;
+
+  const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POSTS_BY_CATEGORY, {
+    postType: category,
+  });
+
+  return posts;
 };

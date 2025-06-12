@@ -569,7 +569,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                         </Text>
                                                     </Flex>
                                                 </Flex>
-                                                <Flex width="50%">
+                                                <Flex width={{ base: "100%", md: "50%" }} >
                                                     <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
                                                 </Flex>
                                             </Flex>
