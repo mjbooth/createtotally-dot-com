@@ -1,5 +1,4 @@
 import React from 'react';
-import { IconType } from 'react-icons';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 import { FaSitemap, FaGlobeAmericas } from 'react-icons/fa';
 import { TbTypography, TbTextWrapDisabled, TbTextSize } from 'react-icons/tb';
@@ -12,7 +11,7 @@ import { BiLayerPlus } from 'react-icons/bi';
 import { VscFileMedia } from 'react-icons/vsc';
 import { PiPaletteBold } from 'react-icons/pi';
 
-const iconMap: { [key: string]: IconType } = {
+const iconMap = {
   AiOutlineFileAdd,
   FaSitemap,
   FaGlobeAmericas,
@@ -36,14 +35,18 @@ const iconMap: { [key: string]: IconType } = {
   BsCollectionPlay,
 };
 
+export type IconName = keyof typeof iconMap;
+
 interface IconComponentProps extends React.SVGAttributes<SVGElement> {
-  name: string;
+  name: IconName;
   size?: string | number;
 }
 
-const IconComponent: React.FC<IconComponentProps> = ({ name, size = "2rem", ...props }) => {
-  const DynamicIcon = iconMap[name];
-  return DynamicIcon ? <DynamicIcon size={size} {...props} /> : null;
+const IconComponent: React.FC<IconComponentProps> = ({ name, size = '2rem', ...props }) => {
+  const Icon = iconMap[name];
+  return Icon ? <Icon size={size} {...props} /> : null;
 };
 
 export default IconComponent;
+
+export { iconMap };

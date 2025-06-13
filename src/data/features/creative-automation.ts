@@ -31,61 +31,48 @@ export const CreativeAutomationPageData = {
     {
       heading: "The copy-paste trap",
       text: "Teams waste hours rebuilding nearly identical assets over and over. Simple changes like swapping headlines or updating product details require opening and editing each file individually, creating endless opportunities for errors.",
-      image: "/wasting-time.png"
+      image: "/wasting-time.png",
+      imageAlt: "Confirmation message: “Magic! 106 items imported successfully.” Emphasises bulk data import and automation setup efficiency."
     },
     {
       heading: "The version control chaos",
       text: "Without structured planning systems, nobody knows which version is current or what changes between variants. Efforts get duplicated, approvals get confused, and delivery deadlines are constantly at risk.",
-      image: "/version-control.png"
+      image: "/version-control.png",
+      imageAlt: "Video version dropdown showing V.1 and V.2 options for a 60-second 4K rooftop cut. Represents built-in version control for creative iteration and approvals."
     },
-    // {
-    //   heading: "The scaling bottleneck",
-    //   text: "As campaigns grow beyond a handful of formats, your existing tools create exponential complexity. What works for 10 variants fails completely at 100, forcing your team into late nights and weekend work just to keep up.",
-    //   image: "/feature-placeholder-FiPenTool-sqr.jpg"
-    // },
     {
       heading: "Solution: Intelligent content scaling",
       text: "Connect your existing templates to powerful automation rules that determine exactly what changes and what stays consistent across every format, language, and market. Whether you're building 20 versions or 2,000, you maintain complete control over how content scales—from initial logic to final output.",
-      image: "/scale.png"
+      image: "/scale.png",
+      imageAlt: "Grid of multilingual Grey Goose banners each featuring localised creative in over a dozen languages. Illustrates high-volume creative scaling with consistent brand design."
     }
   ],
-  howItWorksHeading: "Ready to scale your designs without compromise?", // Add this line
+  howItWorksHeading: "Ready to scale your designs without compromise?",
   HowItWorksSteps: [
     {
       step: 1,
       label: "Step one",
       title: "Intuitive content creation",
       description: "Start in the UI or upload in bulk via Excel to plan your content campaign by campaign, market by market.",
-      image: "/intuitive-content-creation.png"
+      image: "/intuitive-content-creation.png",
+      imageAlt: "Interface showing no placements with a CTA to “Add your first adaptation”. Highlights user onboarding flow and intuitive starting point for creative automation."
     },
     {
       step: 2,
       label: "Step two",
       title: "Set your variant logic",
       description: "Apply conditions like campaign, market, or language to drive intelligent variations across every format.",
-      image: "/variant-logic.png"
+      image: "/variant-logic.png",
+      imageAlt: "InDesign master file with project assets and language variants across multiple regions. Shows variant logic and structured creative file management."
     },
     {
       step: 3,
       label: "Step three",
       title: "Connect your content sources",
       description: "Pull from campaign copy decks, product data feeds, or translation tables without having to manually input every single iteration.",
-      image: "/connect-your-content-sources.png"
+      image: "/connect-your-content-sources.png",
+      imageAlt: "Excel translation sheet showing 29 languages imported automatically from a .xls file. Demonstrates automated content ingestion and multi-language asset generation at scale."
     },
-    // {
-    //   step: 4,
-    //   label: "Step four",
-    //   title: "Tag and track everything",
-    //   description: "Attach every variant to the right campaign, content plan, or market for seamless reporting, QA, and delivery.",
-    //   image: "/feature-placeholder-FiPenTool-sqr.jpg"
-    // },
-    // {
-    //   step: 5,
-    //   label: "Step five",
-    //   title: "Automate file naming",
-    //   description: "File naming follows your defined naming structure - from language codes to product SKUs - removing manual renaming.",
-    //   image: "/feature-placeholder-FiPenTool-sqr.jpg"
-    // },
   ],
   testimonialData: {
     quote: "In just a few days we created 750+ videos using\nCreateTOTALLY. It’s cheaper, more consistent and speedy...\nit’ll be an important tool for Lukkien in the future.",

@@ -488,7 +488,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                 <AspectRatio ratio={1 / 1}>
                                                     <Image
                                                         src={step.image}
-                                                        alt={`Step ${step.step}`}
+                                                        alt={step.imageAlt}
                                                         borderRadius="lg"
                                                         width="100%"
                                                         height="auto"
@@ -632,7 +632,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                     <Flex gap="5">
                                         <Avatar.Root size="md" key="md">
                                             <Avatar.Fallback name={data.testimonialData.author} />
-                                            <Avatar.Image src={data.testimonialData.avatar} />
+                                            <Avatar.Image src={data.testimonialData.avatar} alt={`${data.testimonialData.author}, ${data.testimonialData.role} at ${data.testimonialData.company}`}/>
                                         </Avatar.Root>
                                         <Text
                                             fontWeight="400"

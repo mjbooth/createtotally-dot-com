@@ -7,7 +7,7 @@ import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlatformPageData } from "@/src/data/platform";
-import IconComponent from '@/app/platform/IconComponent';
+import IconComponent, { iconMap, IconName } from '@/app/platform/IconComponent';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -166,7 +166,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
 
             if (document.fonts?.ready) {
                 await document.fonts.ready;
-                console.log(`[ScrollTrigger] Fonts ready after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
             }
 
             const wrapper = howItWorksWrapperRef.current;
@@ -181,7 +180,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                         });
                     })
                 );
-                console.log(`[ScrollTrigger] All images loaded after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
             }
 
             requestAnimationFrame(() => {
@@ -232,17 +230,12 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
             parent?.removeChild(existingPinSpacer);
         }
 
-        // Calculate scroll distance using scrollWidth and offsetWidth
         const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
         if (!isMobile) {
             container.style.width = `${container.scrollWidth}px`;
         }
 
         gsap.set(container, { x: 0 });
-
-        //console.log("[GSAP] scrollWidth:", container.scrollWidth);
-        //console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
-        //console.log("[GSAP] scrollDistance:", scrollDistance);
 
         ScrollTrigger.create({
             trigger: wrapper,
@@ -277,9 +270,6 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
     }, [data.HowItWorksSteps.length, isMobile, setupGSAPForDesktop]);
 
     const resetLayoutForMobile = () => {
-        // Debug: log before cleanup
-        console.log("[ResetMobile] clearing wrapper height:", howItWorksWrapperRef.current?.style.height);
-        console.log("[ResetMobile] killing all ScrollTriggers...");
         ScrollTrigger.killAll();
 
         if (scrollContainerRef.current) {
@@ -291,14 +281,12 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
             howItWorksWrapperRef.current.style.overflow = 'visible';
             howItWorksWrapperRef.current.style.minHeight = 'auto';
         }
-        // Remove pin-spacer
         const pinSpacer = document.querySelector('.pin-spacer');
         if (pinSpacer) {
             const parent = pinSpacer.parentNode;
             while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
             parent?.removeChild(pinSpacer);
         }
-        // Remove any pinned inline styles by targeting .pin-spacer > *
         const pinnedChildren = document.querySelectorAll('.pin-spacer > *');
         pinnedChildren.forEach(el => {
             (el as HTMLElement).style.position = 'relative';
@@ -380,7 +368,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                         <Box width="100%" overflow="hidden">
                                             <Image
                                                 src={block.image}
-                                                alt={block.heading}
+                                                alt={block.imageAlt}
                                                 width="100%"
                                                 borderRadius={{ base: "xl", md: "4xl" }}
                                             />
@@ -445,7 +433,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                                 <AspectRatio ratio={1 / 1}>
                                                     <Image
                                                         src={step.image}
-                                                        alt={`Step ${step.step}`}
+                                                        alt={step.imageAlt}
                                                         borderRadius="lg"
                                                         width="100%"
                                                         height="auto"
@@ -531,7 +519,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                                     </Flex>
                                                 </Flex>
                                                 <Flex width={{ base: "100%", md: "50%" }} >
-                                                    <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                                                    <Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
                                                 </Flex>
                                             </Flex>
                                         </Flex>
@@ -592,7 +580,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                     <Flex gap="5">
                                         <Avatar.Root size="md" key="md">
                                             <Avatar.Fallback name={data.testimonialData.author} />
-                                            <Avatar.Image src={data.testimonialData.avatar} />
+                                            <Avatar.Image src={data.testimonialData.avatar} alt={`${data.testimonialData.author}, ${data.testimonialData.role} at ${data.testimonialData.company}`} />
                                         </Avatar.Root>
                                         <Text
                                             fontWeight="400"
@@ -652,14 +640,18 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                             <Box key={index} textAlign="left" p={{ base: "8", md: "10", lg: "10" }} minHeight={{ base: "48", md: "30", lg: "24" }} background="white" borderRadius="2xl" shadow="realistic">
                                 <HStack align="flex-start" gap="5">
                                     <Box color="brandFuchsia.500">
-                                        <IconComponent
-                                            name={
-                                                typeof feature.icon === 'string'
-                                                    ? feature.icon
-                                                    : feature.icon.name
-                                            }
-                                            aria-label={feature.title}
-                                        />
+                                        {typeof feature.icon === 'string' && feature.icon in iconMap && (
+                                            <IconComponent
+                                                name={feature.icon as IconName}
+                                                aria-label={feature.title}
+                                            />
+                                        )}
+                                        {typeof feature.icon === 'object' && 'name' in feature.icon && feature.icon.name in iconMap && (
+                                            <IconComponent
+                                                name={feature.icon.name as IconName}
+                                                aria-label={feature.title}
+                                            />
+                                        )}
                                     </Box>
                                     <VStack align="left" gap={0}>
                                         <Text fontSize="lg" color="brandNavy.500" fontWeight="700">

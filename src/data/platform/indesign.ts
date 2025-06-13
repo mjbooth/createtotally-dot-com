@@ -56,17 +56,20 @@ export const InDesignPageData = {
     {
       heading: "Too much time wasted on repetitive tasks",
       text: "You became a designer to create, not copy-paste. But 70% of your day disappears into formatting, resizing, and versioning – leaving little time for actual design work.",
-      image: "/repetitive-tasks.png"
+      image: "/repetitive-tasks.png",
+      imageAlt: "Cut, copy, and paste menu above a Spanish-language ad for Bombay Sapphire. Represents the manual effort involved in localising campaign assets before automation."
     },
     {
       heading: "Brand consistency erodes with every new adaptation",
       text: "As variations multiply across regions and platforms, small deviations compound into major inconsistencies. Your once-cohesive brand identity becomes fragmented, diluting your market presence and confusing customers.",
-      image: "/brand-consistency.png"
+      image: "/brand-consistency.png",
+      imageAlt: "Font override interface showing replacement of Grotesque MT with Noto Sans SC for Chinese-language brand creative. Demonstrates automated font substitution for multilingual brand consistency."
     },
     {
       heading: "Traditional templates create frustrating dependencies",
       text: "When you rely on external vendors, ticketing systems or lengthy implementation cycles, you lose control precisely when deadlines are tightest. The handoff process itself creates the bottleneck.",
-      image: "/variant-logic.png"
+      image: "/variant-logic.png",
+      imageAlt: "Project view showing an InDesign master file and multiple design file variants in different languages and formats. Visualises structured asset management and variant control."
     }
   ],
   HowItWorksSteps: [
@@ -75,21 +78,24 @@ export const InDesignPageData = {
       label: "Step one",
       title: "Set up in InDesign",
       description: "Use our StudioCraft plugin that runs quietly in the background, prepping your files for automation without ever touching your design intent. No new tools to learn. No templates to rebuild.",
-      image: "/use-your-actual-design-files.png"
+      image: "/use-your-actual-design-files.png",
+      imageAlt: "CreateTOTALLY StudioCraft interface with logo and headline selected in a tropical-themed layout. Emphasises use of real design files for structured creative automation."
     },
     {
       step: 2,
       label: "Step two",
       title: "Upload to CreateTOTALLY",
       description: "Your InDesign templates become intelligent production systems that work like a designer - placing every element exactly where you'd expect, from multilingual formats to dynamic image swaps, while maintaining full visual control.",
-      image: "/indesign-upload.png"
+      image: "/indesign-upload.png",
+      imageAlt: "Upload panel for automation assets with drag-and-drop and browse functionality. Highlights easy onboarding of design files for creative automation workflows."
     },
     {
       step: 3,
       label: "Step three",
       title: "Scale endlessly",
       description: "Generate hundreds of assets across every format, region, or language in seconds. Make a single change to colors, fonts, or layouts and apply it everywhere instantly - all while maintaining your precise design specifications.",
-      image: "/wasting-time.png"
+      image: "/wasting-time.png",
+      imageAlt: "Confirmation screen stating “106 items imported successfully” after uploading a content plan. Captures the speed and automation of bulk import and data-driven content setup."
     }
   ],
   heroSectionData: {

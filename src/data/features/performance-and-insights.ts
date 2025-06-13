@@ -32,22 +32,26 @@ export const PerformanceAndInsightsPageData = {
     {
       heading: "Operating in the dark",
       text: "Even when performance data is available, it exists in analytics platforms separate from your creative process. The most valuable patterns remain hidden because no one can connect specific creative attributes to performance metrics at scale.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     },
     {
       heading: "Missing valuable patterns",
       text: "Without clear connections between content and templates, even brilliant designs struggle to deliver their potential. Copy lives in spreadsheets while images hide in folders, creating a frustrating disconnect in your production process.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     },
     {
       heading: "Reacting too slowly",
       text: "By the time insights emerge from disconnected systems, it's too late to capitalise on them. Your media budget continues to support underperforming assets while opportunities to scale successful creative approaches are missed.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     },
     {
       heading: "Close the creative performance loop",
       text: "CreateTOTALLY bridges the gap between creation and results. Our insights engine links every adaptation to its real-world performance, giving you unprecedented visibility into what drives success across your entire creative portfolio.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     }
   ],
   HowItWorksSteps: [
@@ -56,21 +60,24 @@ export const PerformanceAndInsightsPageData = {
       label: "Step one",
       title: "Connect to your media platforms",
       description: "We integrate with your advertising and analytics platforms to pull performance data for each asset automatically. No manual imports or complex setup required.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     },
     {
       step: 2,
       label: "Step two",
       title: "Analyse at the asset level",
       description: "Our system tracks every adaptation's performance metrics with precision. Compare variations across markets, formats and channels to identify winners and understand why they succeed.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     },
     {
       step: 3,
       label: "Step three",
       title: "Act on insights immediately",
       description: "Spot patterns, make decisions and implement changes without leaving the platform. Scale winning approaches, pause underperformers and refine templates based on real data.",
-      image: "/feature-placeholder-FiPenTool-sqr.jpg"
+      image: "/feature-placeholder-FiPenTool-sqr.jpg",
+      imageAlt: "Alt Text"
     }
   ],
   testimonialData: {

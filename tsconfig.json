@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-        "lib": [
+    "lib": [
       "dom",
       "dom.iterable",
       "esnext"
@@ -24,6 +24,10 @@
         "./*"
       ]
     },
+    "types": [
+      "node",
+      "jest"
+    ],
     "plugins": [
       {
         "name": "next"
@@ -34,8 +38,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "app/platform/[slug]/PlatformTemplate.tsx.old"],
+    ".next/types/**/*.ts",
+    "app/platform/[slug]/PlatformTemplate.tsx.old"
+  ],
   "exclude": [
     "node_modules"
   ]

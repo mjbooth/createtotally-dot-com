@@ -25,6 +25,7 @@ export interface FeaturePageData {
         text: string;
         image?: string;
         lottie?: string;
+        imageAlt: string;
     }>;
     howItWorksHeading: string; // Add this new property
     HowItWorksSteps: Array<{
@@ -33,6 +34,7 @@ export interface FeaturePageData {
         title: string;
         description: string;
         image: string;
+        imageAlt: string;
     }>;
     testimonialData: {
         quote: string;

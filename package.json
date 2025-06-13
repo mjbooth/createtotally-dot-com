@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^3.15.1",
-    "@chakra-ui/theme": "^3.4.6",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@next/third-parties": "^15.3.3",
@@ -21,9 +20,7 @@
     "framer-motion": "^12.6.5",
     "graphql": "^16.11.0",
     "graphql-request": "^7.1.2",
-    "gray-matter": "^4.0.3",
     "gsap": "^3.13.0",
-    "lottie-react": "^2.4.1",
     "next": "^15.3.3",
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.6",
@@ -31,24 +28,24 @@
     "react-dom": "^19.0.0",
     "react-ga4": "^2.1.0",
     "react-hook-form": "^7.56.3",
-    "react-icons": "^5.5.0",
-    "react-markdown": "^10.1.0",
-    "react-player": "^2.16.0",
-    "remark": "^15.0.1",
-    "remark-html": "^16.0.1"
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@next/bundle-analyzer": "^15.3.3",
-    "@types/node": "^20",
+    "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^24.0.1",
     "@types/react": "^19.1.4",
-    "@types/react-dom": "^19",
     "eslint": "^9.25.1",
     "eslint-config-next": "^15.2.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
+    "glob": "^11.0.3",
     "prettier": "^3.5.3",
-    "typescript": "^5",
-    "webpack-bundle-analyzer": "^4.10.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-stats-plugin": "^1.1.3"
   }
 }
