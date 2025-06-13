@@ -32,6 +32,7 @@ const steps = [
 		"headline": "Start with Figma & Adobe",
 		"subLabel": "Upload existing Figma and Adobe design files, prepared using our suite of plugins.",
 		"image": "/SetUpInFigma.avif",
+		"imageAlt": "Interface showing a Figma file uploaded for creative automation. Illustrates seamless setup for design-to-delivery workflows.",
 		"cta": "Explore our design integrations →"
 	},
 	{
@@ -41,6 +42,7 @@ const steps = [
 		"headline": "No-code Templating",
 		"subLabel": "Set up templates easily, without writing any code. Just click and customise.",
 		"image": "/upload-to-ct.png",
+		"imageAlt": "Upload UI with a highlighted “Analyse” button next to an After Effects project file. Marks the start of the creative automation pipeline.",
 		"cta": "See how templates work →"
 	},
 	{
@@ -50,6 +52,7 @@ const steps = [
 		"headline": "Content Planning",
 		"subLabel": "Choose what you need: sizes, styles, and languages, ensuring every adapt is perfect.",
 		"image": "/content-variations-at-scale.png",
+		"imageAlt": "Placement dashboard showing 62 selected adaptations across Meta formats and languages. Highlights content scaling with master templates and cross-channel deployment.",
 		"cta": "Discover content planning tools →"
 	},
 	{
@@ -59,6 +62,7 @@ const steps = [
 		"headline": "Automate at Scale",
 		"subLabel": "The system quickly creates all your designs, perfectly formatted every time.",
 		"image": "/format-explosion.png",
+		"imageAlt": "Multilingual creative variants for the same campaign shown in multiple formats and aspect ratios. Highlights creative complexity managed through automation.",
 		"cta": "Learn about scalable automation →"
 	},
 	{
@@ -68,6 +72,7 @@ const steps = [
 		"headline": "Approve Without the Back-and-Forth",
 		"subLabel": "Share for review in one place. Get feedback, make changes, and approve quickly.",
 		"image": "/trapped-in-approval-purgatory.png",
+		"imageAlt": "Multi-step reviewer workflow paused at market manager stage. Reflects approval bottlenecks in traditional creative sign-off flows.",
 		"cta": "View our approval workflows →"
 	},
 	{
@@ -77,6 +82,7 @@ const steps = [
 		"headline": "Deliver Instantly",
 		"subLabel": "Send your files where they need to go—no extra steps, no renaming.",
 		"image": "/final-assets-delivered.png",
+		"imageAlt": "Google Drive folder with multiple video files titled by language, resolution, and template ID. Represents final creative delivery grouped by format and locale.",
 		"cta": "See delivery options →"
 	},
 	{
@@ -86,6 +92,7 @@ const steps = [
 		"headline": "Track & Optimise",
 		"subLabel": "See what's working, measure results, and improve designs over time.",
 		"image": "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png",
+		"imageAlt": "Campaign performance dashboard showing metrics for Facebook and Instagram including spend, reach, CPC, and CTR. Demonstrates end-to-end performance tracking across creative platforms.",
 		"cta": "Explore analytics capabilities →"
 	}
 ];
@@ -529,7 +536,7 @@ export default function HomePage() {
 							</Box>
 							<Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
 								<Box width="100%" overflow="hidden">
-									<Image src="/AutomationSuite.svg" alt="Icon" width="100%" borderRadius="4xl" />
+									<Image src="/AutomationSuite.svg" alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." width="100%" borderRadius="4xl" />
 								</Box>
 							</Box>
 						</Flex>
@@ -588,7 +595,7 @@ export default function HomePage() {
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														src={step.image}
-														alt={`Step ${step.step}`}
+														alt={step.imageAlt}
 														borderRadius="lg"
 														width="100%"
 														height="auto"
@@ -670,7 +677,7 @@ export default function HomePage() {
 													</Flex>
 												</Flex>
 												<Flex width="50%">
-													<Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+													<Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
 												</Flex>
 											</Flex>
 										</Flex>
