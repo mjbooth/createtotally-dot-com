@@ -2,7 +2,8 @@
 
 import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
 import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
-import { FaPencilRuler } from "react-icons/fa";
+import dynamic from "next/dynamic";
+const FaPencilRuler = dynamic(() => import("react-icons/fa").then(mod => mod.FaPencilRuler), { ssr: false });
 import { useBackground } from '@/src/context/BackgroundContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -47,7 +48,7 @@ const steps = [
 		"step": "Step three",
 		"feature": "Feature name",
 		"headline": "Content Planning",
-		"subLabel": "Choose what you need: sizes, styles, and languages ensuring every adapt is perfect.",
+		"subLabel": "Choose what you need: sizes, styles, and languages, ensuring every adapt is perfect.",
 		"image": "/content-variations-at-scale.png",
 		"cta": "Discover content planning tools →"
 	},
@@ -399,7 +400,7 @@ export default function HomePage() {
 								fontWeight="400"
 								maxW={{ base: "full", md: "3xl" }}
 							>
-								If you make more than 10 print, video, or digital adapts per campaign, our AI automation technology can cut your production costs by 65%. Without sacrificing creative control.
+								If you make more than 10 print, video, or digital adaptations per campaign, our AI automation technology can cut your production costs by 65%. Without sacrificing creative control.
 							</Text>
 						</Stack>
 					</Box>

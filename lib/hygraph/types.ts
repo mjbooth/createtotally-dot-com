@@ -4,6 +4,7 @@ export interface PostSummary {
   slug: string;
   excerpt?: string;
   publishedAt: string;
+  postType: string;
   coverImage?: {
     url: string;
   };

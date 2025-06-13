@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Heading, Text, Stack, Flex, Icon, Container } from '@chakra-ui/react';
 import { HiCheckCircle } from "react-icons/hi";
-import { renderIcon } from '@/src/utils/iconUtils';
+import { getIcon } from '@/src/utils/iconUtils';
 
 interface FeatureHeroSectionProps {
   featureGroup: string;
@@ -21,7 +21,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   features,
 }) => {
 
-  const IconComponent = renderIcon(featureGroupIcon);
+  const IconComponent = getIcon(featureGroupIcon);
 
   return (
     <Box bg="brandNeutral.200">

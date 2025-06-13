@@ -72,7 +72,7 @@ export const EasyTemplatingPageData = {
       step: 4,
       label: "Step four",
       title: "Set intelligent resizing rules",
-      description: "Define how your design adapts to different formats and dimensions.",
+      description: "Define how your design adaptations to different formats and dimensions.",
       image: "/resizing-rules.png"
     },
     {

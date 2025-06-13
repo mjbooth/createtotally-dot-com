@@ -83,7 +83,7 @@ export default async function BlogPage() {
                   p={10}
                   boxShadow="realistic"
                 >
-                  <Link href={`/blog/${post.slug}`}>
+                  <Link href={`/${post.postType}/${post.slug}`}>
                     {post.coverImage?.url && (
                       <Box as="figure" width="100%" position="relative" mb={4}>
                         <Image

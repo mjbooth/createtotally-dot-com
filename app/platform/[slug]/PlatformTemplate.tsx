@@ -7,7 +7,7 @@ import React from 'react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlatformPageData } from "@/src/data/platform";
-import IconComponent from '@/app/platform/IconComponent';
+import IconComponent, { iconMap, IconName } from '@/app/platform/IconComponent';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -652,14 +652,18 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                             <Box key={index} textAlign="left" p={{ base: "8", md: "10", lg: "10" }} minHeight={{ base: "48", md: "30", lg: "24" }} background="white" borderRadius="2xl" shadow="realistic">
                                 <HStack align="flex-start" gap="5">
                                     <Box color="brandFuchsia.500">
-                                        <IconComponent
-                                            name={
-                                                typeof feature.icon === 'string'
-                                                    ? feature.icon
-                                                    : feature.icon.name
-                                            }
-                                            aria-label={feature.title}
-                                        />
+                                        {typeof feature.icon === 'string' && feature.icon in iconMap && (
+                                            <IconComponent
+                                                name={feature.icon as IconName}
+                                                aria-label={feature.title}
+                                            />
+                                        )}
+                                        {typeof feature.icon === 'object' && 'name' in feature.icon && feature.icon.name in iconMap && (
+                                            <IconComponent
+                                                name={feature.icon.name as IconName}
+                                                aria-label={feature.title}
+                                            />
+                                        )}
                                     </Box>
                                     <VStack align="left" gap={0}>
                                         <Text fontSize="lg" color="brandNavy.500" fontWeight="700">

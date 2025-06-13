@@ -1,53 +1,40 @@
-import * as GoIcons from "react-icons/go";
-import * as HiIcons from "react-icons/hi";
-import * as PiIcons from "react-icons/pi";
-import * as MdIcons from "react-icons/md";
-import * as RiIcons from "react-icons/ri";
-import * as BsIcons from "react-icons/bs";
-import * as TbIcons from "react-icons/tb";
-import * as FaIcons from "react-icons/fa";
-import * as SiIcons from "react-icons/si";
-import * as F6Icons from "react-icons/fa6";
-import * as BiIcons from "react-icons/bi";
-import * as TiIcons from "react-icons/ti";
-
 import { IconType } from 'react-icons';
+import { SiFigma, SiAdobeindesign, SiAdobeaftereffects, SiAdobephotoshop, SiAdobeillustrator, SiHtml5 } from 'react-icons/si';
+import { FaPencilRuler, FaBolt } from 'react-icons/fa';
+import { BiSolidImageAdd, BiSolidBarChartAlt2 } from 'react-icons/bi';
+import { MdAccountTree, MdViewInAr, MdCompareArrows } from 'react-icons/md';
+import { RiFunctionAddFill, RiShieldFlashFill } from 'react-icons/ri';
+import { TbCirclePlusFilled } from 'react-icons/tb';
+import { TiStarFullOutline } from 'react-icons/ti';
 
-const iconLibraries: { [key: string]: { [key: string]: IconType } } = {
-  Go: GoIcons,
-  Hi: HiIcons,
-  Pi: PiIcons,
-  Md: MdIcons,
-  Ri: RiIcons,
-  Bs: BsIcons,
-  Tb: TbIcons,
-  Fa: FaIcons,
-  Si: SiIcons,
-  F6: F6Icons,
-  Bi: BiIcons,
-  Ti: TiIcons,
+export const iconMap = {
+  SiFigma,
+  SiAdobeindesign,
+  SiAdobeaftereffects,
+  SiAdobephotoshop,
+  SiAdobeillustrator,
+  SiHtml5,
+  FaPencilRuler,
+  BiSolidImageAdd,
+  FaBolt,
+  MdAccountTree,
+  RiFunctionAddFill,
+  BiSolidBarChartAlt2,
+  RiShieldFlashFill,
+  TbCirclePlusFilled,
+  MdViewInAr,
+  TiStarFullOutline,
+  MdCompareArrows,
 };
 
-export const getIcon = (iconName?: string): IconType | undefined => {
-  if (!iconName) return undefined;
+export type IconName = keyof typeof iconMap;
 
-  const prefix = iconName.slice(0, 2);
-  const library = iconLibraries[prefix];
-
-  if (!library) {
-    console.warn(`Unknown icon prefix for "${iconName}"`);
+export const getIcon = (name?: string): IconType | undefined => {
+  if (!name || !(name in iconMap)) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[iconUtils] Unknown icon: "${name}"`);
+    }
     return undefined;
   }
-
-  const IconComponent = library[iconName];
-
-  if (!IconComponent) {
-    console.warn(`Icon "${iconName}" not found in ${prefix}Icons`);
-    return undefined;
-  }
-
-  return IconComponent;
+  return iconMap[name as IconName];
 };
-
-export const renderIcon = getIcon;
-

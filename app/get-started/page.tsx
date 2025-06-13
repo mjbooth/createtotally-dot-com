@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Box, Heading, Flex, VStack, Stack, Text, Alert, Grid, Image, Icon, Textarea, List, GridItem, Container, VisuallyHidden, SimpleGrid, } from "@chakra-ui/react"
 import {
   Button,
@@ -11,10 +12,12 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { FaStar,FaPlay } from 'react-icons/fa';
 import Link from "next/link";
-import { FaCircleCheck } from "react-icons/fa6"
 import { useBackground } from '@/src/context/BackgroundContext';
+
+const FaPlay = dynamic(() => import('react-icons/fa').then(mod => mod.FaPlay), { ssr: false });
+const FaStar = dynamic(() => import('react-icons/fa').then(mod => mod.FaStar), { ssr: false });
+const FaCircleCheck = dynamic(() => import('react-icons/fa6').then(mod => mod.FaCircleCheck), { ssr: false });
 
 const allClientLogos = [
   { src: "/bacardi_logo.png", alt: "Bacardi" },

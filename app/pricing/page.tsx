@@ -1,10 +1,11 @@
 "use client"
 
+import dynamic from "next/dynamic";
 import React from 'react';
 import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Image, Link, Avatar } from "@chakra-ui/react";
-import { LuCircleCheck } from "react-icons/lu";
-import { renderIcon } from '@/src/utils/iconUtils';
-import { TbCoinPoundFilled } from "react-icons/tb";
+
+const LuCircleCheck = dynamic(() => import("react-icons/lu").then(mod => mod.LuCircleCheck), { ssr: false });
+const TbCoinPoundFilled = dynamic(() => import("react-icons/tb").then(mod => mod.TbCoinPoundFilled), { ssr: false });
 
 const CustomCheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -43,28 +44,24 @@ const clientHighlights = [
   {
     title: "55% reduction in production \ncosts. 8x faster.",
     description: ["55% reduction", "8x faster."],
-    icon: "MdGridOn",
     image: "/white-claw-hard-seltzer-logo-vector.svg",
     client: "White Claw",
   },
   {
     title: "Briefing to live in 3 weeks. \nSold out in 3 markets.",
     description: "Briefing to live in 3 weeks.",
-    icon: "LuLayoutDashboard",
     image: "/Hasbro_logo.svg",
     client: "Hasbro",
   },
   {
     title: "10x faster to brief, adapt \nand deliver retail films.",
     description: "10x faster",
-    icon: "HiOutlinePuzzle",
     image: "/nike-4-logo.svg",
     client: "Nike",
   },
   {
     title: "38% reduction in new customer cost per acquisition.",
     description: "38% reduction",
-    icon: "TbTextWrapDisabled",
     image: "/tws.jpeg",
     client: "The Wine Society",
   },
@@ -148,7 +145,6 @@ const tableRows = [
 
 interface Feature {
   image: string;
-  icon: string | { name: string };
   title: string;
   client: string;
   description: string | string[];
@@ -204,7 +200,7 @@ const PricingPage = () => {
                 maxW={{ base: "full", md: "2xl" }}
                 px={{ base: 4, sm: 0 }}
               >
-                Whether you’re just starting out or orchestrating global campaigns, CreateTOTALLY adapts to your workflow and scales without surprises.
+                Whether you’re just starting out or orchestrating global campaigns, CreateTOTALLY adaptations to your workflow and scales without surprises.
               </Text>
             </Stack>
           </Box>
@@ -280,17 +276,6 @@ const PricingPage = () => {
               >
                 {model.modelBlock ? (
                   <Flex gap="6" direction="column" alignItems="left">
-                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" color="brandNeutral.500">
-                      <Text color="brandNeutral.200" fontWeight="bold" fontSize="xl" lineHeight={1} whiteSpace="nowrap">
-                        {model.icon && (
-                          <Icon
-                            as={renderIcon(model.icon)}
-                            boxSize="18px"
-                            color="currentColor"
-                          />
-                        )}
-                      </Text>
-                    </Flex>
                     <Flex gap="4" direction="column" alignItems="left" py="3">
                       <Heading as="h3" fontSize={{ base: "4xl", md: "5xl", lg: "5xl" }} fontWeight="700" lineHeight="100%" letterSpacing="tight" color="brandNeutral.500">
                         {model.headline}

@@ -2,8 +2,9 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
+const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const webpack = require('webpack');
-const path = require('path');
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -46,6 +47,24 @@ const nextConfig = {
         })
       );
     }
+
+    if (!isServer && process.env.EXPORT_STATS === 'true') {
+      config.plugins.push(
+        new StatsWriterPlugin({
+          filename: 'stats.json',
+          stats: {
+            all: false,
+            assets: true,
+            chunks: true,
+            entrypoints: true,
+            moduleAssets: true,
+            reasons: false,
+            usedExports: false,
+          },
+        })
+      );
+    }
+
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
     return config;
   },
