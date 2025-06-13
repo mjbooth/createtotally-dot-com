@@ -29,6 +29,7 @@ export interface PlatformPageData {
         heading: string;
         text: string;
         image: string;
+        imageAlt: string;
     };
     howItWorksHeading: string;
     HowItWorksStep: {
@@ -37,6 +38,7 @@ export interface PlatformPageData {
         title: string;
         description: string;
         image: string;
+        imageAlt: string;
     };
     HeroSectionData: {
         featureGroup: string;

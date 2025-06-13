@@ -562,7 +562,7 @@ const PricingPage = () => {
                   <Flex gap="5">
                     <Avatar.Root size="md" key="md">
                       <Avatar.Fallback name={testimonialData[0].author} />
-                      <Avatar.Image src={testimonialData[0].avatar} />
+                      <Avatar.Image src={testimonialData[0].avatar} alt={`${testimonialData[0].author}, ${testimonialData[0].role} at ${testimonialData[0].company}`}/>
                     </Avatar.Root>
                     <Text
                       fontWeight="400"

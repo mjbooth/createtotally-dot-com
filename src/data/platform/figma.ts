@@ -1,10 +1,10 @@
 export const FigmaPageData = {
   metadata: {
-    title: "Figma Creative Automation | CreateTOTALLY",
-    description: "Automate your Figma designs at scale. CreateTOTALLY’s Figma integration helps creative teams adapt, localise, and deliver assets faster - without touching design again.",
+    title: "Figma Automation Tool: Scale Design Production Without Limits",
+    description: "Stop drowning in Figma design edits. Automate localisation, format variations, and approval workflows. Scale creative production effortlessly.",
     openGraph: {
       title: "Figma automation that scales with your creative team",
-      description: "From one Figma file to hundreds of localised assets. CreateTOTALLY gives creative teams the control to scale - fast, flexible, and design-true.",
+      description: "Stop drowning in Figma design edits. Automate localisation, format variations, and approval workflows. Scale creative production effortlessly.",
       images: [
         {
           url: "/setup_in_figma.png",
@@ -70,17 +70,20 @@ export const FigmaPageData = {
     {
       heading: "The localisation bottleneck",
       text: "You’ve designed the perfect campaign in Figma. Then the requests flood in: “Can we get this in 12 languages?” “We need all the CTAs adapted for each market.”\n\nYour team gets stuck in an endless cycle of edits, copying and pasting translations, checking alignment, and fixing broken layouts—hours of work that doesn’t use your creative talents.",
-      image: "/snapchat.png"
+      image: "/snapchat.png",
+      imageAlt: "Example of localized Snapchat creative with “Find your favorite on Snapchat” translated into eight global languages including English, Spanish, Hindi, Urdu, Turkish, and Arabic—each with Google Play CTA. Showcases multilingual ad adaptation and dynamic creative localization for global marketing campaigns.",
     },
     {
       heading: "The format explosion",
       text: "Your stakeholders need assets in every conceivable format: Instagram Stories, Facebook carousels, LinkedIn posts, display ads in six different sizes, email headers... \n\nEach adaptation means reopening Figma, adjusting designs, manually exporting, and renaming files—over and over again.",
-      image: "/format-explosion.png"
+      image: "/format-explosion.png",
+      imageAlt: "Multilingual campaign assets in English, Italian, and Spanish, each adapted into varied formats and aspect ratios. Demonstrates creative automation at scale for global brand localisation."
     },
     {
       heading: "The approval-revision loop",
       text: "You send assets for review. Then come the change requests: “Can we try a different image?” “The headline’s too long.” “Legal wants different disclaimers for each market.” \n\nEach small change means reopening files, making adjustments, re-exporting, and updating your tracking spreadsheet—multiplied by dozens of versions.",
-      image: "/approval-revision-loop.png"
+      image: "/approval-revision-loop.png",
+      imageAlt: "Feedback modal from a creative review platform showing “Changes required” for multiple selected proofs. Highlights automated proofing workflow and collaborative commenting across assets."
     }
   ],
   HowItWorksSteps: [
@@ -89,21 +92,24 @@ export const FigmaPageData = {
       label: "Step one",
       title: "Set up in Figma",
       description: "Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.",
-      image: "/SetUpInFigma.avif"
+      image: "/SetUpInFigma.avif",
+      imageAlt: "Figma automation panel with a linked master design file ready for template analysis. Demonstrates seamless setup of creative automation from within Figma."
     },
     {
       step: 2,
       label: "Step two",
       title: "Upload to CreateTOTALLY",
       description: "Your templates become intelligent production systems that maintain design integrity, while allowing controlled changes.",
-      image: "/upload_to_createtotally.png"
+      image: "/upload_to_createtotally.png",
+      imageAlt: "Figma file upload interface showing a master template ready for automation. Highlights CreateTOTALLY’s template analysis workflow for creative asset generation."
     },
     {
       step: 3,
       label: "Step three",
       title: "Scale endlessly",
       description: "With CreateTOTALLY, you can scale your design workflow to handle thousands of assets, hundreds of projects, or even tens of thousands of clients. Generate hundreds of assets with different copy, images, sizes, and formats—all maintaining your precise design specifications.",
-      image: "/ScaleEndlessly.webp"
+      image: "/ScaleEndlessly.webp",
+      imageAlt: "Creative automation platform showing message that output items will be available after template analysis. Represents scalable content generation using a single Figma file."
     }
   ],
   testimonialData: {
