@@ -32,6 +32,7 @@ const steps = [
 		"headline": "Start with Figma & Adobe",
 		"subLabel": "Upload existing Figma and Adobe design files, prepared using our suite of plugins.",
 		"image": "/SetUpInFigma.avif",
+		"imageAlt": "Text",
 		"cta": "Explore our design integrations →"
 	},
 	{
@@ -41,6 +42,7 @@ const steps = [
 		"headline": "No-code Templating",
 		"subLabel": "Set up templates easily, without writing any code. Just click and customise.",
 		"image": "/upload-to-ct.png",
+		"imageAlt": "Text",
 		"cta": "See how templates work →"
 	},
 	{
@@ -50,6 +52,7 @@ const steps = [
 		"headline": "Content Planning",
 		"subLabel": "Choose what you need: sizes, styles, and languages, ensuring every adapt is perfect.",
 		"image": "/content-variations-at-scale.png",
+		"imageAlt": "Text",
 		"cta": "Discover content planning tools →"
 	},
 	{
@@ -59,6 +62,7 @@ const steps = [
 		"headline": "Automate at Scale",
 		"subLabel": "The system quickly creates all your designs, perfectly formatted every time.",
 		"image": "/format-explosion.png",
+		"imageAlt": "Text",
 		"cta": "Learn about scalable automation →"
 	},
 	{
@@ -77,6 +81,7 @@ const steps = [
 		"headline": "Deliver Instantly",
 		"subLabel": "Send your files where they need to go—no extra steps, no renaming.",
 		"image": "/final-assets-delivered.png",
+		"imageAlt": "Text",
 		"cta": "See delivery options →"
 	},
 	{
@@ -86,6 +91,7 @@ const steps = [
 		"headline": "Track & Optimise",
 		"subLabel": "See what's working, measure results, and improve designs over time.",
 		"image": "/CreateTOTALLY-Reports-Campaign-performance-02-20-2025_09_33_PM.png",
+		"imageAlt": "Text",
 		"cta": "Explore analytics capabilities →"
 	}
 ];
@@ -529,7 +535,7 @@ export default function HomePage() {
 							</Box>
 							<Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
 								<Box width="100%" overflow="hidden">
-									<Image src="/AutomationSuite.svg" alt="Icon" width="100%" borderRadius="4xl" />
+									<Image src="/AutomationSuite.svg" alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." width="100%" borderRadius="4xl" />
 								</Box>
 							</Box>
 						</Flex>
@@ -588,7 +594,7 @@ export default function HomePage() {
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														src={step.image}
-														alt={`Step ${step.step}`}
+														alt={step.imageAlt}
 														borderRadius="lg"
 														width="100%"
 														height="auto"
@@ -670,7 +676,7 @@ export default function HomePage() {
 													</Flex>
 												</Flex>
 												<Flex width="50%">
-													<Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+													<Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
 												</Flex>
 											</Flex>
 										</Flex>
