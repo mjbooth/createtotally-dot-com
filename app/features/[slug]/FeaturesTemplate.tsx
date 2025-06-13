@@ -373,7 +373,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                 maxW={{ base: "full", md: "3xl" }}
                                                 width="100%"
                                             >
-                                                <Image src={block.image} alt={block.heading} width="100%" />
+                                                <Image src={block.image} alt={block.imageAlt} width="100%" />
                                             </Box>
                                         </Flex>
                                     );
@@ -422,7 +422,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                             <Box width="100%" overflow="hidden">
                                                 <Image
                                                     src={block.image}
-                                                    alt={block.heading}
+                                                    alt={block.imageAlt}
                                                     width="100%"
                                                     borderRadius={{ base: "xl", md: "4xl" }}
                                                 />
@@ -570,7 +570,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                     </Flex>
                                                 </Flex>
                                                 <Flex width={{ base: "100%", md: "50%" }} >
-                                                    <Image src={step.image} alt={`Step ${step.step}`} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                                                    <Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
                                                 </Flex>
                                             </Flex>
                                         </Flex>
