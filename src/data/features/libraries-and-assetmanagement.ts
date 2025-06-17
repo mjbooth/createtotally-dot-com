@@ -14,6 +14,9 @@ export const LibrariesAndAssetManagementPageData = {
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/features/libraries-and-asset-management",
+    }
   },
   heroSectionData: {
     featureGroup: "Libraries & Asset Management",

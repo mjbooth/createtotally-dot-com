@@ -14,6 +14,9 @@ export const EasyTemplatingPageData = {
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/features/easy-templating",
+    }
   },
   heroSectionData: {
     featureGroup: "Easy Templating",

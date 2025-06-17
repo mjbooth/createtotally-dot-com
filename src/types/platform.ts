@@ -12,6 +12,9 @@ export interface PlatformPageData {
                 alt: string;
             }>;
         };
+        alternates?: {
+            canonical?: string;
+        };
     };
     heroSectionData: {
         featureGroup: string;

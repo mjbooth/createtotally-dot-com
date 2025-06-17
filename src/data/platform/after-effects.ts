@@ -7,12 +7,15 @@ export const AfterEffectsPageData = {
       description: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it. Break from video production bottlenecks without sacrificing creative control.",
       images: [
         {
-          url: "/FigmaPlugin.jpg",
+          url: "/OpenGraph.jpg",
           width: 1200,
           height: 630,
           alt: "Adobe After Effects Automation with CreateTOTALLY",
         },
       ],
+    },
+    alternates: {
+      canonical: "https://www.createtotally.com/platform/adobe-after-effects-automation",
     },
   },
   features: [

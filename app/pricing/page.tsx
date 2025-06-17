@@ -1,5 +1,3 @@
-"use client"
-
 import React from 'react';
 import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Image, Link, Avatar } from "@chakra-ui/react";
 
@@ -139,6 +137,27 @@ interface Feature {
     client: string;
     description: string | string[];
 }
+
+export const metadata = {
+  title: 'Creative Automation Platform - Automate More, Pay Less | CreateTOTALLY',
+  description: 'Automate your creative production with CreateTOTALLY. Remove blockers, scale faster, and reduce costs with flexible team solutions.',
+  alternates: {
+    canonical: 'https://www.createtotally.com/pricing',
+  },
+  openGraph: {
+    title: 'CreateTOTALLY Pricing',
+    description: "Scale creative production with CreateTOTALLY's automation platform. AI-powered workflows, flexible team solutions, and cost-effective creative management.",
+    url: 'https://www.createtotally.com/pricing',
+    siteName: 'CreateTOTALLY',
+    type: 'website',
+  },
+  twitter: {
+    card: "/TwitterSummaryCard.jpg",
+    title: 'Creative Automation Platform - Automate More, Pay Less | CreateTOTALLY',
+    description: "Scale creative production with CreateTOTALLY's automation platform. AI-powered workflows, flexible team solutions, and cost-effective creative management.",
+  },
+};
+
 const PricingPage = () => {
     return (
         <Box bg="brandNeutral.200" pt={{ base: "20", md: "40", lg: "40" }}>

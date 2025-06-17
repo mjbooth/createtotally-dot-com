@@ -7,13 +7,16 @@ export const FigmaPageData = {
       description: "Stop drowning in Figma design edits. Automate localisation, format variations, and approval workflows. Scale creative production effortlessly.",
       images: [
         {
-          url: "/setup_in_figma.png",
+          url: "/OpenGraph.jpg",
           width: 1200,
           height: 630,
           alt: "Figma automation that scales with your creative team",
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/platform/figma-creative-automation",
+    }
   },
   heroSectionData: {
     featureGroup: "Figma Creative Automation",

@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: 'Learn about our platform',
       description: 'Learn about our platform',
     },
+    alternates: {
+      canonical: data.metadata.alternates?.canonical || `https://www.createtotally.com/features/${slug}`,
+    },
   };
 }
 

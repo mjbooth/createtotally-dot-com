@@ -240,10 +240,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
         gsap.set(container, { x: 0 });
 
-        //console.log("[GSAP] scrollWidth:", container.scrollWidth);
-        //console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
-        //console.log("[GSAP] scrollDistance:", scrollDistance);
-
         ScrollTrigger.create({
             trigger: wrapper,
             start: "top top",

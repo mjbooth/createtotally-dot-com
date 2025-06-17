@@ -14,6 +14,9 @@ export const CreativeAutomationPageData = {
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/features/creative-automation",
+    }
   },
   heroSectionData: {
     featureGroup: "Creative Automation",

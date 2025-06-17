@@ -14,6 +14,9 @@ export const WorkflowAutomationPageData = {
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/features/workflow-automation",
+    }
   },
   heroSectionData: {
     featureGroup: "Workflow Automation",
