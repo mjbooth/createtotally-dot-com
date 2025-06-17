@@ -2,8 +2,6 @@
 
 import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
 import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
-const FaPencilRuler = dynamic(() => import("react-icons/fa").then(mod => mod.FaPencilRuler), { ssr: false });
 import { useBackground } from '@/src/context/BackgroundContext';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -31,7 +29,7 @@ const steps = [
 		"feature": "Feature name",
 		"headline": "Start with Figma & Adobe",
 		"subLabel": "Upload existing Figma and Adobe design files, prepared using our suite of plugins.",
-		"image": "/SetUpInFigma.avif",
+		"image": "/SetUpInFigma.png",
 		"imageAlt": "Interface showing a Figma file uploaded for creative automation. Illustrates seamless setup for design-to-delivery workflows.",
 		"cta": "Explore our design integrations →"
 	},
@@ -503,7 +501,7 @@ export default function HomePage() {
 							<Box flex={{ base: "1 1 100%", md: "1 1 50%" }}>
 								<Box bg="brandPurple.600" color="brandNeutral.500" mb="2" px="3" py="2" borderRadius="lg" fontWeight="700" fontSize="md" width="fit-content" mx={{ base: "auto", md: "0" }}>
 									<Flex gap="3" direction="row" alignItems="center">
-										<Icon color="brandNeutral.500" as={FaPencilRuler} fontSize="md" />
+										<Image src="/PencilRuler.svg" alt="Pencil Ruler Icon" boxSize="1rem" />
 										<Text>Easy templating</Text>
 									</Flex>
 								</Box>

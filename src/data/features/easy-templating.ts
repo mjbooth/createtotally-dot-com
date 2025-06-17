@@ -17,7 +17,7 @@ export const EasyTemplatingPageData = {
   },
   heroSectionData: {
     featureGroup: "Easy Templating",
-    featureGroupIcon: "FaPencilRuler",
+    featureGroupIcon: "TemplatingIcon",
     title: "Transform your design files into powerful templates without starting from scratch",
     subtitle: "Stop rebuilding. Start scaling. Turn your existing Figma and Adobe files into flexible templates that preserve every creative detail while generating hundreds of on-brand variations.",
     features: [

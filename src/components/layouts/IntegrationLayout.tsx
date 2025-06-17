@@ -1,6 +1,5 @@
 import { Box, Container, Heading, Image, Stack, Text, Flex, Icon } from "@chakra-ui/react";
 import { Metadata } from 'next';
-import { ImCross } from "react-icons/im";
 import { getIntegrationBySlug } from '@/lib/hygraph/index';
 import type { Post } from '@/src/types/hygraph';
 
@@ -55,8 +54,10 @@ export default function IntegrationPage({ post }: { post: Post }) {
                                         />
                                     )}
                                 </Box>
-                                <Icon size="2xl" color="brandNavy.500">
-                                    <ImCross />
+                                <Icon width="12" color="brandNavy.500">
+                                    <svg viewBox="0 0 32 32">
+                                        <path d="M17.459,16.014l8.239-8.194c0.395-0.391,0.395-1.024,0-1.414c-0.394-0.391-1.034-0.391-1.428,0  l-8.232,8.187L7.73,6.284c-0.394-0.395-1.034-0.395-1.428,0c-0.394,0.396-0.394,1.037,0,1.432l8.302,8.303l-8.332,8.286  c-0.394,0.391-0.394,1.024,0,1.414c0.394,0.391,1.034,0.391,1.428,0l8.325-8.279l8.275,8.276c0.394,0.395,1.034,0.395,1.428,0  c0.394-0.396,0.394-1.037,0-1.432L17.459,16.014z" />
+                                    </svg>
                                 </Icon>
                                 <Box width="36">
                                     <Image src="/CreateTOTALLY_Icon.svg" objectFit="contain" alt="CreateTOTALLY Logo" />
@@ -98,12 +99,12 @@ export default function IntegrationPage({ post }: { post: Post }) {
                     <Container maxW={{ base: "100%", md: "1152px" }} mx="auto" px={{ base: 4, md: 10 }} zIndex="9999">
                         <Box maxW="3xl" mx="auto">
                             {post.content?.html && (
-                              <Box
-                                className="prose"
-                                mx="auto"
-                                color="brandNavy.500"
-                                dangerouslySetInnerHTML={{ __html: post.content.html }}
-                              />
+                                <Box
+                                    className="prose"
+                                    mx="auto"
+                                    color="brandNavy.500"
+                                    dangerouslySetInnerHTML={{ __html: post.content.html }}
+                                />
                             )}
                         </Box>
                     </Container>

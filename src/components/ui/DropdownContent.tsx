@@ -1,12 +1,11 @@
 import React from 'react';
 import { Box, Heading, Button, Flex, HStack, Icon, VStack } from '@chakra-ui/react';
-import { getIcon } from '@/src/utils/iconUtils';
 import NextLink from 'next/link';
 
 interface MenuLink {
   label: string;
   href: string;
-  icon?: string;
+  icon?: React.ElementType;
   visible?: boolean;
   style?: React.CSSProperties;
 }
@@ -71,8 +70,8 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                         <HStack gap={2}>
                           {link.icon && (
                             <Icon
-                              as={getIcon(link.icon)}
-                              boxSize="18px"
+                              as={link.icon}
+                              boxSize="1.25rem"
                               color="currentColor"
                             />
                           )}

@@ -21,26 +21,6 @@ import { gql } from 'graphql-request';
 import { client } from './client';
 import { PostSummary, PostDetail, Page, Integration } from './types';
 
-const TEST_QUERY = gql`
-  query {
-    posts(first: 1) {
-      id
-      title
-    }
-  }
-`;
-
-export const testConnection = async () => {
-  try {
-    const result = await client.request(TEST_QUERY);
-    console.log('Connection test result:', result);
-    return result;
-  } catch (error) {
-    console.error('Connection test error:', error);
-    throw error;
-  }
-};
-
 const GET_ALL_BLOG_POSTS = gql`
   query GetAllBlogPosts {
     posts(
@@ -284,4 +264,22 @@ export const getPostsByCategory = async (category: string): Promise<PostDetail[]
   });
 
   return posts;
+};
+const GET_ALL_POST_SLUGS = gql`
+  query GetAllPostSlugs {
+    posts {
+      slug
+      postType
+    }
+  }
+`;
+
+export const getAllPostSlugs = async (): Promise<{ slug: string; postType: string }[]> => {
+  try {
+    const { posts } = await client.request<{ posts: { slug: string; postType: string }[] }>(GET_ALL_POST_SLUGS);
+    return posts;
+  } catch (error) {
+    console.error('Error fetching all post slugs:', error);
+    throw error;
+  }
 };

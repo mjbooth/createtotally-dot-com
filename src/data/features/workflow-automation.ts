@@ -17,7 +17,7 @@ export const WorkflowAutomationPageData = {
   },
   heroSectionData: {
     featureGroup: "Workflow Automation",
-    featureGroupIcon: "MdAccountTree",
+    featureGroupIcon: "WorkflowAutomationIcon",
     title: "Streamline your workflow to get creative work live faster",
     subtitle: "Simplify your creative journey from final draft to live asset, without chasing a single approval. Connect your existing tools to a workflow that delivers ready-to-use assets automatically.",
     features: [

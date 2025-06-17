@@ -17,7 +17,7 @@ export const CreativeAutomationPageData = {
   },
   heroSectionData: {
     featureGroup: "Creative Automation",
-    featureGroupIcon: "BiSolidImageAdd",
+    featureGroupIcon: "CreativeAutomationIcon",
     title: "Plan once. Adapt infinitely.",
     subtitle: "Transform campaigns into scalable content systems without changing your creative production workflow. \n\nCreateTOTALLY transforms how you plan, produce and deliver creative variants by automatically applying your rules to generate perfectly structured outputs.",
     features: [

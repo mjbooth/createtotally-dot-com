@@ -6,4 +6,4 @@ Allow: /
 Host: https://www.createtotally.com/
 
 # Sitemaps
-Sitemap: https://www.createtotally.com/sitemap.xml
+Sitemap: https://www.createtotally.com/api/sitemap.xml

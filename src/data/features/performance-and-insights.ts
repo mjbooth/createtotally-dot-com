@@ -18,7 +18,7 @@ export const PerformanceAndInsightsPageData = {
   howItWorksHeading: "Ready to scale your designs without compromise?",
   heroSectionData: {
     featureGroup: "Performance & Insights",
-    featureGroupIcon: "BiSolidBarChartAlt2",
+    featureGroupIcon: "Performance",
     title: "Transform creative production into a data-driven advantage",
     subtitle: "Most creative teams have no visibility into how their assets actually perform. Your production system tracks deadlines and approvals but remains completely disconnected from real-world results, leaving your team guessing about what works.",
     features: [

@@ -6,6 +6,7 @@ const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const webpack = require('webpack');
 
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {
     domains: ['eu-west-2.graphassets.com'],

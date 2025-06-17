@@ -1,52 +1,42 @@
 import React from 'react';
-import { AiOutlineFileAdd } from 'react-icons/ai';
-import { FaSitemap, FaGlobeAmericas } from 'react-icons/fa';
-import { TbTypography, TbTextWrapDisabled, TbTextSize } from 'react-icons/tb';
-import { MdExtension, MdGridOn, MdTextFields, MdOutlineRuleFolder } from 'react-icons/md';
-import { HiOutlinePuzzle, HiOutlineAdjustments } from 'react-icons/hi';
-import { BsCameraReels, BsCollectionPlay } from 'react-icons/bs';
-import { LuStretchHorizontal, LuLayoutDashboard } from 'react-icons/lu';
-import { FiFolderPlus, FiType } from 'react-icons/fi';
-import { BiLayerPlus } from 'react-icons/bi';
-import { VscFileMedia } from 'react-icons/vsc';
-import { PiPaletteBold } from 'react-icons/pi';
+import * as Icons from '@/src/components/Icons';
+import { IconProps } from '@chakra-ui/react';
 
-const iconMap = {
-  AiOutlineFileAdd,
-  FaSitemap,
-  FaGlobeAmericas,
-  TbTypography,
-  MdExtension,
-  HiOutlinePuzzle,
-  BsCameraReels,
-  LuStretchHorizontal,
-  MdGridOn,
-  LuLayoutDashboard,
-  TbTextWrapDisabled,
-  FiFolderPlus,
-  BiLayerPlus,
-  VscFileMedia,
-  TbTextSize,
-  MdTextFields,
-  MdOutlineRuleFolder,
-  HiOutlineAdjustments,
-  PiPaletteBold,
-  FiType,
-  BsCollectionPlay,
+export const iconMap = {
+  OutlineFileAdd: Icons.AddDocumentIcon,
+  Sitemap: Icons.SitemapIcon,
+  Globe: Icons.GlobeIcon,
+  Typography: Icons.TypographyIcon,
+  Extension: Icons.ExtensionIcon,
+  OutlinePuzzle: Icons.OutlinePuzzleIcon,
+  CameraReels: Icons.CameraReelsyIcon,
+  StretchHorizontal: Icons.StretchHorizontalIcon,
+  GridOn: Icons.GridOnIcon,
+  LayoutDashboard: Icons.LayoutDashboardIcon,
+  TextWrapDisabled: Icons.TextWrapDisabledIcon,
+  FolderPlus: Icons.FolderPlusIcon,
+  LayerPlus: Icons.LayerPlusIcon,
+  FileMedia: Icons.FileMediaIcon,
+  TextSize: Icons.TypographyIcon,
+  TextFields: Icons.TextFieldsIcon,
+  OutlineRuleFolder: Icons.RuleFolderIcon,
+  OutlineAdjustments: Icons.OutlineAdjustmentsIcon,
+  PaletteBold: Icons.PaletteBoldIcon,
+  Type: Icons.TypeIcon,
+  CollectionPlay: Icons.CameraReelsyIcon,
+  Linked: Icons.LinkedIcon,
+  TextTuning: Icons.TextTuningIcon,
 };
 
 export type IconName = keyof typeof iconMap;
 
-interface IconComponentProps extends React.SVGAttributes<SVGElement> {
+interface IconComponentProps extends Omit<IconProps, 'name'> {
   name: IconName;
-  size?: string | number;
 }
 
-const IconComponent: React.FC<IconComponentProps> = ({ name, size = '2rem', ...props }) => {
+const IconComponent: React.FC<IconComponentProps> = ({ name, size = "2rem", ...props }) => {
   const Icon = iconMap[name];
-  return Icon ? <Icon size={size} {...props} /> : null;
+  return Icon ? <Icon fill="brandFuchsia.500" boxSize={size} {...props} /> : null;
 };
 
 export default IconComponent;
-
-export { iconMap };

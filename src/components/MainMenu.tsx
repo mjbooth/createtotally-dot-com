@@ -2,14 +2,13 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, Icon, useBreakpointValue } from '@chakra-ui/react';
-import { HiMiniChevronDown } from 'react-icons/hi2';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
 import { useNavigation } from "@/src/context/NavigationContext";
 import { usePathname } from 'next/navigation';
 import { useBackground } from '@/src/context/BackgroundContext';
-import { HiMenuAlt3 } from 'react-icons/hi';
-import { VscClose } from 'react-icons/vsc';
+import { MenuIcon, CloseIcon } from "@/src/components/Icons";
+import { FigmaIcon, AfterEffectsIcon, InDesignIcon, ChevronIcon, OverviewIcon, CreativeAutomationIcon, WorkflowAutomationIcon, LibrariesIcon, EngageIcon, CompareIcon, TemplatingIcon, AllFeaturesIcon } from '@/src/components/Icons';
 
 const MainMenu: React.FC = () => {
   const { isNavOpen, activeMenu, setActiveMenu, resetNav } = useNavigation();
@@ -80,13 +79,9 @@ const MainMenu: React.FC = () => {
         col: 2,
         visible: true,
         links: [
-          { label: "Figma Automation", href: "/platform/figma-creative-automation", icon: "SiFigma" },
-          { label: "InDesign Automation", href: "/platform/adobe-indesign-automation", icon: "SiAdobeindesign" },
-          { label: "After Effects Automation", href: "/platform/adobe-after-effects-automation", icon: "SiAdobeaftereffects" },
-          { label: "Photoshop Automation", href: "#", icon: "SiAdobephotoshop", visible: false },
-          { label: "Illustrator Automation", href: "#", icon: "SiAdobeillustrator", visible: false },
-          { label: "HTML Automation", href: "#", icon: "SiHtml5", visible: false },
-
+          { label: "Figma Automation", href: "/platform/figma-creative-automation", icon: FigmaIcon },
+          { label: "InDesign Automation", href: "/platform/adobe-indesign-automation", icon: InDesignIcon },
+          { label: "After Effects Automation", href: "/platform/adobe-after-effects-automation", icon: AfterEffectsIcon },
         ],
       },
       column2: {
@@ -94,14 +89,11 @@ const MainMenu: React.FC = () => {
         col: 2,
         visible: true,
         links: [
-          { label: "Easy Templating", href: "/features/easy-templating", icon: "FaPencilRuler" },
-          { label: "Content Creation", href: "/features/content-creation", icon: "BiSolidImageAdd", visible: false },
-          { label: "Creative Automation", href: "/features/creative-automation", icon: "FaBolt" },
-          { label: "Workflow Automation", href: "/features/workflow-automation", icon: "MdAccountTree" },
-          { label: "Libraries & Asset Management", href: "/features/libraries-and-asset-management", icon: "RiFunctionAddFill" },
-          { label: "Performance & Insights", href: "/features/performance-insights", icon: "BiSolidBarChartAlt2", visible: false },
-          { label: "Secure by Design", href: "#", icon: "RiShieldFlashFill", visible: false },
-          { label: "All Features", href: "/features/all-features", icon: "TbCirclePlusFilled", visible: false },
+          { label: "Easy Templating", href: "/features/easy-templating", icon: TemplatingIcon },
+          { label: "Creative Automation", href: "/features/creative-automation", icon: CreativeAutomationIcon },
+          { label: "Workflow Automation", href: "/features/workflow-automation", icon: WorkflowAutomationIcon },
+          { label: "Libraries & Asset Management", href: "/features/libraries-and-asset-management", icon: LibrariesIcon },
+          { label: "All Features", href: "/features/all-features", icon: AllFeaturesIcon, visible: false },
         ],
       },
       column3: {
@@ -109,9 +101,9 @@ const MainMenu: React.FC = () => {
         col: 2,
         visible: true,
         links: [
-          { label: "Overview", href: "/pricing", icon: "MdViewInAr" },
-          { label: "Ways to Engage", href: "/pricing#ways-to-engage", icon: "TiStarFullOutline" },
-          { label: "Compare Models", href: "/pricing#compare", icon: "MdCompareArrows" },
+          { label: "Overview", href: "/pricing", icon: OverviewIcon },
+          { label: "Ways to Engage", href: "/pricing#ways-to-engage", icon: EngageIcon },
+          { label: "Compare Models", href: "/pricing#compare", icon: CompareIcon },
         ],
       },
     },
@@ -223,7 +215,7 @@ const MainMenu: React.FC = () => {
             {isMobile ? (
               // Mobile Menu Button
               <Button onClick={toggleMobileMenu} variant="ghost" color="brandNavy.500">
-                <Icon as={isMobileMenuOpen ? VscClose : HiMenuAlt3} boxSize={6} color="brandNavy.500" />
+                <Icon as={isMobileMenuOpen ? CloseIcon : MenuIcon } boxSize={6} color="brandNavy.500" />
               </Button>
             ) : (
               // Desktop Menu
@@ -255,7 +247,7 @@ const MainMenu: React.FC = () => {
                             transition={{ duration: 0.2, ease: 'easeInOut' }}
                             style={{ marginLeft: '5px', display: 'inline-block' }}
                           >
-                            <HiMiniChevronDown />
+                            <ChevronIcon width="0.65rem" color="currentColor" />
                           </motion.div>
                         </Button>
                       </Popover.Trigger>
@@ -331,7 +323,7 @@ const MainMenu: React.FC = () => {
                           animate={{ rotate: isNavOpen && activeMenu === item.label ? 180 : 0 }}
                           transition={{ duration: 0.2, ease: 'easeInOut' }}
                         >
-                          <HiMiniChevronDown />
+                          <ChevronIcon width="0.65rem" color="currentColor" />
                         </motion.div>
                       </Button>
                       {isNavOpen && activeMenu === item.label && (

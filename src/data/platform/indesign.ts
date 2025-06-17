@@ -19,37 +19,37 @@ export const InDesignPageData = {
     {
       title: "Fine-tuned typography control",
       description: "Character styles can be applied dynamically, with precise spacing, alignment, and style rules",
-      icon: "TbTextSize"
+      icon: "TextTuning"
     },
     {
       title: "Smart text behaviour",
       description: "Text can auto-shrink, reflow, or raise a flag based on the logic you define",
-      icon: "MdTextFields"
+      icon: "TextFields"
     },
     {
       title: "Alpha channel precision",
       description: "Perfect cropping for product shots, people, or anything with transparency – no repetitive masking",
-      icon: "HiOutlineAdjustments"
+      icon: "OutlineAdjustments"
     },
     {
       title: "Dynamic colour updates",
       description: "Swap out spot colour swatches instantly for seasonal campaigns or regional palettes",
-      icon: "PiPaletteBold"
+      icon: "PaletteBold"
     },
     {
       title: "Centralised font management",
       description: "Fonts managed in one place with automatic fallbacks and full style fidelity",
-      icon: "FiType"
+      icon: "Type"
     },
     {
       title: "Outputs for every channel",
       description: "Generate CMYK-ready PDFs with bleed and trim or digital assets with custom file size limits",
-      icon: "BsCollectionPlay"
+      icon: "CollectionPlay"
     },
     {
       title: "Clean fallbacks",
       description: "Set rules to skip, hide, or replace empty content automatically",
-      icon: "MdOutlineRuleFolder"
+      icon: "OutlineRuleFolder"
     }
   ],
   featureBlocks: [
@@ -100,7 +100,7 @@ export const InDesignPageData = {
   ],
   heroSectionData: {
     featureGroup: "Adobe InDesign Automation",
-    featureGroupIcon: "SiAdobeindesign",
+    featureGroupIcon: "InDesignIcon",
     title: "Scale design production without sacrificing quality.",
     subtitle: "Keep your creative control. Let automation handle the busywork.",
     features: [
