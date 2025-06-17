@@ -17,7 +17,7 @@ export const LibrariesAndAssetManagementPageData = {
   },
   heroSectionData: {
     featureGroup: "Libraries & Asset Management",
-    featureGroupIcon: "RiFunctionAddFill",
+    featureGroupIcon: "LibrariesIcon",
     title: "Centralise your assets to amplify your creative output",
     subtitle: "Organise, tag, and connect your creative content without extra tools or confusion. Power your templates with a single source of truth that makes automation simple, consistent and scalable.",
     features: [

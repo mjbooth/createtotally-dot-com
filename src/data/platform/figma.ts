@@ -17,7 +17,7 @@ export const FigmaPageData = {
   },
   heroSectionData: {
     featureGroup: "Figma Creative Automation",
-    featureGroupIcon: "SiFigma",
+    featureGroupIcon: "FigmaIcon",
     title: "Stop drowning in design edits. Start automating your Figma workflow.",
     subtitle: "Turn a single Figma file into hundreds of on-brand assets, without endless manual adjustments or late nights at your desk.",
     features: [
@@ -33,37 +33,37 @@ export const FigmaPageData = {
     {
       title: "Pixel-perfect rendering",
       description: "What you design is exactly what gets rendered, every time",
-      icon: "MdGridOn"
+      icon: "GridOn"
     },
     {
       title: "Native auto layout support",
       description: "Your responsive design logic works exactly as intended",
-      icon: "LuLayoutDashboard"
+      icon: "LayoutDashboard"
     },
     {
       title: "Component consistency",
       description: "Update once, apply everywhere with linked elements",
-      icon: "HiOutlinePuzzle"
+      icon: "OutlinePuzzle"
     },
     {
       title: "Text that knows how to behave",
       description: "Smart text scaling keeps your layouts intact, even with longer translations",
-      icon: "TbTextWrapDisabled"
+      icon: "TextWrapDisabled"
     },
     {
       title: "Asset management that makes sense",
       description: "Centralised library with usage rights and market-specific controls",
-      icon: "FiFolderPlus"
+      icon: "FolderPlus"
     },
     {
       title: "Bulk generation that actually works",
       description: "Hundreds of assets from a single content plan, no manual exports",
-      icon: "BiLayerPlus"
+      icon: "LayerPlus"
     },
     {
       title: "Multi-format exports",
       description: "PNG, JPEG, @2x, or custom specs—automatically packaged and ready to use",
-      icon: "VscFileMedia"
+      icon: "FileMedia"
     }
   ],
   featureBlocks: [
@@ -92,7 +92,7 @@ export const FigmaPageData = {
       label: "Step one",
       title: "Set up in Figma",
       description: "Use our StudioCraft plugin to tag dynamic elements, define outputs, and create smart templates that know how to adapt.",
-      image: "/SetUpInFigma.avif",
+      image: "/SetUpInFigma.png",
       imageAlt: "Figma automation panel with a linked master design file ready for template analysis. Demonstrates seamless setup of creative automation from within Figma."
     },
     {

@@ -2,13 +2,11 @@
 
 import React from 'react';
 import { Box, Heading, Text, Stack, Flex, Icon, Container } from '@chakra-ui/react';
-import { HiCheckCircle } from "react-icons/hi";
-import { getIcon } from '@/src/utils/iconUtils';
+import { iconMap, CheckIcon } from '@/src/components/Icons';
 
 interface FeatureHeroSectionProps {
   featureGroup: string;
-  featureGroupIcon: string;
-  title: string;
+  featureGroupIcon: keyof typeof iconMap; title: string;
   subtitle: string;
   features: string[];
 }
@@ -21,7 +19,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
   features,
 }) => {
 
-  const IconComponent = getIcon(featureGroupIcon);
+  const IconComponent = iconMap[featureGroupIcon];
 
   return (
     <Box bg="brandNeutral.200">
@@ -48,7 +46,7 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
                 <Icon
                   as={IconComponent}
                   boxSize={{ base: "18px", sm: "24px" }}
-                  color="brandNeutral.500"
+                  fill="brandNeutral.500"
                 />
               )}
               <Text
@@ -99,8 +97,8 @@ export const FeatureHeroSection: React.FC<FeatureHeroSectionProps> = ({
                   flexBasis="auto"
                 >
                   <Icon
-                    as={HiCheckCircle}
-                    color="brandPurple.600"
+                    as={CheckIcon}
+                    fill="brandPurple.600"
                     boxSize={{ base: 4, sm: 5 }}
                     flexShrink={0}
                   />

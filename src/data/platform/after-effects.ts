@@ -19,42 +19,42 @@ export const AfterEffectsPageData = {
     {
       title: "Native template compatibility",
       description: "Upload After Effects projects as-is without restrictive tokens or special naming conventions—your creative workflow stays intact",
-      icon: "AiOutlineFileAdd"
+      icon: "OutlineFileAdd"
     },
     {
       title: "Intelligent composition analysis",
       description: "Every text layer, image, and nested comp becomes editable while preserving your original design hierarchy and relationships",
-      icon: "FaSitemap"
+      icon: "Sitemap"
     },
     {
       title: "Advanced typography handling",
       description: "Font installation across all render machines with full Unicode support for global languages and precise typographic control",
-      icon: "TbTypography"
+      icon: "Typography"
     },
     {
       title: "Plugin ecosystem integration",
       description: "Industry-standard plugins pre-installed and ready to render, including Red Giant, Video Copilot, Boris FX and more",
-      icon: "MdExtension"
+      icon: "OutlinePuzzle"
     },
     {
       title: "Linked asset integrity",
       description: "All linked assets, adjustment layers, mattes, and native effects remain intact throughout the automation process",
-      icon: "HiOutlinePuzzle"
+      icon: "Linked"
     },
     {
       title: "Flexible output control",
       description: "Render to MP4, ProRes, or other formats with consistent quality and frame-perfect accuracy across all versions",
-      icon: "BsCameraReels"
+      icon: "CameraReels"
     },
     {
       title: "Automatic layout adaptation",
       description: "Text resizes and repositions intelligently for different languages and content lengths without breaking your design",
-      icon: "LuStretchHorizontal"
+      icon: "StretchHorizontal"
     },
     {
       title: "Global localisation support",
       description: "Apply language-specific font substitutions and direction changes while maintaining visual hierarchy and brand integrity",
-      icon: "FaGlobeAmericas"
+      icon: "Globe"
     }
   ],
   featureBlocks: [
@@ -105,7 +105,7 @@ export const AfterEffectsPageData = {
   ],
   heroSectionData: {
     featureGroup: "Adobe After Effects Automation",
-    featureGroupIcon: "SiAdobeaftereffects",
+    featureGroupIcon: "AfterEffectsIcon",
     title: "Break from video production bottlenecks - without sacrificing creative control",
     subtitle: "Scale your After Effects templates to 100s of versions whilst keeping every pixel exactly how you designed it.",
     features: [
