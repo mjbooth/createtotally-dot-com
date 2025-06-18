@@ -13,6 +13,13 @@ const GET_POST_BY_CATEGORY_AND_SLUG = gql`
       excerpt
       publishedAt
       postType
+      seoOverride {
+        title
+        description
+        image {
+          url
+        }
+      }
     }
   }
 `;
@@ -20,6 +27,30 @@ const GET_POST_BY_CATEGORY_AND_SLUG = gql`
 import { gql } from 'graphql-request';
 import { client } from './client';
 import { PostSummary, PostDetail, Page, Integration } from './types';
+
+interface PostDetailWithSeo extends PostDetail {
+  seoOverride?: {
+    title?: string;
+    description?: string;
+    canonicalUrl?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogImage?: {
+      url: string;
+      alt?: string;
+    };
+  };
+}
+
+interface IntegrationWithSeoOverride extends Integration {
+  seoOverride?: {
+    title?: string;
+    description?: string;
+    image?: {
+      url: string;
+    };
+  };
+}
 
 const GET_ALL_BLOG_POSTS = gql`
   query GetAllBlogPosts {
@@ -100,18 +131,18 @@ const GET_POST_BY_SLUG = gql`
   }
 `;
 
-export const getPostBySlug = async (slug: string): Promise<PostDetail> => {
+export const getPostBySlug = async (slug: string): Promise<PostDetailWithSeo> => {
   try {
-    const { post } = await client.request<{ post: PostDetail }>(GET_POST_BY_SLUG, { slug });
+    const { post } = await client.request<{ post: PostDetailWithSeo }>(GET_POST_BY_SLUG, { slug });
     return post;
   } catch (error) {
     throw error;
   }
 };
 
-export const getPostByCategoryAndSlug = async (category: string, slug: string): Promise<PostDetail | null> => {
+export const getPostByCategoryAndSlug = async (category: string, slug: string): Promise<PostDetailWithSeo | null> => {
   try {
-    const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POST_BY_CATEGORY_AND_SLUG, { slug, postType: category });
+    const { posts } = await client.request<{ posts: PostDetailWithSeo[] }>(GET_POST_BY_CATEGORY_AND_SLUG, { slug, postType: category });
     return posts.length > 0 ? posts[0] : null;
   } catch {
     return null;
@@ -215,18 +246,18 @@ const GET_INTEGRATION_BY_SLUG = `
   }
 `;
 
-export const getAllIntegrations = async (): Promise<Integration[]> => {
+export const getAllIntegrations = async (): Promise<IntegrationWithSeoOverride[]> => {
   try {
-    const { pages } = await client.request<{ pages: Integration[] }>(GET_ALL_INTEGRATIONS);
+    const { pages } = await client.request<{ pages: IntegrationWithSeoOverride[] }>(GET_ALL_INTEGRATIONS);
     return pages;
   } catch (error) {
     throw error;
   }
 };
 
-export const getIntegrationBySlug = async (slug: string): Promise<Integration | null> => {
+export const getIntegrationBySlug = async (slug: string): Promise<IntegrationWithSeoOverride | null> => {
   try {
-    const { page } = await client.request<{ page: Integration }>(GET_INTEGRATION_BY_SLUG, { slug });
+    const { page } = await client.request<{ page: IntegrationWithSeoOverride }>(GET_INTEGRATION_BY_SLUG, { slug });
     return page;
   } catch {
     return null;
@@ -234,7 +265,7 @@ export const getIntegrationBySlug = async (slug: string): Promise<Integration | 
 };
 
 
-export const getPostsByCategory = async (category: string): Promise<PostDetail[]> => {
+export const getPostsByCategory = async (category: string): Promise<PostDetailWithSeo[]> => {
   const GET_POSTS_BY_CATEGORY = gql`
     query PostsByCategory($postType: String!) {
       posts(where: { postType: $postType }, orderBy: publishedAt_DESC) {
@@ -251,7 +282,7 @@ export const getPostsByCategory = async (category: string): Promise<PostDetail[]
     }
   `;
 
-  const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POSTS_BY_CATEGORY, {
+  const { posts } = await client.request<{ posts: PostDetailWithSeo[] }>(GET_POSTS_BY_CATEGORY, {
     postType: category,
   });
 

@@ -3,7 +3,6 @@ import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { ReactNode } from 'react';
 
 export async function generateMetadata(context: { params: Promise<{ slug: string; category: string }> }) {
-  console.log('📡 generateMetadata running in slug layout');
 
   const resolvedParams = await context.params;
   const { slug, category } = resolvedParams;
@@ -21,12 +20,14 @@ export async function generateMetadata(context: { params: Promise<{ slug: string
   }
 
   return {
-    title: post.title,
-    description: post.excerpt || 'Read the latest article.',
+    title: post.seoOverride?.title || post.title,
+    description: post.seoOverride?.description || post.excerpt || 'Read the latest article.',
     openGraph: {
-      title: post.title,
-      description: post.excerpt || '',
-      images: post.coverImage?.url ? [{ url: post.coverImage.url }] : [],
+      title: post.seoOverride?.title || post.title,
+      description: post.seoOverride?.description || post.excerpt || '',
+      images: post.coverImage?.url
+        ? [{ url: post.coverImage.url }]
+        : [],
     },
     alternates: {
       canonical: `https://createtotally.com/${category}/${slug}`,
@@ -35,6 +36,5 @@ export async function generateMetadata(context: { params: Promise<{ slug: string
 }
 
 export default function BlogSlugLayout({ children }: { children: ReactNode }) {
-  console.log('�� BlogSlugLayout rendered');
   return <section>{children}</section>;
 }
