@@ -1,5 +1,5 @@
 import IntegrationCategoryLayout from '@/src/components/layouts/IntegrationCategoryLayout';
-console.log('🧭 Entering CategoryPage function...');
+import categorySEO from '@/src/data/blogCategoryMetadata';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +15,35 @@ type Post = {
         url: string;
     };
 };
+
+import { Metadata } from 'next';
+
+export async function generateMetadata(context: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const resolvedParams = await context.params;
+  const category = resolvedParams?.category;
+
+  const meta = category && categorySEO[category] ? categorySEO[category] : {
+    title: 'CreateTOTALLY',
+    description: 'Creative automation for modern marketing teams.',
+    canonical: 'https://createtotally.com',
+    ogImage: 'https://createtotally.com/og/default.png',
+  };
+
+  const metadata: Metadata = {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: meta.canonical,
+      images: [{ url: meta.ogImage }],
+    },
+    alternates: {
+      canonical: meta.canonical,
+    },
+  };
+  return metadata;
+}
 
 // DefaultLayout wraps the current JSX content for all other categories
 function DefaultLayout({ posts, category }: { posts: Post[]; category: string }) {
@@ -139,48 +168,6 @@ function DefaultLayout({ posts, category }: { posts: Post[]; category: string })
                 backgroundPosition="top center"
                 backgroundSize="100% auto"
             >
-                {/* <Container
-            pt="7.5rem"
-          >
-            <Box
-              px={4}
-            >
-              <Flex
-                maxW="3xl"
-                mx="auto"
-                bg="brandNavy.500"
-                borderRadius="xxl"
-                boxShadow="realistic"
-                textAlign="center"
-                p="15"
-                gap="15"
-                direction="column"
-                alignItems="center"
-              >
-                <Text
-                  fontSize={{ base: "xl", md: "3xl", lg: "3rem" }}
-                  fontWeight="bold"
-                  color="brandNeutral.500"
-                  lineHeight="100%"
-                  letterSpacing="tight"
-                >
-                  Some form of a headline
-                </Text>
-                <Link href="/get-started">
-                  <Button
-                    py="6"
-                    px="10"
-                    fontSize={{ base: "md", md: "lg", lg: "xl" }}
-                    variant="solid"
-                    colorPalette="brandFuchsia"
-                    rounded="full"
-                  >
-                    Click here
-                  </Button>
-                </Link>
-              </Flex>
-            </Box>
-          </Container> */}
             </Box>
         </Box>
     );
@@ -190,22 +177,19 @@ const categoryLayouts: Record<string, React.FC<{ posts: Post[]; category: string
     integrations: IntegrationCategoryLayout,
 };
 
-export default async function CategoryPage(context: { params: Promise<{ category: string }> }) {
-    const { category } = await context.params;
-    console.log('✅ Successfully accessed params.category:', category);
+export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+    const resolvedParams = await params;
+    const { category } = resolvedParams;
 
     let posts = [];
     try {
         if (!category) throw new Error('Cannot fetch posts: category is empty');
         posts = await getPostsByCategory(category);
         if (!Array.isArray(posts)) throw new Error('getPostsByCategory did not return an array');
-        console.log(`📄 Retrieved ${posts.length} posts for category "${category}"`);
     } catch (err) {
-        console.error(`🔥 ERROR fetching posts for category "${category}":`, err);
         throw err;
     }
 
-    console.log('🚦 Rendering CategoryPage for category:', category);
     const Layout = categoryLayouts[category] || DefaultLayout;
     return <Layout posts={posts} category={category} />;
 }

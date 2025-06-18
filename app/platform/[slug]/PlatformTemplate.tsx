@@ -59,57 +59,42 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
 
     useLayoutEffect(() => {
         const scrollTriggerStart = performance.now();
-        console.log("[ScrollTrigger] useLayoutEffect start", scrollTriggerStart);
 
         const runScrollTrigger = () => {
             const elapsed = (performance.now() - scrollTriggerStart).toFixed(2);
-            console.log(`[ScrollTrigger] runScrollTrigger called after ${elapsed}ms`);
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
             try {
                 if (isMobile) {
-                    console.log("[ScrollTrigger] Skipped because isMobile === true");
                 }
                 if (!wrapper || !container || isMobile) {
-                    console.warn("[ScrollTrigger] Skipped: wrapper or container missing, or mobile");
                     return;
                 }
 
-                // Early return guard for zero offsetWidth
                 if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
-                    console.warn("[ScrollTrigger] Aborted: container or wrapper offsetWidth === 0");
                     return;
                 }
 
-                // Force container width early
                 container.style.width = `${container.scrollWidth}px`;
 
                 const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
 
                 if (scrollDistance <= 0) {
-                    console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
-                    // Retry once if layout may not have settled
                     requestAnimationFrame(() => {
                         setTimeout(() => {
-                            console.log("[ScrollTrigger] Retrying runScrollTrigger after delay");
                             runScrollTrigger();
                         }, 50);
                     });
                     return;
                 }
 
-                console.log("[HowItWorks] Creating ScrollTrigger...");
                 const ctx = gsap.context(() => {
-                    // --- Wrapper height diagnostic and guard ---
                     const wrapperHeight = wrapper.clientHeight;
-                    console.log("[ScrollTrigger] Wrapper clientHeight:", wrapperHeight);
                     if (wrapperHeight < 200) {
-                        console.warn("[ScrollTrigger] Aborted: wrapper height too small", wrapperHeight);
                         return;
                     }
 
-                    // Clean up all ScrollTriggers targeting this wrapper
                     ScrollTrigger.getAll().forEach(trigger => {
                         if (trigger.trigger === wrapper || trigger.vars.id === 'howItWorks') {
                             trigger.kill();
@@ -127,7 +112,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                     ScrollTrigger.create({
                         id: 'howItWorks',
                         trigger: wrapper,
-                        scroller: window, // explicitly set the scroller
+                        scroller: window,
                         start: "top top",
                         end: () => `+=${scrollDistance}px`,
                         pin: true,
@@ -147,20 +132,16 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
                 const setupElapsed = (performance.now() - scrollTriggerStart).toFixed(2);
-                console.log(`[ScrollTrigger] ScrollTrigger created successfully after ${setupElapsed}ms`);
 
                 return () => {
                     ctx.revert();
                 };
             } catch (error) {
-                console.error("[HowItWorks] ScrollTrigger setup failed:", error);
             } finally {
-                // Always restore scroll if for any reason it was locked
                 document.body.style.overflow = '';
             }
         };
 
-        // SPA-safe layout readiness check function
         const whenLayoutIsReady = async () => {
             document.body.style.overflow = 'hidden';
 

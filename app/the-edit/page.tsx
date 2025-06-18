@@ -181,7 +181,6 @@ export default async function BlogPage() {
 			</Box>
 		);
 	} catch (error) {
-		console.error('Error in BlogPage:', error);
 		return (
 			<Box>
 				<Heading>Error</Heading>
