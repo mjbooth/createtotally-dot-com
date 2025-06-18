@@ -113,7 +113,7 @@ export const getPostByCategoryAndSlug = async (category: string, slug: string): 
   try {
     const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POST_BY_CATEGORY_AND_SLUG, { slug, postType: category });
     return posts.length > 0 ? posts[0] : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 };
@@ -228,7 +228,7 @@ export const getIntegrationBySlug = async (slug: string): Promise<Integration | 
   try {
     const { page } = await client.request<{ page: Integration }>(GET_INTEGRATION_BY_SLUG, { slug });
     return page;
-  } catch (error) {
+  } catch {
     return null;
   }
 };

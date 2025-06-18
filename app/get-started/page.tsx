@@ -73,7 +73,7 @@ export default function TemplateContentCreation() {
                 setTimeout(() => setIsSubmitSuccessful(false), 5000);
             } else {
             }
-        } catch (error) {
+        } catch {
         }
     };
 

@@ -4,8 +4,9 @@ import { Box, Container, Heading, Image, Text } from "@chakra-ui/react";
 import IntegrationLayout from '@/src/components/layouts/IntegrationLayout';
 
 
-export default async function BlogPage({ params }: { params: { slug: string; category: string } }) {
-  const { slug, category } = await Promise.resolve(params);
+export default async function BlogPage(context: { params: Promise<{ slug: string; category: string }> }) {
+  const resolvedParams = await context.params;
+  const { slug, category } = resolvedParams;
 
   let post;
   try {

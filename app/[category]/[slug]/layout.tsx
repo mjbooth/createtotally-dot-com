@@ -2,8 +2,10 @@
 import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { ReactNode } from 'react';
 
-export async function generateMetadata({ params }: { params: { slug: string; category: string } }) {
-  const resolvedParams = await params;
+export async function generateMetadata(context: { params: Promise<{ slug: string; category: string }> }) {
+  console.log('📡 generateMetadata running in slug layout');
+
+  const resolvedParams = await context.params;
   const { slug, category } = resolvedParams;
 
   const post = await getPostByCategoryAndSlug(category, slug);
@@ -33,5 +35,6 @@ export async function generateMetadata({ params }: { params: { slug: string; cat
 }
 
 export default function BlogSlugLayout({ children }: { children: ReactNode }) {
+  console.log('�� BlogSlugLayout rendered');
   return <section>{children}</section>;
 }

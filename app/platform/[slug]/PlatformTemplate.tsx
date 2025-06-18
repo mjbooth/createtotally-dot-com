@@ -58,10 +58,8 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
     }, []);
 
     useLayoutEffect(() => {
-        const scrollTriggerStart = performance.now();
 
         const runScrollTrigger = () => {
-            const elapsed = (performance.now() - scrollTriggerStart).toFixed(2);
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
@@ -131,12 +129,12 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                     ScrollTrigger.refresh();
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
-                const setupElapsed = (performance.now() - scrollTriggerStart).toFixed(2);
+                // Removed unused setupElapsed variable
 
                 return () => {
                     ctx.revert();
                 };
-            } catch (error) {
+            } catch {
             } finally {
                 document.body.style.overflow = '';
             }

@@ -58,10 +58,8 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     }, []);
 
     useLayoutEffect(() => {
-        const scrollTriggerStart = performance.now();
 
         const runScrollTrigger = () => {
-            const elapsed = (performance.now() - scrollTriggerStart).toFixed(2);
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
@@ -131,12 +129,11 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     ScrollTrigger.refresh();
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
-                const setupElapsed = (performance.now() - scrollTriggerStart).toFixed(2);
 
                 return () => {
                     ctx.revert();
                 };
-            } catch (error) {
+            } catch {
             } finally {
                 document.body.style.overflow = '';
             }

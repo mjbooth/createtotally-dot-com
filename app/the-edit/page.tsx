@@ -135,52 +135,10 @@ export default async function BlogPage() {
 					backgroundPosition="top center"
 					backgroundSize="100% auto"
 				>
-					{/* <Container
-            pt="7.5rem"
-          >
-            <Box
-              px={4}
-            >
-              <Flex
-                maxW="3xl"
-                mx="auto"
-                bg="brandNavy.500"
-                borderRadius="xxl"
-                boxShadow="realistic"
-                textAlign="center"
-                p="15"
-                gap="15"
-                direction="column"
-                alignItems="center"
-              >
-                <Text
-                  fontSize={{ base: "xl", md: "3xl", lg: "3rem" }}
-                  fontWeight="bold"
-                  color="brandNeutral.500"
-                  lineHeight="100%"
-                  letterSpacing="tight"
-                >
-                  Some form of a headline
-                </Text>
-                <Link href="/get-started">
-                  <Button
-                    py="6"
-                    px="10"
-                    fontSize={{ base: "md", md: "lg", lg: "xl" }}
-                    variant="solid"
-                    colorPalette="brandFuchsia"
-                    rounded="full"
-                  >
-                    Click here
-                  </Button>
-                </Link>
-              </Flex>
-            </Box>
-          </Container> */}
 				</Box>
 			</Box>
 		);
-	} catch (error) {
+	} catch {
 		return (
 			<Box>
 				<Heading>Error</Heading>
