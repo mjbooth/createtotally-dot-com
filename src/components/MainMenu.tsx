@@ -150,6 +150,7 @@ const MainMenu: React.FC = () => {
           { label: "Miele", href: "/automation-in-action/miele-x-createtotally" },
           { label: "The Wine Society", href: "/automation-in-action/the-wine-society-x-createtotally" },
           { label: "Patek Philippe", href: "#", visible: false },
+          { label: "View all", href: "/automation-in-action" },
         ],
       },
     },
@@ -162,6 +163,7 @@ const MainMenu: React.FC = () => {
           { label: "Miele", href: "/automation-in-action/miele-x-createtotally" },
           { label: "The Wine Society", href: "/automation-in-action/the-wine-society-x-createtotally" },
           { label: "Patek Philippe", href: "#", visible: false },
+          { label: "View all", href: "/automation-in-action" },
         ],
       },
       column2: {

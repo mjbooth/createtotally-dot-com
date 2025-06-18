@@ -67,18 +67,13 @@ export default function TemplateContentCreation() {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                console.log('Form submitted successfully');
                 reset(); // Clear the form
                 setIsSubmitSuccessful(true); // Set success state
                 // Hide success message after 5 seconds
                 setTimeout(() => setIsSubmitSuccessful(false), 5000);
             } else {
-                console.error('Form submission failed');
-                // Handle error (e.g., show an error message)
             }
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle error (e.g., show an error message)
+        } catch {
         }
     };
 

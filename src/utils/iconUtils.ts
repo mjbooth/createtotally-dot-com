@@ -19,7 +19,6 @@ export type IconName = keyof typeof iconMap;
 export const getIcon = (name?: string): IconType | string | undefined => {
   if (!name || !(name in iconMap)) {
     if (process.env.NODE_ENV === 'development') {
-      console.warn(`[iconUtils] Unknown icon: "${name}"`);
     }
     return undefined;
   }

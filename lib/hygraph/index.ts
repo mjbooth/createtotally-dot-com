@@ -49,7 +49,6 @@ export const getAllBlogPosts = async (): Promise<PostSummary[]> => {
     const { posts } = await client.request<{ posts: PostSummary[] }>(GET_ALL_BLOG_POSTS);
     return posts;
   } catch (error) {
-    console.error('Error fetching all posts:', error);
     throw error;
   }
 };
@@ -78,7 +77,6 @@ export const getAllInActionPosts = async (): Promise<PostSummary[]> => {
     const { posts } = await client.request<{ posts: PostSummary[] }>(GET_ALL_IN_ACTION_POSTS);
     return posts;
   } catch (error) {
-    console.error('Error fetching all posts:', error);
     throw error;
   }
 };
@@ -107,7 +105,6 @@ export const getPostBySlug = async (slug: string): Promise<PostDetail> => {
     const { post } = await client.request<{ post: PostDetail }>(GET_POST_BY_SLUG, { slug });
     return post;
   } catch (error) {
-    console.error(`Error fetching post with slug ${slug}:`, error);
     throw error;
   }
 };
@@ -116,8 +113,7 @@ export const getPostByCategoryAndSlug = async (category: string, slug: string): 
   try {
     const { posts } = await client.request<{ posts: PostDetail[] }>(GET_POST_BY_CATEGORY_AND_SLUG, { slug, postType: category });
     return posts.length > 0 ? posts[0] : null;
-  } catch (error) {
-    console.error(`Error fetching post with slug ${slug} and category ${category}:`, error);
+  } catch {
     return null;
   }
 };
@@ -141,7 +137,6 @@ export const getAllPages = async (): Promise<Page[]> => {
     const { pages } = await client.request<{ pages: Page[] }>(GET_ALL_PAGES);
     return pages;
   } catch (error) {
-    console.error('Error fetching all pages:', error);
     throw error;
   }
 };
@@ -172,7 +167,6 @@ export const getPageBySlug = async (slug: string): Promise<Page> => {
     const { page } = await client.request<{ page: Page }>(GET_PAGE_BY_SLUG, { slug });
     return page;
   } catch (error) {
-    console.error(`Error fetching page with slug ${slug}:`, error);
     throw error;
   }
 };
@@ -226,7 +220,6 @@ export const getAllIntegrations = async (): Promise<Integration[]> => {
     const { pages } = await client.request<{ pages: Integration[] }>(GET_ALL_INTEGRATIONS);
     return pages;
   } catch (error) {
-    console.error('Error fetching all integrations:', error);
     throw error;
   }
 };
@@ -235,8 +228,7 @@ export const getIntegrationBySlug = async (slug: string): Promise<Integration | 
   try {
     const { page } = await client.request<{ page: Integration }>(GET_INTEGRATION_BY_SLUG, { slug });
     return page;
-  } catch (error) {
-    console.error(`Error fetching integration with slug ${slug}:`, error);
+  } catch {
     return null;
   }
 };
@@ -279,7 +271,6 @@ export const getAllPostSlugs = async (): Promise<{ slug: string; postType: strin
     const { posts } = await client.request<{ posts: { slug: string; postType: string }[] }>(GET_ALL_POST_SLUGS);
     return posts;
   } catch (error) {
-    console.error('Error fetching all post slugs:', error);
     throw error;
   }
 };

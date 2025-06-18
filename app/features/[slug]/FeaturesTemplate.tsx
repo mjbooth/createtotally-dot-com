@@ -58,58 +58,41 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     }, []);
 
     useLayoutEffect(() => {
-        const scrollTriggerStart = performance.now();
-        console.log("[ScrollTrigger] useLayoutEffect start", scrollTriggerStart);
 
         const runScrollTrigger = () => {
-            const elapsed = (performance.now() - scrollTriggerStart).toFixed(2);
-            console.log(`[ScrollTrigger] runScrollTrigger called after ${elapsed}ms`);
 
             const wrapper = howItWorksWrapperRef.current;
             const container = scrollContainerRef.current;
             try {
                 if (isMobile) {
-                    console.log("[ScrollTrigger] Skipped because isMobile === true");
                 }
                 if (!wrapper || !container || isMobile) {
-                    console.warn("[ScrollTrigger] Skipped: wrapper or container missing, or mobile");
                     return;
                 }
 
-                // Early return guard for zero offsetWidth
                 if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
-                    console.warn("[ScrollTrigger] Aborted: container or wrapper offsetWidth === 0");
                     return;
                 }
 
-                // Force container width early
                 container.style.width = `${container.scrollWidth}px`;
 
                 const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
 
                 if (scrollDistance <= 0) {
-                    console.warn("[ScrollTrigger] Aborted: scrollDistance is zero or negative", scrollDistance);
-                    // Retry once if layout may not have settled
                     requestAnimationFrame(() => {
                         setTimeout(() => {
-                            console.log("[ScrollTrigger] Retrying runScrollTrigger after delay");
                             runScrollTrigger();
                         }, 50);
                     });
                     return;
                 }
 
-                console.log("[HowItWorks] Creating ScrollTrigger...");
                 const ctx = gsap.context(() => {
-                    // --- Wrapper height diagnostic and guard ---
                     const wrapperHeight = wrapper.clientHeight;
-                    console.log("[ScrollTrigger] Wrapper clientHeight:", wrapperHeight);
                     if (wrapperHeight < 200) {
-                        console.warn("[ScrollTrigger] Aborted: wrapper height too small", wrapperHeight);
                         return;
                     }
 
-                    // Clean up all ScrollTriggers targeting this wrapper
                     ScrollTrigger.getAll().forEach(trigger => {
                         if (trigger.trigger === wrapper || trigger.vars.id === 'howItWorks') {
                             trigger.kill();
@@ -127,7 +110,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     ScrollTrigger.create({
                         id: 'howItWorks',
                         trigger: wrapper,
-                        scroller: window, // explicitly set the scroller
+                        scroller: window,
                         start: "top top",
                         end: () => `+=${scrollDistance}px`,
                         pin: true,
@@ -146,27 +129,21 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                     ScrollTrigger.refresh();
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
-                const setupElapsed = (performance.now() - scrollTriggerStart).toFixed(2);
-                console.log(`[ScrollTrigger] ScrollTrigger created successfully after ${setupElapsed}ms`);
 
                 return () => {
                     ctx.revert();
                 };
-            } catch (error) {
-                console.error("[HowItWorks] ScrollTrigger setup failed:", error);
+            } catch {
             } finally {
-                // Always restore scroll if for any reason it was locked
                 document.body.style.overflow = '';
             }
         };
 
-        // SPA-safe layout readiness check function
         const whenLayoutIsReady = async () => {
             document.body.style.overflow = 'hidden';
 
             if (document.fonts?.ready) {
                 await document.fonts.ready;
-                console.log(`[ScrollTrigger] Fonts ready after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
             }
 
             const wrapper = howItWorksWrapperRef.current;
@@ -181,7 +158,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                         });
                     })
                 );
-                console.log(`[ScrollTrigger] All images loaded after ${(performance.now() - scrollTriggerStart).toFixed(2)}ms`);
             }
 
             requestAnimationFrame(() => {
@@ -240,10 +216,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
         gsap.set(container, { x: 0 });
 
-        //console.log("[GSAP] scrollWidth:", container.scrollWidth);
-        //console.log("[GSAP] wrapper.offsetWidth:", wrapper.offsetWidth);
-        //console.log("[GSAP] scrollDistance:", scrollDistance);
-
         ScrollTrigger.create({
             trigger: wrapper,
             start: "top top",
@@ -277,9 +249,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     }, [data.HowItWorksSteps.length, isMobile, setupGSAPForDesktop]);
 
     const resetLayoutForMobile = () => {
-        // Debug: log before cleanup
-        console.log("[ResetMobile] clearing wrapper height:", howItWorksWrapperRef.current?.style.height);
-        console.log("[ResetMobile] killing all ScrollTriggers...");
         ScrollTrigger.killAll();
 
         if (scrollContainerRef.current) {
@@ -291,14 +260,12 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
             howItWorksWrapperRef.current.style.overflow = 'visible';
             howItWorksWrapperRef.current.style.minHeight = 'auto';
         }
-        // Remove pin-spacer
         const pinSpacer = document.querySelector('.pin-spacer');
         if (pinSpacer) {
             const parent = pinSpacer.parentNode;
             while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
             parent?.removeChild(pinSpacer);
         }
-        // Remove any pinned inline styles by targeting .pin-spacer > *
         const pinnedChildren = document.querySelectorAll('.pin-spacer > *');
         pinnedChildren.forEach(el => {
             (el as HTMLElement).style.position = 'relative';

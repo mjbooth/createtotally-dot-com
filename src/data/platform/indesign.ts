@@ -7,13 +7,16 @@ export const InDesignPageData = {
       description: "Scale design production without sacrificing quality. Keep your creative control and let automation handle the busywork with CreateTOTALLY's InDesign automation.",
       images: [
         {
-          url: "/feature-placeholder-FiPenTool-sqr.jpg", // You might want to replace this with a more specific InDesign-related image
+          url: "/OpenGraph.jpg",
           width: 1200,
           height: 630,
           alt: "Adobe InDesign Automation with CreateTOTALLY",
         },
       ],
     },
+    alternates: {
+      canonical: "https://www.createtotally.com/platform/adobe-indesign-automation",
+    }
   },
   features: [
     {

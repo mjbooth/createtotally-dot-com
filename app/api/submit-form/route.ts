@@ -6,7 +6,6 @@ export async function POST(request: Request) {
 
     // Check for honeypot
     if (formData.honeypot) {
-      console.log('Potential spam detected');
       return NextResponse.json({ message: 'Spam detected' }, { status: 400 });
     }
 
@@ -24,7 +23,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Form submission failed' }, { status: response.status });
     }
   } catch (error: unknown) {
-    console.error('Error processing form submission:', error);
     
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return NextResponse.json({ message: 'Server error', error: errorMessage }, { status: 500 });

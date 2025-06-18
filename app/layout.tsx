@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     images: ["/TwitterSummaryCard.jpg"],
   },
   alternates: {
-    canonical: "https://www.createtotally.com/",
+    canonical: undefined, // Will be set dynamically in page-level components or middleware
   }
 };
 
