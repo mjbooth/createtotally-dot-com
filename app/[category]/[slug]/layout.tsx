@@ -14,7 +14,7 @@ export async function generateMetadata(context: { params: Promise<{ slug: string
       title: 'Post Not Found',
       description: 'The requested blog post could not be found.',
       alternates: {
-        canonical: `https://createtotally.com/${category}/${slug}`,
+        canonical: `https://www.createtotally.com/${category}/${slug}`,
       },
     };
   }
@@ -30,7 +30,7 @@ export async function generateMetadata(context: { params: Promise<{ slug: string
         : [],
     },
     alternates: {
-      canonical: `https://createtotally.com/${category}/${slug}`,
+      canonical: `https://www.createtotally.com/${category}/${slug}`,
     },
   };
 }
