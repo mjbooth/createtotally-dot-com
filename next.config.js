@@ -71,7 +71,10 @@ const nextConfig = {
   },
 
   async redirects() {
-    return [];
+    return [
+      { source: '/demo', destination: '/get-started', permanent: true, },
+      { source: '/contact-us', destination: '/get-started', permanent: true, },
+    ];
   },
 
   async rewrites() {
