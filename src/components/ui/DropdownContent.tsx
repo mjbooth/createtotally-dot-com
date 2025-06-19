@@ -49,8 +49,8 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                                     link.visible !== false && (
                                         <ChakraLink
                                             as={NextLink}
-                                            key={index}
                                             href={link.href}
+                                            key={index}
                                             color="brandNavy.500"
                                             bg="transparent"
                                             border="none"
@@ -62,7 +62,8 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ activeMenu, menuConte
                                             _focus={{
                                                 boxShadow: "none",
                                                 outline: "none"
-                                            }} transition="all 0.2s ease"
+                                            }}
+                                            transition="all 0.2s ease"
                                             whiteSpace="nowrap"
                                             overflow="hidden"
                                             textOverflow="ellipsis"
