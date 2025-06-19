@@ -25,8 +25,8 @@ export async function generateMetadata(context: { params: Promise<{ category: st
   const meta = category && categorySEO[category] ? categorySEO[category] : {
     title: 'CreateTOTALLY',
     description: 'Creative automation for modern marketing teams.',
-    canonical: 'https://createtotally.com',
-    ogImage: 'https://createtotally.com/og/default.png',
+    canonical: 'https://www.createtotally.com',
+    ogImage: '/OpenGraph.jpg',
   };
 
   const metadata: Metadata = {
