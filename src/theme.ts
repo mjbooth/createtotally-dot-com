@@ -133,13 +133,13 @@ export const system = createSystem(defaultConfig, {
     },
     '.prose p': {
       fontSize: "lg",
-      fontWeight: "regular",
+      fontWeight: "400",
       lineHeight: "150%",
       mb: "6",
     },
     '.prose ul': {
       fontSize: "lg",
-      fontWeight: "regular",
+      fontWeight: "400",
       lineHeight: "1.5",
       mb: "6",
       listStyleType: 'disc',
@@ -148,7 +148,7 @@ export const system = createSystem(defaultConfig, {
     },
     '.prose li': {
       fontSize: "lg",
-      fontWeight: "regular",
+      fontWeight: "400",
       lineHeight: "1.5",
       mb: "6",
     },
@@ -160,6 +160,9 @@ export const system = createSystem(defaultConfig, {
         color: 'brandFuchsia.200',
         textDecoration: 'none',
       },
+    },
+    '.prose em': {
+      fontStyle: "italic",
     },
     "*::marker": {
       color: "rgba(202, 63, 192, 1)",
