@@ -5,6 +5,26 @@ import { Box, Container, Heading } from '@chakra-ui/react';
 
 export const dynamic = 'force-static';
 
+export const metadata = {
+  title: 'Privacy Policy | CreateTOTALLY',
+  description: 'Read the CreateTOTALLY Privacy Policy. Learn how we handle data, privacy, and your rights.',
+  alternates: {
+    canonical: 'https://www.createtotally.com/privacy-policy',
+  },
+  openGraph: {
+    title: 'Privacy Policy | CreateTOTALLY',
+    description: 'Understand how CreateTOTALLY manages your data and privacy.',
+    url: 'https://www.createtotally.com/privacy-policy',
+    siteName: 'CreateTOTALLY',
+    type: 'website',
+  },
+  twitter: {
+    card: '/TwitterSummaryCard.jpg',
+    title: 'Privacy Policy | CreateTOTALLY',
+    description: 'Understand how CreateTOTALLY manages your data and privacy.',
+  },
+};
+
 export default async function PrivacyPolicyPage() {
   const filePath = path.join(process.cwd(), 'public', 'privacy-policy.md');
   const markdown = fs.readFileSync(filePath, 'utf-8');

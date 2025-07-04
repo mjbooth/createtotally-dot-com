@@ -3,6 +3,26 @@ import path from 'path';
 import { marked } from 'marked';
 import { Box, Container, Heading } from '@chakra-ui/react';
 
+export const metadata = {
+  title: 'Terms of Service | CreateTOTALLY',
+  description: 'Read the CreateTOTALLY Terms of Service. Understand your rights, responsibilities, and our legal guidelines.',
+  alternates: {
+    canonical: 'https://www.createtotally.com/terms-of-service',
+  },
+  openGraph: {
+    title: 'Terms of Service | CreateTOTALLY',
+    description: 'Understand your rights, responsibilities, and our legal guidelines.',
+    url: 'https://www.createtotally.com/terms-of-service',
+    siteName: 'CreateTOTALLY',
+    type: 'website',
+  },
+  twitter: {
+    card: '/TwitterSummaryCard.jpg',
+    title: 'Terms of Service | CreateTOTALLY',
+    description: 'Understand your rights, responsibilities, and our legal guidelines.',
+  },
+};
+
 export const dynamic = 'force-static';
 
 export default async function PrivacyPolicyPage() {
