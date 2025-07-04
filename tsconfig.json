@@ -40,7 +40,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/platform/[slug]/PlatformTemplate.tsx.old"
-  ],
+, "src/components/TermlyCMP.js"  ],
   "exclude": [
     "node_modules"
   ]

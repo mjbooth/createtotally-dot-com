@@ -149,7 +149,7 @@ const Footer = () => {
                         >
                             <Link color="gray.500" href="/terms-of-service">Terms of Service</Link>
                             <Link color="gray.500" href="/privacy-policy">Privacy Policy</Link>
-                            <Link color="gray.500" href="#">Consent Preferences</Link>
+                            <Link color="gray.500" href="#" className="termly-display-preferences">Consent Preferences</Link>
                         </Flex>
                     </Flex>
                     <Box mt={{ base: '6', md: '0' }}>

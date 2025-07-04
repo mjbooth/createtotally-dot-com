@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#FFFCFB' }}>
       <head>
+        <script src="https://app.termly.io/resource-blocker/bc0c7928-3a7f-4ccc-863b-b4cbbdf922a7?autoBlock=on"></script>
         <GoogleTagManager gtmId="GTM-KPHRZB4" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
