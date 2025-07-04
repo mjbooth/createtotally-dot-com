@@ -21,6 +21,8 @@ export async function GET() {
     '/get-started',
     '/glossary',
     '/the-edit',
+    '/terms-of-service',
+    '/privacy-policy',
   ];
 
   const urls = [

@@ -147,8 +147,8 @@ const Footer = () => {
                             direction={{ base: 'column', md: 'row' }}
                             alignItems="center"
                         >
-                            <Link color="gray.500" href="#">Terms of Service</Link>
-                            <Link color="gray.500" href="#">Privacy Policy</Link>
+                            <Link color="gray.500" href="/terms-of-service">Terms of Service</Link>
+                            <Link color="gray.500" href="/privacy-policy">Privacy Policy</Link>
                             <Link color="gray.500" href="#">Consent Preferences</Link>
                         </Flex>
                     </Flex>
