@@ -164,6 +164,21 @@ export const system = createSystem(defaultConfig, {
     '.prose em': {
       fontStyle: "italic",
     },
+    '.prose a.noStyle-h2': {
+      all: 'unset', // optional, resets *all* inherited styles
+      color: 'inherit',
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      fontSize: '4xl',
+      lineHeight: '1.2',
+      mb: '8',
+      mt: '16',
+      pointerEvents: 'none',
+      _hover: {
+        color: 'inherit',
+        textDecoration: 'none',
+      },
+    },
     "*::marker": {
       color: "rgba(202, 63, 192, 1)",
     },
