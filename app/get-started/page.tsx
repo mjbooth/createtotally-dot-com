@@ -69,6 +69,11 @@ export default function TemplateContentCreation() {
             if (response.ok) {
                 reset(); // Clear the form
                 setIsSubmitSuccessful(true); // Set success state
+                // Push GTM event for successful submission
+                if (typeof window !== 'undefined') {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({ event: 'demoFormSubmissionSuccess' });
+                }
                 // Hide success message after 5 seconds
                 setTimeout(() => setIsSubmitSuccessful(false), 5000);
             } else {
