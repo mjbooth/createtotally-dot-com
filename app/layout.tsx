@@ -42,13 +42,63 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#FFFCFB' }}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://app.termly.io" />
+        <link rel="dns-prefetch" href="https://eu-west-2.graphassets.com" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#853FCA" />
+        <Script
+          id="register-sw"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `
+          }}
+        />
         <Script
           id="termly-cmp"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://app.termly.io/resource-blocker/bc0c7928-3a7f-4ccc-863b-b4cbbdf922a7?autoBlock=on"
         />
         <GoogleTagManager gtmId="GTM-KPHRZB4" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical CSS for above-the-fold content */
+            html { font-family: system-ui, -apple-system, sans-serif; }
+            body { margin: 0; background-color: #FFFCFB; }
+            
+            /* Prevent layout shift for images */
+            img { max-width: 100%; height: auto; }
+            
+            /* Critical layout styles */
+            .container { max-width: 1152px; margin: 0 auto; padding: 0 1rem; }
+            
+            /* Prevent FOUC */
+            .loading { visibility: hidden; }
+            .loaded { visibility: visible; }
+            
+            /* Critical typography */
+            h1, h2, h3 { margin: 0; line-height: 1.2; }
+            
+            @media (max-width: 768px) {
+              .container { padding: 0 1rem; }
+            }
+          `
+        }} />
         <OrganizationStructuredData />
       </head>
       <body>
