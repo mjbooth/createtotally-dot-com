@@ -1,0 +1,23 @@
+{
+  "name": "CreateTOTALLY - Creative Automation Platform",
+  "short_name": "CreateTOTALLY",
+  "description": "Effortlessly scale creative production in Figma & Adobe. AI-powered automation for high-velocity marketing teams.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFCFB",
+  "theme_color": "#853FCA",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/CreateTOTALLY_Icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

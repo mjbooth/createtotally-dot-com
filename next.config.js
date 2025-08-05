@@ -10,20 +10,61 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['eu-west-2.graphassets.com'],
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   distDir: ".next",
+  
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+  
+  // Experimental features for performance
+  experimental: {
+    scrollRestoration: true,
+  },
 
   webpack: (config, { isServer }) => {
-    // Use memory caching instead of filesystem caching
-    // This addresses the validation error
+    // Performance optimizations
     config.cache = {
       type: "memory",
       maxGenerations: 10,
     };
 
-    // Enable large string handling
+    // Enable large string handling and tree shaking
     config.optimization.moduleIds = "deterministic";
     config.optimization.chunkIds = "deterministic";
+    
+    // Bundle splitting for better caching
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          chakra: {
+            test: /[\\/]node_modules[\\/](@chakra-ui|@emotion)[\\/]/,
+            name: 'chakra',
+            priority: 20,
+            reuseExistingChunk: true,
+          },
+          gsap: {
+            test: /[\\/]node_modules[\\/]gsap[\\/]/,
+            name: 'gsap',
+            priority: 20,
+            reuseExistingChunk: true,
+          }
+        }
+      };
+    }
 
     // Bundle analyzer stats file generation
     if (process.env.ANALYZE === 'true') {

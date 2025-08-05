@@ -1,15 +1,35 @@
 "use client";
 
-import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
+import React, { useRef, useState, useLayoutEffect, useEffect, useCallback } from "react";
 import { SoftwareApplicationStructuredData } from '@/src/components/StructuredData';
-import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, GridItem, Heading, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
+import Image from 'next/image';
 import { useBackground } from '@/src/context/BackgroundContext';
+import dynamic from 'next/dynamic';
+
+// Import GSAP normally but use dynamic imports in useEffect
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Vimeo = lazy(() => import('@u-wave/react-vimeo'));
+// Lazy load Vimeo player
+const Vimeo = dynamic(() => import('@u-wave/react-vimeo'), {
+	ssr: false,
+	loading: () => (
+		<Box 
+			w="full" 
+			aspectRatio="16/9" 
+			bg="gray.100" 
+			display="flex" 
+			alignItems="center" 
+			justifyContent="center"
+			borderRadius="xl"
+		>
+			Loading video...
+		</Box>
+	)
+});
 
 const allClientLogos = [
 	{ src: "/bacardi_logo.png", alt: "Bacardi" },
@@ -173,7 +193,6 @@ export default function HomePage() {
 	}, []);
 
 	useLayoutEffect(() => {
-
 		const runScrollTrigger = () => {
 			const wrapper = howItWorksWrapperRef.current;
 			const container = scrollContainerRef.current;
@@ -244,36 +263,41 @@ export default function HomePage() {
 			} catch {
 				// Do nothing
 			} finally {
-				// Always restore scroll if for any reason it was locked
-				document.body.style.overflow = '';
+				// Don't modify overflow here - let whenLayoutIsReady handle it
 			}
 		};
 
 		// SPA-safe layout readiness check function
 		const whenLayoutIsReady = async () => {
-			document.body.style.overflow = 'hidden';
-			if (document.fonts?.ready) {
-				await document.fonts.ready;
+			try {
+				// Don't manipulate body overflow - this was causing scroll blocking
+				
+				if (document.fonts?.ready) {
+					await document.fonts.ready;
+				}
+				
+				const wrapper = howItWorksWrapperRef.current;
+				if (wrapper) {
+					const images = Array.from(wrapper.querySelectorAll("img"));
+					await Promise.all(
+						images.map((img) => {
+							if (img.complete) return Promise.resolve();
+							return new Promise<void>((resolve) => {
+								img.onload = () => resolve();
+								img.onerror = () => resolve();
+							});
+						})
+					);
+				}
+				
+				requestAnimationFrame(() => {
+					setTimeout(() => {
+						runScrollTrigger();
+					}, 0);
+				});
+			} catch (error) {
+				console.warn('ScrollTrigger setup failed:', error);
 			}
-			const wrapper = howItWorksWrapperRef.current;
-			if (wrapper) {
-				const images = Array.from(wrapper.querySelectorAll("img"));
-				await Promise.all(
-					images.map((img) => {
-						if (img.complete) return Promise.resolve();
-						return new Promise<void>((resolve) => {
-							img.onload = () => resolve();
-							img.onerror = () => resolve();
-						});
-					})
-				);
-			}
-			requestAnimationFrame(() => {
-				setTimeout(() => {
-					runScrollTrigger();
-					document.body.style.overflow = '';
-				}, 0);
-			});
 		};
 
 		whenLayoutIsReady();
@@ -470,10 +494,15 @@ export default function HomePage() {
 											<Image
 												src={logo.src}
 												alt={logo.alt}
-												maxH="80px"
-												maxW="80%"
-												objectFit="contain"
-												filter="grayscale(100%) brightness(0%)"
+												width={120}
+												height={80}
+												style={{
+													maxHeight: '80px',
+													maxWidth: '80%',
+													objectFit: 'contain',
+													filter: 'grayscale(100%) brightness(0%)'
+												}}
+												priority={index < 3}
 											/>
 										</Flex>
 									</GridItem>
@@ -504,7 +533,7 @@ export default function HomePage() {
 							<Box flex={{ base: "1 1 100%", md: "1 1 50%" }}>
 								<Box bg="brandPurple.600" color="brandNeutral.500" mb="2" px="3" py="2" borderRadius="lg" fontWeight="700" fontSize="md" width="fit-content" mx={{ base: "auto", md: "0" }}>
 									<Flex gap="3" direction="row" alignItems="center">
-										<Image src="/PencilRuler.svg" alt="Pencil Ruler Icon" boxSize="1rem" />
+										<Image src="/PencilRuler.svg" alt="Pencil Ruler Icon" width={16} height={16} />
 										<Text>Easy templating</Text>
 									</Flex>
 								</Box>
@@ -537,7 +566,14 @@ export default function HomePage() {
 							</Box>
 							<Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
 								<Box width="100%" overflow="hidden">
-									<Image src="/AutomationSuite.svg" alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." width="100%" borderRadius="4xl" />
+									<Image 
+										src="/AutomationSuite.svg" 
+										alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." 
+										width={800} 
+										height={600}
+										style={{ width: '100%', height: 'auto', borderRadius: '24px' }}
+										priority
+									/>
 								</Box>
 							</Box>
 						</Flex>
@@ -597,10 +633,15 @@ export default function HomePage() {
 													<Image
 														src={step.image}
 														alt={step.imageAlt}
-														borderRadius="lg"
-														width="100%"
-														height="auto"
-														objectFit="cover"
+														width={400}
+														height={400}
+														style={{
+															borderRadius: '12px',
+															width: '100%',
+															height: '100%',
+															objectFit: 'cover'
+														}}
+														loading="lazy"
 													/>
 												</AspectRatio>
 												<Flex gap="3" direction="column">
@@ -678,7 +719,19 @@ export default function HomePage() {
 													</Flex>
 												</Flex>
 												<Flex width="50%">
-													<Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+													<Image 
+														src={step.image} 
+														alt={step.imageAlt} 
+														width={576}
+														height={400}
+														style={{
+															borderRadius: '32px',
+															width: '100%',
+															height: '100%',
+															objectFit: 'cover'
+														}}
+														loading="lazy"
+													/>
 												</Flex>
 											</Flex>
 										</Flex>
