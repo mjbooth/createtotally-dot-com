@@ -1,6 +1,8 @@
 import { Box, Container, Heading, Image, Stack, Text, Flex, Icon } from "@chakra-ui/react";
 import { Metadata } from 'next';
 import { getIntegrationBySlug } from '@/lib/hygraph/index';
+import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
+import { getCategorySlugCanonicalUrl, getCategoryCanonicalUrl } from '@/src/utils/canonical';
 import type { Post } from '@/src/types/hygraph';
 
 
@@ -32,7 +34,23 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default function IntegrationPage({ post }: { post: Post }) {
     return (
-        <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
+        <>
+            <ArticleStructuredData
+                headline={post.title || 'Integration'}
+                description={post.excerpt || post.title || 'Integration'}
+                url={getCategorySlugCanonicalUrl('integrations', post.slug)}
+                datePublished={new Date().toISOString()}
+                dateModified={new Date().toISOString()}
+                image={post.coverImage?.url}
+            />
+            <BreadcrumbStructuredData
+                items={[
+                    { name: "Home", url: "https://www.createtotally.com" },
+                    { name: "Integrations", url: getCategoryCanonicalUrl('integrations') },
+                    { name: post.title || 'Integration', url: getCategorySlugCanonicalUrl('integrations', post.slug) }
+                ]}
+            />
+            <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
             <Box bg="brandNeutral.200">
                 <Container maxW={{ base: "100%", md: "1152px" }} mx="auto" px={{ base: 4, md: 10 }} zIndex="9999">
                     <Box display="flex" justifyContent="center" alignItems="center" pt={{ base: 4, sm: 5 }}>
@@ -120,5 +138,6 @@ export default function IntegrationPage({ post }: { post: Post }) {
             >
             </Box>
         </Box>
+        </>
     );
 }

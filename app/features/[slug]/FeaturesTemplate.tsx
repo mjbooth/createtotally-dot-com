@@ -273,8 +273,9 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
     };
 
     return (
-        <Box bg="brandNeutral.200" pt={{ base: "24", md: "40" }}>
-            <Box bg="brandNeutral.500">
+        <>
+            <Box bg="brandNeutral.200" pt={{ base: "24", md: "40" }}>
+                <Box bg="brandNeutral.500">
                 <FeatureHeroSection
                     featureGroup={data.heroSectionData.featureGroup}
                     featureGroupIcon={data.heroSectionData.featureGroupIcon}
@@ -674,5 +675,6 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 </Container>
             </Box>
         </Box >
+        </>
     );
 }

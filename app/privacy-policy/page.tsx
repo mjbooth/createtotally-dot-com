@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import { Box, Container, Heading } from '@chakra-ui/react';
+import { getStaticPageCanonicalUrl } from '@/src/utils/canonical';
 
 export const dynamic = 'force-static';
 
@@ -9,19 +10,27 @@ export const metadata = {
   title: 'Privacy Policy | CreateTOTALLY',
   description: 'Read the CreateTOTALLY Privacy Policy. Learn how we handle data, privacy, and your rights.',
   alternates: {
-    canonical: 'https://www.createtotally.com/privacy-policy',
+    canonical: getStaticPageCanonicalUrl('privacy-policy'),
   },
   openGraph: {
     title: 'Privacy Policy | CreateTOTALLY',
     description: 'Understand how CreateTOTALLY manages your data and privacy.',
-    url: 'https://www.createtotally.com/privacy-policy',
+    url: getStaticPageCanonicalUrl('privacy-policy'),
     siteName: 'CreateTOTALLY',
     type: 'website',
+    images: [
+      {
+        url: "/OpenGraph.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
-    card: '/TwitterSummaryCard.jpg',
+    card: 'summary_large_image',
     title: 'Privacy Policy | CreateTOTALLY',
     description: 'Understand how CreateTOTALLY manages your data and privacy.',
+    images: ["/TwitterSummaryCard.jpg"],
   },
 };
 

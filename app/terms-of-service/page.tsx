@@ -2,24 +2,33 @@ import fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import { Box, Container, Heading } from '@chakra-ui/react';
+import { getStaticPageCanonicalUrl } from '@/src/utils/canonical';
 
 export const metadata = {
   title: 'Terms of Service | CreateTOTALLY',
   description: 'Read the CreateTOTALLY Terms of Service. Understand your rights, responsibilities, and our legal guidelines.',
   alternates: {
-    canonical: 'https://www.createtotally.com/terms-of-service',
+    canonical: getStaticPageCanonicalUrl('terms-of-service'),
   },
   openGraph: {
     title: 'Terms of Service | CreateTOTALLY',
     description: 'Understand your rights, responsibilities, and our legal guidelines.',
-    url: 'https://www.createtotally.com/terms-of-service',
+    url: getStaticPageCanonicalUrl('terms-of-service'),
     siteName: 'CreateTOTALLY',
     type: 'website',
+    images: [
+      {
+        url: "/OpenGraph.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
-    card: '/TwitterSummaryCard.jpg',
+    card: 'summary_large_image',
     title: 'Terms of Service | CreateTOTALLY',
     description: 'Understand your rights, responsibilities, and our legal guidelines.',
+    images: ["/TwitterSummaryCard.jpg"],
   },
 };
 

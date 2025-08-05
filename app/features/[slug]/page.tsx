@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { featureDataBySlug, FeatureSlug } from '@/src/data/features';
 import FeatureTemplate from '@/app/features/[slug]/FeaturesTemplate';
 import { Metadata } from 'next';
+import { getFeatureCanonicalUrl } from '@/src/utils/canonical';
 
 async function getFeatureData(slug: string) {
   const data = featureDataBySlug[slug as FeatureSlug];
@@ -14,16 +15,27 @@ async function getFeatureData(slug: string) {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const data = await getFeatureData(slug);
+  const canonicalUrl = getFeatureCanonicalUrl(slug);
 
   return {
     title: data.metadata.title || 'Learn about our platform',
     description: data.metadata.description || 'Learn about our platform',
-    openGraph: data.metadata.openGraph || {
-      title: 'Learn about our platform',
-      description: 'Learn about our platform',
+    openGraph: {
+      ...data.metadata.openGraph,
+      title: data.metadata.openGraph?.title || data.metadata.title || 'Learn about our platform',
+      description: data.metadata.openGraph?.description || data.metadata.description || 'Learn about our platform',
+      url: canonicalUrl,
+      siteName: "CreateTOTALLY",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: data.metadata.title || 'Learn about our platform',
+      description: data.metadata.description || 'Learn about our platform',
+      images: ["/TwitterSummaryCard.jpg"],
     },
     alternates: {
-      canonical: data.metadata.alternates?.canonical || `https://www.createtotally.com/features/${slug}`,
+      canonical: canonicalUrl,
     },
   };
 }

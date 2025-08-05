@@ -1,19 +1,24 @@
-// /app/get-started/layout.tsx
+// /app/the-edit/layout.tsx
 import { Metadata } from 'next';
+import { getStaticPageCanonicalUrl } from '@/src/utils/canonical';
 
 export const metadata: Metadata = {
   title: 'The Edit - Creative Automation Insights | CreateTOTALLY',
   description: "Discover creative automation insights, case studies, and industry tips on The Edit. Learn how brands like Miele scale creative production efficiently.",
   alternates: {
-    canonical: 'https://www.createtotally.com/the-edit',
+    canonical: getStaticPageCanonicalUrl('the-edit'),
   },
   openGraph: {
+    title: 'The Edit - Creative Automation Insights | CreateTOTALLY',
+    description: "Discover creative automation insights, case studies, and industry tips on The Edit. Learn how brands like Miele scale creative production efficiently.",
     type: 'website',
-    url: 'https://www.createtotally.com/the-edit',
+    url: getStaticPageCanonicalUrl('the-edit'),
     siteName: 'CreateTOTALLY',
     images: [
       {
         url: '/OpenGraph.jpg',
+        width: 1200,
+        height: 630,
         alt: 'The Edit - Creative automation insights and case studies',
       },
     ],
@@ -22,6 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Edit - Creative Automation Insights & Case Studies',
     description: 'Discover how top brands scale creative production. Real case studies and automation insights.',
+    images: ["/TwitterSummaryCard.jpg"],
   },
 };
 
