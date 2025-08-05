@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
+import { SoftwareApplicationStructuredData } from '@/src/components/StructuredData';
 import { Box, Container, Flex, Grid, GridItem, Heading, Image, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
 import { useBackground } from '@/src/context/BackgroundContext';
 import gsap from "gsap";
@@ -382,8 +383,10 @@ export default function HomePage() {
 	};
 
 	return (
-		<Box bg="brandNeutral.500" pt={{ base: "16", md: "40", lg: "40" }}>
-			<Box>
+		<>
+			<SoftwareApplicationStructuredData />
+			<Box bg="brandNeutral.500" pt={{ base: "16", md: "40", lg: "40" }}>
+				<Box>
 				<Container maxW={{ base: "100%", md: "1152px" }} mx="auto" px={{ base: 4, md: 0 }} zIndex="9999">
 					<Box display="flex" justifyContent="center" alignItems="center" pt="5">
 						<Stack gap={6} mx="auto" textAlign="center" alignItems="center" pb={{ base: "12", md: "8", lg: "7.5rem" }} >
@@ -688,5 +691,6 @@ export default function HomePage() {
 				</Container>
 			</Box>
 		</Box>
+		</>
 	);
 }

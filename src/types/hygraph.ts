@@ -5,6 +5,7 @@ export type Post = {
   slug: string;
   title?: string;
   excerpt?: string;
+  publishedAt?: string;
   coverImage?: {
     url: string;
   };

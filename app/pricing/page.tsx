@@ -138,23 +138,33 @@ interface Feature {
     description: string | string[];
 }
 
+import { getStaticPageCanonicalUrl } from '@/src/utils/canonical';
+
 export const metadata = {
   title: 'Creative Automation Platform - Automate More, Pay Less | CreateTOTALLY',
   description: 'Automate your creative production with CreateTOTALLY. Remove blockers, scale faster, and reduce costs with flexible team solutions.',
   alternates: {
-    canonical: 'https://www.createtotally.com/pricing',
+    canonical: getStaticPageCanonicalUrl('pricing'),
   },
   openGraph: {
     title: 'CreateTOTALLY Pricing',
     description: "Scale creative production with CreateTOTALLY's automation platform. AI-powered workflows, flexible team solutions, and cost-effective creative management.",
-    url: 'https://www.createtotally.com/pricing',
+    url: getStaticPageCanonicalUrl('pricing'),
     siteName: 'CreateTOTALLY',
     type: 'website',
+    images: [
+      {
+        url: "/OpenGraph.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
-    card: "/TwitterSummaryCard.jpg",
+    card: "summary_large_image",
     title: 'Creative Automation Platform - Automate More, Pay Less | CreateTOTALLY',
     description: "Scale creative production with CreateTOTALLY's automation platform. AI-powered workflows, flexible team solutions, and cost-effective creative management.",
+    images: ["/TwitterSummaryCard.jpg"],
   },
 };
 

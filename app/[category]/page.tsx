@@ -1,4 +1,5 @@
 import IntegrationCategoryLayout from '@/src/components/layouts/IntegrationCategoryLayout';
+import { getCategoryCanonicalUrl } from '@/src/utils/canonical';
 import categorySEO from '@/src/data/blogCategoryMetadata';
 
 export const dynamic = 'force-dynamic';
@@ -21,11 +22,12 @@ import { Metadata } from 'next';
 export async function generateMetadata(context: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const resolvedParams = await context.params;
   const category = resolvedParams?.category;
+  const canonicalUrl = getCategoryCanonicalUrl(category || '');
 
   const meta = category && categorySEO[category] ? categorySEO[category] : {
     title: 'CreateTOTALLY',
     description: 'Creative automation for modern marketing teams.',
-    canonical: 'https://www.createtotally.com',
+    canonical: canonicalUrl,
     ogImage: '/OpenGraph.jpg',
   };
 
@@ -35,11 +37,19 @@ export async function generateMetadata(context: { params: Promise<{ category: st
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: meta.canonical,
+      url: canonicalUrl,
+      siteName: "CreateTOTALLY",
+      type: "website",
       images: [{ url: meta.ogImage }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/TwitterSummaryCard.jpg"],
+    },
     alternates: {
-      canonical: meta.canonical,
+      canonical: canonicalUrl,
     },
   };
   return metadata;
@@ -48,7 +58,8 @@ export async function generateMetadata(context: { params: Promise<{ category: st
 // DefaultLayout wraps the current JSX content for all other categories
 function DefaultLayout({ posts, category }: { posts: Post[]; category: string }) {
     return (
-        <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
+        <>
+            <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
             <Box bg="brandNeutral.200">
                 <Container maxW="1152px" mb={{ base: "60px", sm: "80px", md: "16" }} px={{ base: 4, sm: 6, md: 8 }}>
                     <Box display="flex" justifyContent="center" alignItems="center" pt={{ base: 4, sm: 5 }}>
@@ -170,6 +181,7 @@ function DefaultLayout({ posts, category }: { posts: Post[]; category: string })
             >
             </Box>
         </Box>
+        </>
     );
 }
 

@@ -6,6 +6,8 @@ import Footer from "@/src/components/Footer"
 import ClientLayoutWrapper from "@/src/components/ClientLayoutWrapper";
 import { BackgroundProvider } from '@/src/context/BackgroundContext';
 import { GoogleTagManager } from '@next/third-parties/google'
+import { OrganizationStructuredData } from '@/src/components/StructuredData';
+import { getHomeCanonicalUrl } from "@/src/utils/canonical";
 
 export const metadata: Metadata = {
   title: "Creative Automation for Figma & Adobe Teams | CreateTOTALLY",
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
     images: ["/TwitterSummaryCard.jpg"],
   },
   alternates: {
-    canonical: undefined, // Will be set dynamically in page-level components or middleware
+    canonical: getHomeCanonicalUrl(), // Default canonical URL for the homepage
   }
 };
 
@@ -47,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <GoogleTagManager gtmId="GTM-KPHRZB4" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <OrganizationStructuredData />
       </head>
       <body>
         <noscript>

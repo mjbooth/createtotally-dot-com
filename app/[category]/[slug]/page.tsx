@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { Box, Container, Heading, Image, Text } from "@chakra-ui/react";
 import IntegrationLayout from '@/src/components/layouts/IntegrationLayout';
+import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
+import { getCategorySlugCanonicalUrl, getCategoryCanonicalUrl } from '@/src/utils/canonical';
 
 
 export default async function BlogPage(context: { params: Promise<{ slug: string; category: string }> }) {
@@ -23,7 +25,23 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
   }
 
   return (
-    <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
+    <>
+      <ArticleStructuredData
+        headline={post.title}
+        description={post.excerpt || post.title}
+        url={getCategorySlugCanonicalUrl(category, slug)}
+        datePublished={post.publishedAt}
+        dateModified={post.publishedAt}
+        image={post.coverImage?.url}
+      />
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "https://www.createtotally.com" },
+          { name: category.charAt(0).toUpperCase() + category.slice(1), url: getCategoryCanonicalUrl(category) },
+          { name: post.title, url: getCategorySlugCanonicalUrl(category, slug) }
+        ]}
+      />
+      <Box bg="brandNeutral.200" pt={{ base: "20", sm: "0", md: "40" }}>
       <Box bg="brandNeutral.200">
         <Container maxW="1152px" mb={{ base: "60px", sm: "80px", md: "16" }} px={{ base: 4, sm: 6, md: 8 }} display="flex" justifyContent="center" alignItems="center" pt={{ base: 4, sm: 5 }}>
           <Heading
@@ -94,5 +112,6 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
         </Container>
       </Box>
     </Box>
+    </>
   );
 }
