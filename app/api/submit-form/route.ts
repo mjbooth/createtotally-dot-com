@@ -7,6 +7,13 @@ const ALLOWED_ORIGINS = [
   'https://createtotally.com',
 ];
 
+function isAllowedOrigin(origin: string): boolean {
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow Vercel preview deployments
+  if (/^https:\/\/createtotally-dot-.*\.vercel\.app$/.test(origin)) return true;
+  return false;
+}
+
 // Simple in-memory rate limiter: max 5 requests per IP per minute
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 60_000;
@@ -65,7 +72,7 @@ export async function POST(request: NextRequest) {
     // Origin check (skip in development)
     if (process.env.NODE_ENV === 'production') {
       const origin = request.headers.get('origin');
-      if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      if (origin && !isAllowedOrigin(origin)) {
         return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
       }
     }
