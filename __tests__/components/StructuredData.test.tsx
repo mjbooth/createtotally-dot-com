@@ -73,7 +73,7 @@ describe('StructuredData Components', () => {
 
     it('should include breadcrumb when provided', () => {
       const breadcrumb = [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.createtotally.com' }
+        { name: 'Home', url: 'https://www.createtotally.com' }
       ];
 
       const props = {
@@ -85,9 +85,11 @@ describe('StructuredData Components', () => {
 
       const { container } = render(<WebPageStructuredData {...props} />);
       const script = container.querySelector('script[type="application/ld+json"]');
-      
+
       const jsonData = JSON.parse(script?.textContent || '{}');
-      expect(jsonData.breadcrumb?.itemListElement).toEqual(breadcrumb);
+      expect(jsonData.breadcrumb?.itemListElement).toEqual([
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.createtotally.com' }
+      ]);
     });
   });
 
