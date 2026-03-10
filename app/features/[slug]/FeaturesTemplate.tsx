@@ -42,22 +42,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
         };
     }, [data.HowItWorksSteps]);
 
-    useEffect(() => {
-        const heading = headingRef.current;
-        if (!heading) return;
-
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition > 100) {
-                heading.classList.add('hidden');
-            } else {
-                heading.classList.remove('hidden');
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    // Heading scroll-out is now driven by GSAP ScrollTrigger onUpdate
 
     useLayoutEffect(() => {
 
@@ -126,6 +111,13 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                 duration: 0,
                                 overwrite: "auto",
                             });
+                            // Scroll heading out during early progress
+                            const heading = headingRef.current;
+                            if (heading) {
+                                const headingProgress = Math.min(self.progress / 0.15, 1);
+                                heading.style.transform = `translateY(-${headingProgress * 100}%)`;
+                                heading.style.opacity = `${1 - headingProgress}`;
+                            }
                         },
                     });
                     ScrollTrigger.refresh();
@@ -148,22 +140,19 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                 await document.fonts.ready;
             }
 
-            const wrapper = howItWorksWrapperRef.current;
-            if (wrapper) {
-                // Only wait for images that are already loading (not lazy-loaded offscreen ones)
-                const images = Array.from(wrapper.querySelectorAll("img"));
-                const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
-                await Promise.all(
-                    visibleImages.map((img) => {
-                        if (img.complete) return Promise.resolve();
-                        return new Promise<void>((resolve) => {
-                            img.onload = () => resolve();
-                            img.onerror = () => resolve();
-                            setTimeout(resolve, 3000);
-                        });
-                    })
-                );
-            }
+            // Wait for ALL page images (not just carousel) so full page height is settled
+            const images = Array.from(document.querySelectorAll("img"));
+            const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
+            await Promise.all(
+                visibleImages.map((img) => {
+                    if (img.complete) return Promise.resolve();
+                    return new Promise<void>((resolve) => {
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        setTimeout(resolve, 3000);
+                    });
+                })
+            );
 
             requestAnimationFrame(() => {
                 setTimeout(() => {
@@ -406,7 +395,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
             {/* How it works */}
             <Box position="relative" bg="brandNeutral.200" zIndex="2" backgroundImage="url('/bg-bottom-footer-flip.svg')" backgroundRepeat="no-repeat" backgroundPosition="top center" backgroundSize="100% auto" pt="100px" >
-                <Container maxW="100%" px="0" overflow="hidden" position="relative" >
+                <Container maxW="100%" px="0" position="relative" >
                     <Heading as="h2" pt="16" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" color="brandNavy.500" zIndex="10" position="sticky" top="0" ref={headingRef} className="scroll-out-heading" opacity="1" pb="16" >
                         How it works
                     </Heading>
@@ -511,7 +500,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                         width="1152px"
                                         minW="1152px"
                                         mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
-                                        zIndex="9999"
+                                        zIndex="1"
                                         boxShadow="realistic"
                                     >
                                         <Flex width="100%" gap="15">
