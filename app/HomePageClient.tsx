@@ -171,13 +171,17 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 			}
 			const wrapper = howItWorksWrapperRef.current;
 			if (wrapper) {
+				// Only wait for images that are already loading (not lazy-loaded offscreen ones)
 				const images = Array.from(wrapper.querySelectorAll("img"));
+				const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
 				await Promise.all(
-					images.map((img) => {
+					visibleImages.map((img) => {
 						if (img.complete) return Promise.resolve();
 						return new Promise<void>((resolve) => {
 							img.onload = () => resolve();
 							img.onerror = () => resolve();
+							// Safety timeout to prevent deadlock
+							setTimeout(resolve, 3000);
 						});
 					})
 				);
@@ -549,9 +553,9 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 					</Box>
 
 					{/* Desktop view */}
-					{!isMobile && (
-						<Flex
+					<Flex
 							ref={scrollContainerRef}
+							display={{ base: "none", md: "flex" }}
 							position="absolute"
 							left="0"
 							overflow="visible"
@@ -590,22 +594,20 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 												</Flex>
 											</Flex>
 											<Flex width="50%">
-												<Box position="relative" width="100%" height="100%">
-													<NextImage
-														src={step.image}
-														alt={step.imageAlt}
-														fill
-														style={{ objectFit: 'cover', borderRadius: '3rem' }}
-														sizes="576px"
-													/>
-												</Box>
+												<NextImage
+													src={step.image}
+													alt={step.imageAlt}
+													width={576}
+													height={400}
+													style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }}
+													sizes="576px"
+												/>
 											</Flex>
 										</Flex>
 									</Flex>
 								))}
 							</Flex>
 						</Flex>
-					)}
 				</Box>
 
 			</Container>

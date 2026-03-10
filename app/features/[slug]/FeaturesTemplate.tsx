@@ -149,13 +149,16 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
 
             const wrapper = howItWorksWrapperRef.current;
             if (wrapper) {
+                // Only wait for images that are already loading (not lazy-loaded offscreen ones)
                 const images = Array.from(wrapper.querySelectorAll("img"));
+                const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
                 await Promise.all(
-                    images.map((img) => {
+                    visibleImages.map((img) => {
                         if (img.complete) return Promise.resolve();
                         return new Promise<void>((resolve) => {
                             img.onload = () => resolve();
                             img.onerror = () => resolve();
+                            setTimeout(resolve, 3000);
                         });
                     })
                 );
@@ -486,57 +489,54 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                         </Box>
 
                         {/* Desktop view */}
-                        {!isMobile && (
-                            <Flex
-                                ref={scrollContainerRef}
-                                position="absolute"
-                                left="0"
-                                overflow="visible"
-                                px={containerPadding}
-                                height="100%"
-                                alignItems="center"
-                            >
-                                <Flex alignItems="center">
-                                    {data.HowItWorksSteps.map((step, index) => (
-                                        <Flex
-                                            key={index}
-                                            flexShrink={0}
-                                            bg="brandNavy.500"
-                                            borderRadius="xxl"
-                                            p="15"
-                                            width="1152px"
-                                            minW="1152px"
-                                            mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
-                                            zIndex="9999"
-                                            boxShadow="realistic"
-                                        >
-                                            <Flex width="100%" gap="15">
-                                                <Flex width="50%" direction="column" gap="4">
-                                                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
-                                                        <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
-                                                            {step.label}
-                                                        </Text>
-                                                    </Flex>
-                                                    <Flex gap="2" direction="column" justify="center" height="100%">
-                                                        <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
-                                                            {step.title}
-                                                        </Heading>
-                                                        <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
-                                                            {step.description}
-                                                        </Text>
-                                                    </Flex>
+                        <Flex
+                            ref={scrollContainerRef}
+                            display={{ base: "none", md: "flex" }}
+                            position="absolute"
+                            left="0"
+                            overflow="visible"
+                            px={containerPadding}
+                            height="100%"
+                            alignItems="center"
+                        >
+                            <Flex alignItems="center">
+                                {data.HowItWorksSteps.map((step, index) => (
+                                    <Flex
+                                        key={index}
+                                        flexShrink={0}
+                                        bg="brandNavy.500"
+                                        borderRadius="xxl"
+                                        p="15"
+                                        width="1152px"
+                                        minW="1152px"
+                                        mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
+                                        zIndex="9999"
+                                        boxShadow="realistic"
+                                    >
+                                        <Flex width="100%" gap="15">
+                                            <Flex width="50%" direction="column" gap="4">
+                                                <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
+                                                    <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
+                                                        {step.label}
+                                                    </Text>
                                                 </Flex>
-                                                <Flex width={{ base: "100%", md: "50%" }} >
-                                                    <Box position="relative" width="100%" height="100%">
-                                                        <NextImage src={step.image} alt={step.imageAlt} fill style={{ objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
-                                                    </Box>
+                                                <Flex gap="2" direction="column" justify="center" height="100%">
+                                                    <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
+                                                        {step.title}
+                                                    </Heading>
+                                                    <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
+                                                        {step.description}
+                                                    </Text>
                                                 </Flex>
                                             </Flex>
+                                            <Flex width={{ base: "100%", md: "50%" }} >
+                                                <NextImage src={step.image} alt={step.imageAlt} width={576} height={400} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
+                                            </Flex>
                                         </Flex>
-                                    ))}
-                                </Flex>
+                                    </Flex>
+                                ))}
                             </Flex>
-                        )}
+                        </Flex>
                     </Box>
 
                 </Container>
