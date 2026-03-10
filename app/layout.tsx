@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { Provider } from "@/src/components/ui/provider"
 import { NavigationProvider } from "@/src/context/NavigationContext";
@@ -8,6 +9,12 @@ import { BackgroundProvider } from '@/src/context/BackgroundContext';
 import { GoogleTagManager } from '@next/third-parties/google'
 import { OrganizationStructuredData } from '@/src/components/StructuredData';
 import { getHomeCanonicalUrl } from "@/src/utils/canonical";
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: "Creative Automation for Figma & Adobe Teams | CreateTOTALLY",
@@ -40,7 +47,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#FFFCFB' }}>
+    <html lang="en" suppressHydrationWarning className={inter.variable} style={{ backgroundColor: '#FFFCFB' }}>
       <head>
         <Script
           id="termly-cmp"

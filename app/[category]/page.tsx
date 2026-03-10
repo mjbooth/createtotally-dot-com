@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic';
 
 import { getPostsByCategory } from '@/lib/hygraph';
 import Link from 'next/link';
-import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
+import Image from 'next/image';
 type Post = {
     id: string;
     slug: string;
@@ -137,14 +138,13 @@ function DefaultLayout({ posts, category }: { posts: Post[]; category: string })
                             >
                                 <Link href={`/${category}/${post.slug}`}>
                                     {post.coverImage?.url && (
-                                        <Box as="figure" width="100%" position="relative" mb={4}>
+                                        <Box as="figure" width="100%" position="relative" mb={4} height="200px">
                                             <Image
                                                 src={post.coverImage.url}
                                                 alt={post.title}
-                                                width="100%"
-                                                height="100%"
-                                                objectFit="cover"
-                                                borderRadius="md"
+                                                fill
+                                                style={{ objectFit: 'cover', borderRadius: '0.375rem' }}
+                                                sizes="(max-width: 768px) 100vw, 50vw"
                                             />
                                         </Box>
                                     )}

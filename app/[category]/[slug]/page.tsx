@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getPostByCategoryAndSlug } from '@/lib/hygraph';
-import { Box, Container, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import { sanitizeHtml } from '@/src/utils/sanitize';
+import Image from 'next/image';
 import IntegrationLayout from '@/src/components/layouts/IntegrationLayout';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
 import { getCategorySlugCanonicalUrl, getCategoryCanonicalUrl } from '@/src/utils/canonical';
@@ -84,7 +86,8 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
                   alt={post.title}
                   width={1152}
                   height={600}
-                  objectFit="cover"
+                  style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                  sizes="(max-width: 768px) 100vw, 1152px"
                 />
               </Box>
             )}
@@ -96,7 +99,7 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
               className="prose"
               mx="auto"
               color="brandNavy.500"
-              dangerouslySetInnerHTML={{ __html: post.content.html }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content.html) }}
             />
           ) : (
             <Text

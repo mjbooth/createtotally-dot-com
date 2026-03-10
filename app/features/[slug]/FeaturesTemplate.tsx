@@ -1,6 +1,7 @@
 "use client";
 
-import { Container, Box, Text, Link, Heading, Button, Image, Flex, Avatar, useBreakpointValue, AspectRatio, } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, Button, Flex, Avatar, useBreakpointValue, AspectRatio, } from "@chakra-ui/react"
+import NextImage from 'next/image';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 import { useRef, useLayoutEffect, useEffect, useState, useCallback, } from 'react';
 import React from 'react';
@@ -341,7 +342,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                 maxW={{ base: "full", md: "3xl" }}
                                                 width="100%"
                                             >
-                                                <Image src={block.image} alt={block.imageAlt} width="100%" />
+                                                {block.image && <NextImage src={block.image} alt={block.imageAlt} width={800} height={450} style={{ width: '100%', height: 'auto' }} sizes="(max-width: 768px) 100vw, 768px" />}
                                             </Box>
                                         </Flex>
                                     );
@@ -387,13 +388,8 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                             </Flex>
                                         </Box>
                                         <Box flex={{ base: "1", md: "1" }} width={{ base: "100%", md: "50%" }}>
-                                            <Box width="100%" overflow="hidden">
-                                                <Image
-                                                    src={block.image}
-                                                    alt={block.imageAlt}
-                                                    width="100%"
-                                                    borderRadius={{ base: "xl", md: "4xl" }}
-                                                />
+                                            <Box width="100%" overflow="hidden" borderRadius={{ base: "xl", md: "4xl" }}>
+                                                {block.image && <NextImage src={block.image} alt={block.imageAlt} width={576} height={400} style={{ width: '100%', height: 'auto' }} sizes="(max-width: 768px) 100vw, 576px" />}
                                             </Box>
                                         </Box>
                                     </Flex>
@@ -454,14 +450,7 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                         >
                                             <Flex gap="6" direction="column">
                                                 <AspectRatio ratio={1 / 1}>
-                                                    <Image
-                                                        src={step.image}
-                                                        alt={step.imageAlt}
-                                                        borderRadius="lg"
-                                                        width="100%"
-                                                        height="auto"
-                                                        objectFit="cover"
-                                                    />
+                                                    <NextImage src={step.image} alt={step.imageAlt} fill style={{ objectFit: 'cover', borderRadius: '0.5rem' }} sizes="90vw" />
                                                 </AspectRatio>
                                                 <Flex gap="3" direction="column">
                                                     <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
@@ -538,7 +527,9 @@ export default function FeatureTemplate({ data }: { data: FeaturePageData }) {
                                                     </Flex>
                                                 </Flex>
                                                 <Flex width={{ base: "100%", md: "50%" }} >
-                                                    <Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                                                    <Box position="relative" width="100%" height="100%">
+                                                        <NextImage src={step.image} alt={step.imageAlt} fill style={{ objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
+                                                    </Box>
                                                 </Flex>
                                             </Flex>
                                         </Flex>

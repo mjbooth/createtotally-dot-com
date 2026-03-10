@@ -58,8 +58,8 @@ export const system = createSystem(defaultConfig, {
         },
       },
       fonts: {
-        body: { value: "Inter Variable, system-ui, sans-serif" },
-        heading: { value: "Inter Variable, system-ui, sans-serif" },
+        body: { value: "var(--font-inter), Inter, system-ui, sans-serif" },
+        heading: { value: "var(--font-inter), Inter, system-ui, sans-serif" },
       },
       shadows: {
         realistic: { value: " 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)" },

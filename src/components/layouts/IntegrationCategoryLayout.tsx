@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Box, Heading, Text, Container, Image, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
+import { Box, Heading, Text, Container, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
+import Image from 'next/image';
 import type { Post } from '@/src/types/hygraph';
 
 export default function IntegrationCategoryLayout({
@@ -88,14 +89,13 @@ export default function IntegrationCategoryLayout({
               >
                 <Link href={`/${category}/${post.slug}`}>
                   {post.coverImage?.url && (
-                    <Box as="figure" width="100%" position="relative" mb={4} boxSize={{ base: "100%", md: "12" }}>
+                    <Box as="figure" position="relative" mb={4} boxSize={{ base: "100%", md: "12" }}>
                       <Image
                         src={post.coverImage.url}
-                        alt={post.title}
-                        width="100%"
-                        height="100%"
-                        objectFit="fit"
-                        borderRadius="md"
+                        alt={post.title || ''}
+                        fill
+                        style={{ objectFit: 'contain', borderRadius: '0.375rem' }}
+                        sizes="(max-width: 768px) 100vw, 48px"
                       />
                     </Box>
                   )}

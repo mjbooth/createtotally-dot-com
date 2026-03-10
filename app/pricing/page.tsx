@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Image, Link, Avatar } from "@chakra-ui/react";
+import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Link, Avatar } from "@chakra-ui/react";
+import Image from 'next/image';
 
 const pricingBenefits = [
     { benefit: 1, headline: "Unlimited users", subline: "Add your whole team, no per-seat charges" },
@@ -515,8 +516,10 @@ const PricingPage = () => {
                                         <Image
                                             src={feature.image}
                                             alt={feature.client}
-                                            minW={{ base: "12", lg: "28" }}
-                                            maxW={{ base: "12", lg: "28" }}
+                                            width={112}
+                                            height={112}
+                                            style={{ minWidth: '3rem', maxWidth: '7rem', height: 'auto' }}
+                                            sizes="112px"
                                         />
                                     </Box>
                                     <VStack align="left" justify="center" height="100%" gap={0}>

@@ -159,7 +159,7 @@ export function generateSoftwareApplicationSchema(): SoftwareApplication {
       "@type": "Offer",
       priceCurrency: "USD",
       price: "0",
-      priceValidUntil: "2025-12-31",
+      priceValidUntil: "2026-12-31",
       availability: "https://schema.org/InStock",
       url: "https://www.createtotally.com/pricing"
     },

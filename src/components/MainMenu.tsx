@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, Container, Flex, Stack, Button, Image, Link, Popover, Portal, Icon, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Container, Flex, Stack, Button, Link, Popover, Portal, Icon, useBreakpointValue } from '@chakra-ui/react';
+import NextImage from 'next/image';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import DropdownContent from '@/src/components/ui/DropdownContent';
 import { useNavigation } from "@/src/context/NavigationContext";
@@ -211,7 +212,7 @@ const MainMenu: React.FC = () => {
         <Container maxW="1200px" px="24px">
           <Flex justify="space-between" align="center" width="100%">
             <Link href="/">
-              <Image src="/CreateTOTALLY_horizontal.png" alt="Logo" maxHeight={{ base: "30px", md: "47.447px" }} />
+              <NextImage src="/CreateTOTALLY_horizontal.png" alt="Logo" width={190} height={47} style={{ maxHeight: '47px', width: 'auto', height: 'auto' }} priority />
             </Link>
 
             {isMobile ? (
