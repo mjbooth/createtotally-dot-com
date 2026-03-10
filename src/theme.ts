@@ -110,10 +110,11 @@ export const system = createSystem(defaultConfig, {
     },
     '.prose h1': {
       color: "brandNavy.500",
-      fontSize: "4xl",
-      fontWeight: "bold",
+      fontSize: { base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" },
+      fontWeight: "800",
       textAlign: "left",
-      lineHeight: "1",
+      lineHeight: "1.1",
+      letterSpacing: "tight",
       mb: "8"
     },
     '.prose h2': {
@@ -163,6 +164,31 @@ export const system = createSystem(defaultConfig, {
     },
     '.prose em': {
       fontStyle: "italic",
+    },
+    '.prose hr': {
+      border: 'none',
+      borderTop: '1px solid',
+      borderColor: 'brandNeutral.600',
+      my: 10,
+    },
+    '.prose table': {
+      width: '100%',
+      borderCollapse: 'collapse',
+      mb: 6,
+      fontSize: 'md',
+    },
+    '.prose th, .prose td': {
+      textAlign: 'left',
+      py: 3,
+      px: 4,
+      borderBottom: '1px solid',
+      borderColor: 'brandNeutral.600',
+    },
+    '.prose th': {
+      fontWeight: '600',
+    },
+    '.prose strong': {
+      fontWeight: '600',
     },
     '.prose a.noStyle-h2': {
       all: 'unset', // optional, resets *all* inherited styles
