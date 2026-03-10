@@ -42,6 +42,9 @@ const config = {
       { loc: '/automation-in-action', priority: 0.6, changefreq: 'weekly' },
       { loc: '/glossary', priority: 0.5, changefreq: 'monthly' },
       
+      // Careers
+      { loc: '/careers/commercial-lead', priority: 0.6, changefreq: 'monthly' },
+
       // Legal pages
       { loc: '/privacy-policy', priority: 0.3, changefreq: 'yearly' },
       { loc: '/terms-of-service', priority: 0.3, changefreq: 'yearly' },
