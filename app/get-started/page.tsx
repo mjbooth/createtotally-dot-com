@@ -1,6 +1,7 @@
 'use client';
 
-import { Box, Heading, Flex, VStack, Stack, Text, Alert, Grid, Image, Icon, Textarea, List, GridItem, Container, VisuallyHidden, SimpleGrid, Button, Field, For, Input, NativeSelect } from "@chakra-ui/react"
+import { Box, Heading, Flex, VStack, Stack, Text, Alert, Grid, Icon, Textarea, List, GridItem, Container, VisuallyHidden, SimpleGrid, Button, Field, For, Input, NativeSelect } from "@chakra-ui/react"
+import NextImage from 'next/image';
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useState, useEffect } from 'react';
@@ -380,14 +381,15 @@ export default function TemplateContentCreation() {
                                             borderRadius="md"
                                             p={2}
                                         >
-                                            <Image
-                                                src={logo.src}
-                                                alt={logo.alt}
-                                                maxH="80px"
-                                                maxW="80%"
-                                                objectFit="contain"
-                                                filter="grayscale(100%) brightness(0%)"
-                                            />
+                                            <Box position="relative" width="120px" height="80px">
+                                                <NextImage
+                                                    src={logo.src}
+                                                    alt={logo.alt}
+                                                    fill
+                                                    style={{ objectFit: 'contain', filter: 'grayscale(100%) brightness(0%)' }}
+                                                    sizes="120px"
+                                                />
+                                            </Box>
                                         </Flex>
                                     </GridItem>
                                 ))}

@@ -57,27 +57,8 @@ const config = {
       });
     });
 
-    // Dynamic content pages will be handled by a separate server-side route
-    // For now, we'll include common dynamic routes that we know exist
-    const knownDynamicPages = [
-      // Integration pages examples - these would be populated from CMS
-      { loc: '/integrations/example-integration', priority: 0.5, changefreq: 'monthly' },
-      // Content pages examples - these would be populated from CMS  
-      { loc: '/perspectives/example-post', priority: 0.6, changefreq: 'weekly' },
-      { loc: '/automation-in-action/example-case-study', priority: 0.6, changefreq: 'weekly' },
-      { loc: '/glossary/example-term', priority: 0.5, changefreq: 'monthly' },
-    ];
-
-    // Note: In production, dynamic content should be fetched from your CMS
-    // This is a placeholder for static sitemap generation
-    knownDynamicPages.forEach(page => {
-      paths.push({
-        loc: page.loc,
-        lastmod: new Date().toISOString(),
-        changefreq: page.changefreq,
-        priority: page.priority,
-      });
-    });
+    // Dynamic content pages are handled by the server-sitemap.xml route
+    // which fetches real URLs from the CMS at request time
 
     return paths;
   },

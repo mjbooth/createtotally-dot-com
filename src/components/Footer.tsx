@@ -1,4 +1,5 @@
-import { Box, Flex, Text, Container, Link, Image } from '@chakra-ui/react';
+import { Box, Flex, Text, Container, Link } from '@chakra-ui/react';
+import Image from 'next/image';
 
 const footerData = [
     {
@@ -62,13 +63,7 @@ const Footer = () => {
                         mb={{ base: 8, md: 0 }}
                         textAlign={{ base: 'center', md: 'left' }}
                     >
-                        <Image 
-                            src="/CreateTOTALLY_FBIcon.png" 
-                            alt="CreateTOTALLY Logo" 
-                            width="150px" 
-                            height="auto" 
-                            display="inline-block"
-                        />
+                        <Image src="/CreateTOTALLY_FBIcon.png" alt="CreateTOTALLY Logo" width={150} height={150} style={{ width: '150px', height: 'auto', display: 'inline-block' }} />
                     </Box>
 
                     {/* Footer data columns */}
@@ -153,7 +148,7 @@ const Footer = () => {
                         </Flex>
                     </Flex>
                     <Box mt={{ base: '6', md: '0' }}>
-                        <Image src="/SOC-2-Type-II.png" alt="SOC 2 Type II" height="60px" />
+                        <Image src="/SOC-2-Type-II.png" alt="SOC 2 Type II" width={60} height={60} style={{ height: '60px', width: 'auto' }} />
                     </Box>
                 </Flex>
             </Container>

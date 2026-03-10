@@ -1,6 +1,8 @@
 "use client";
 
-import { Container, Box, Text, Link, Heading, HStack, VStack, Button, Image, Flex, SimpleGrid, useBreakpointValue, AspectRatio, Avatar } from "@chakra-ui/react"
+import { Container, Box, Text, Link, Heading, HStack, VStack, Button, Flex, SimpleGrid, useBreakpointValue, AspectRatio, Avatar } from "@chakra-ui/react"
+import NextImage from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
 import { useRef, useLayoutEffect, useEffect, useState, useCallback, } from 'react';
 import React from 'react';
@@ -40,22 +42,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
         };
     }, [data.HowItWorksSteps]);
 
-    useEffect(() => {
-        const heading = headingRef.current;
-        if (!heading) return;
-
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition > 100) {
-                heading.classList.add('hidden');
-            } else {
-                heading.classList.remove('hidden');
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    // Heading scroll-out is now driven by GSAP ScrollTrigger onUpdate
 
     useLayoutEffect(() => {
 
@@ -124,12 +111,18 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                 duration: 0,
                                 overwrite: "auto",
                             });
+                            // Scroll heading out during early progress
+                            const heading = headingRef.current;
+                            if (heading) {
+                                const headingProgress = Math.min(self.progress / 0.15, 1);
+                                heading.style.transform = `translateY(-${headingProgress * 100}%)`;
+                                heading.style.opacity = `${1 - headingProgress}`;
+                            }
                         },
                     });
                     ScrollTrigger.refresh();
                     setTimeout(() => ScrollTrigger.refresh(), 100);
                 }, wrapper);
-                // Removed unused setupElapsed variable
 
                 return () => {
                     ctx.revert();
@@ -147,19 +140,19 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                 await document.fonts.ready;
             }
 
-            const wrapper = howItWorksWrapperRef.current;
-            if (wrapper) {
-                const images = Array.from(wrapper.querySelectorAll("img"));
-                await Promise.all(
-                    images.map((img) => {
-                        if (img.complete) return Promise.resolve();
-                        return new Promise<void>((resolve) => {
-                            img.onload = () => resolve();
-                            img.onerror = () => resolve();
-                        });
-                    })
-                );
-            }
+            // Wait for ALL page images (not just carousel) so full page height is settled
+            const images = Array.from(document.querySelectorAll("img"));
+            const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
+            await Promise.all(
+                visibleImages.map((img) => {
+                    if (img.complete) return Promise.resolve();
+                    return new Promise<void>((resolve) => {
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        setTimeout(resolve, 3000);
+                    });
+                })
+            );
 
             requestAnimationFrame(() => {
                 setTimeout(() => {
@@ -345,13 +338,8 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                         </Flex>
                                     </Box>
                                     <Box flex={{ base: "1", md: "1" }} width={{ base: "100%", md: "50%" }}>
-                                        <Box width="100%" overflow="hidden">
-                                            <Image
-                                                src={block.image}
-                                                alt={block.imageAlt}
-                                                width="100%"
-                                                borderRadius={{ base: "xl", md: "4xl" }}
-                                            />
+                                        <Box width="100%" overflow="hidden" borderRadius={{ base: "xl", md: "4xl" }}>
+                                            <NextImage src={block.image} alt={block.imageAlt} width={576} height={400} placeholder="blur" blurDataURL={blurDataURL(576, 400)} style={{ width: '100%', height: 'auto' }} sizes="(max-width: 768px) 100vw, 576px" />
                                         </Box>
                                     </Box>
                                 </Flex>
@@ -363,7 +351,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
 
             {/* How it works */}
             <Box position="relative" bg="brandNeutral.200" zIndex="2" backgroundImage="url('/bg-bottom-footer-flip.svg')" backgroundRepeat="no-repeat" backgroundPosition="top center" backgroundSize="100% auto" pt="100px" >
-                <Container maxW="100%" px="0" overflow="hidden" position="relative" >
+                <Container maxW="100%" px="0" position="relative" >
                     <Heading as="h2" pt="16" fontSize="3rem" fontWeight="700" textAlign="center" lineHeight="102.811%" color="brandNavy.500" zIndex="10" position="sticky" top="0" ref={headingRef} className="scroll-out-heading" opacity="1" pb="16" >
                         How it works
                     </Heading>
@@ -411,14 +399,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                         >
                                             <Flex gap="6" direction="column">
                                                 <AspectRatio ratio={1 / 1}>
-                                                    <Image
-                                                        src={step.image}
-                                                        alt={step.imageAlt}
-                                                        borderRadius="lg"
-                                                        width="100%"
-                                                        height="auto"
-                                                        objectFit="cover"
-                                                    />
+                                                    <NextImage src={step.image} alt={step.imageAlt} fill placeholder="blur" blurDataURL={blurDataURL()} style={{ objectFit: 'cover', borderRadius: '0.5rem' }} sizes="90vw" />
                                                 </AspectRatio>
                                                 <Flex gap="3" direction="column">
                                                     <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start">
@@ -454,59 +435,58 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                         </Box>
 
                         {/* Desktop view */}
-                        {!isMobile && (
-                            <Flex
-                                ref={scrollContainerRef}
-                                position="absolute"
-                                left="0"
-                                overflow="visible"
-                                px={containerPadding}
-                                height="100%"
-                                alignItems="center"
-                            >
-                                <Flex alignItems="center">
-                                    {data.HowItWorksSteps.map((step, index) => (
-                                        <Flex
-                                            key={index}
-                                            flexShrink={0}
-                                            bg="brandNavy.500"
-                                            borderRadius="xxl"
-                                            p="15"
-                                            width="1152px"
-                                            minW="1152px"
-                                            mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
-                                            zIndex="9999"
-                                            boxShadow="realistic"
-                                        >
-                                            <Flex width="100%" gap="15">
-                                                <Flex
-                                                    width="50%"
-                                                    direction="column"
-                                                    gap="4"
-                                                >
-                                                    <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
-                                                        <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
-                                                            {step.label}
-                                                        </Text>
-                                                    </Flex>
-                                                    <Flex gap="2" direction="column" justify="center" height="100%">
-                                                        <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
-                                                            {step.title}
-                                                        </Heading>
-                                                        <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
-                                                            {step.description}
-                                                        </Text>
-                                                    </Flex>
+                        <Flex
+                            ref={scrollContainerRef}
+                            display={{ base: "none", md: "flex" }}
+                            position="absolute"
+                            left="0"
+                            overflow="visible"
+                            px={containerPadding}
+                            height="100%"
+                            alignItems="center"
+                        >
+                            <Flex alignItems="center">
+                                {data.HowItWorksSteps.map((step, index) => (
+                                    <Flex
+                                        key={index}
+                                        flexShrink={0}
+                                        bg="brandNavy.500"
+                                        borderRadius="xxl"
+                                        p="15"
+                                        width="1152px"
+                                        minW="1152px"
+                                        mr={index !== data.HowItWorksSteps.length - 1 ? "30" : "0"}
+                                        zIndex="1"
+                                        boxShadow="realistic"
+                                    >
+                                        <Flex width="100%" gap="15">
+                                            <Flex
+                                                width="50%"
+                                                direction="column"
+                                                gap="4"
+                                            >
+                                                <Flex bg="brandPurple.600" p="3" borderRadius="md" display="inline-flex" alignSelf="flex-start" >
+                                                    <Text color="brandNeutral.200" fontWeight="bold" fontSize="2xl" lineHeight={1} whiteSpace="nowrap" >
+                                                        {step.label}
+                                                    </Text>
                                                 </Flex>
-                                                <Flex width={{ base: "100%", md: "50%" }} >
-                                                    <Image src={step.image} alt={step.imageAlt} borderRadius="xxl" width="100%" height="100%" objectFit="cover" />
+                                                <Flex gap="2" direction="column" justify="center" height="100%">
+                                                    <Heading color="brandNeutral.500" as="h3" fontSize={["3xl", "4xl", "5xl"]} fontWeight="700" lineHeight="100%" mt="0" mb="0" letterSpacing="tight" >
+                                                        {step.title}
+                                                    </Heading>
+                                                    <Text color="brandNeutral.500" fontSize="lg" lineHeight="1.6">
+                                                        {step.description}
+                                                    </Text>
                                                 </Flex>
                                             </Flex>
+                                            <Flex width={{ base: "100%", md: "50%" }} >
+                                                <NextImage src={step.image} alt={step.imageAlt} width={576} height={400} placeholder="blur" blurDataURL={blurDataURL(576, 400)} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
+                                            </Flex>
                                         </Flex>
-                                    ))}
-                                </Flex>
+                                    </Flex>
+                                ))}
                             </Flex>
-                        )}
+                        </Flex>
                     </Box>
                 </Container>
             </Box>

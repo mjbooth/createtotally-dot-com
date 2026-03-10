@@ -71,29 +71,22 @@ global.IntersectionObserver = jest.fn(() => ({
 process.env.HYGRAPH_ENDPOINT = 'https://test-endpoint.com/graphql';
 process.env.NODE_ENV = 'test';
 
-// Mock Request and Response for API tests
-global.Request = class MockRequest {
-  constructor(url, options = {}) {
-    this.url = url;
-    this.method = options.method || 'GET';
-    this.headers = new Map(Object.entries(options.headers || {}));
-    this.body = options.body;
-  }
-  
-  async json() {
-    return JSON.parse(this.body || '{}');
-  }
-};
+// Setup webhook URL for API tests
+process.env.TRAY_WEBHOOK_URL = 'https://test-webhook.example.com';
 
-global.Response = class MockResponse {
-  constructor(body, options = {}) {
-    this.body = body;
-    this.status = options.status || 200;
-    this.ok = this.status >= 200 && this.status < 300;
-    this.headers = new Map(Object.entries(options.headers || {}));
-  }
-  
-  async json() {
-    return JSON.parse(this.body || '{}');
-  }
-};
+
+// Mock next/script to render a plain <script> tag in jsdom
+jest.mock('next/script', () => {
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: function MockScript({ id, type, dangerouslySetInnerHTML, ...props }) {
+      return React.createElement('script', {
+        id,
+        type,
+        dangerouslySetInnerHTML,
+        ...props,
+      });
+    },
+  };
+});

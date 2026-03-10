@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import { Box, Container, Heading } from '@chakra-ui/react';
+import { sanitizeHtml } from '@/src/utils/sanitize';
 import { getStaticPageCanonicalUrl } from '@/src/utils/canonical';
 
 export const metadata = {
@@ -63,7 +64,7 @@ export default async function PrivacyPolicyPage() {
           className="prose"
           mx="auto"
           color="brandNavy.500"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(html as string) }}
         />
       </Container>
     </Box>

@@ -1,5 +1,8 @@
-import { Box, Container, Heading, Image, Stack, Text, Flex, Icon } from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, Text, Flex, Icon } from "@chakra-ui/react";
+import Image from 'next/image';
 import { Metadata } from 'next';
+import { blurDataURL } from '@/src/utils/image';
+import { sanitizeHtml } from '@/src/utils/sanitize';
 import { getIntegrationBySlug } from '@/lib/hygraph/index';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
 import { getCategorySlugCanonicalUrl, getCategoryCanonicalUrl } from '@/src/utils/canonical';
@@ -67,8 +70,13 @@ export default function IntegrationPage({ post }: { post: Post }) {
                                     {post.coverImage?.url && (
                                         <Image
                                             src={post.coverImage.url}
-                                            objectFit="contain"
                                             alt={post.title || 'Integration cover image'}
+                                            width={144}
+                                            height={144}
+                                            placeholder="blur"
+                                            blurDataURL={blurDataURL(144, 144)}
+                                            style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
+                                            sizes="144px"
                                         />
                                     )}
                                 </Box>
@@ -78,7 +86,7 @@ export default function IntegrationPage({ post }: { post: Post }) {
                                     </svg>
                                 </Icon>
                                 <Box width="36">
-                                    <Image src="/CreateTOTALLY_Icon.svg" objectFit="contain" alt="CreateTOTALLY Logo" />
+                                    <Image src="/CreateTOTALLY_Icon.svg" alt="CreateTOTALLY Logo" width={144} height={144} style={{ objectFit: 'contain', width: '100%', height: 'auto' }} />
                                 </Box>
                             </Flex >
                             <Heading
@@ -121,7 +129,7 @@ export default function IntegrationPage({ post }: { post: Post }) {
                                     className="prose"
                                     mx="auto"
                                     color="brandNavy.500"
-                                    dangerouslySetInnerHTML={{ __html: post.content.html }}
+                                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content.html) }}
                                 />
                             )}
                         </Box>
