@@ -2,6 +2,7 @@ import { getAllBlogPosts } from '@/lib/hygraph';
 import Link from 'next/link';
 import { Box, Heading, Text, Container, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import Image from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 
 export default async function BlogPage() {
 	try {
@@ -92,6 +93,8 @@ export default async function BlogPage() {
 													src={post.coverImage.url}
 													alt={post.title}
 													fill
+													placeholder="blur"
+													blurDataURL={blurDataURL()}
 													style={{ objectFit: 'cover', borderRadius: '0.375rem' }}
 													sizes="(max-width: 768px) 100vw, 50vw"
 												/>

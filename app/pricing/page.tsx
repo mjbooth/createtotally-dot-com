@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Heading, Button, Container, Text, Flex, Stack, Icon, Separator, SimpleGrid, HStack, VStack, List, Highlight, Link, Avatar } from "@chakra-ui/react";
 import Image from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 
 const pricingBenefits = [
     { benefit: 1, headline: "Unlimited users", subline: "Add your whole team, no per-seat charges" },
@@ -518,6 +519,8 @@ const PricingPage = () => {
                                             alt={feature.client}
                                             width={112}
                                             height={112}
+                                            placeholder="blur"
+                                            blurDataURL={blurDataURL(112, 112)}
                                             style={{ minWidth: '3rem', maxWidth: '7rem', height: 'auto' }}
                                             sizes="112px"
                                         />

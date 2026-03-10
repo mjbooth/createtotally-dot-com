@@ -3,6 +3,7 @@ import { getPostByCategoryAndSlug } from '@/lib/hygraph';
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 import { sanitizeHtml } from '@/src/utils/sanitize';
 import Image from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 import IntegrationLayout from '@/src/components/layouts/IntegrationLayout';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
 import { getCategorySlugCanonicalUrl, getCategoryCanonicalUrl } from '@/src/utils/canonical';
@@ -86,6 +87,8 @@ export default async function BlogPage(context: { params: Promise<{ slug: string
                   alt={post.title}
                   width={1152}
                   height={600}
+                  placeholder="blur"
+                  blurDataURL={blurDataURL(1152, 600)}
                   style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                   sizes="(max-width: 768px) 100vw, 1152px"
                 />

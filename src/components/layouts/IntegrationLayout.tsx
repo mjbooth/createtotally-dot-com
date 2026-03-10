@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Stack, Text, Flex, Icon } from "@chakra-ui/react";
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { blurDataURL } from '@/src/utils/image';
 import { sanitizeHtml } from '@/src/utils/sanitize';
 import { getIntegrationBySlug } from '@/lib/hygraph/index';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/src/components/StructuredData';
@@ -72,6 +73,8 @@ export default function IntegrationPage({ post }: { post: Post }) {
                                             alt={post.title || 'Integration cover image'}
                                             width={144}
                                             height={144}
+                                            placeholder="blur"
+                                            blurDataURL={blurDataURL(144, 144)}
                                             style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
                                             sizes="144px"
                                         />

@@ -8,6 +8,7 @@ import { getPostsByCategory } from '@/lib/hygraph';
 import Link from 'next/link';
 import { Box, Heading, Text, Container, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import Image from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 type Post = {
     id: string;
     slug: string;
@@ -143,6 +144,8 @@ function DefaultLayout({ posts, category }: { posts: Post[]; category: string })
                                                 src={post.coverImage.url}
                                                 alt={post.title}
                                                 fill
+                                                placeholder="blur"
+                                                blurDataURL={blurDataURL()}
                                                 style={{ objectFit: 'cover', borderRadius: '0.375rem' }}
                                                 sizes="(max-width: 768px) 100vw, 50vw"
                                             />

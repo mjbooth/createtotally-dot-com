@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Box, Heading, Text, Container, SimpleGrid, Stack, Flex, Icon } from '@chakra-ui/react';
 import Image from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 import type { Post } from '@/src/types/hygraph';
 
 export default function IntegrationCategoryLayout({
@@ -94,6 +95,8 @@ export default function IntegrationCategoryLayout({
                         src={post.coverImage.url}
                         alt={post.title || ''}
                         fill
+                        placeholder="blur"
+                        blurDataURL={blurDataURL(48, 48)}
                         style={{ objectFit: 'contain', borderRadius: '0.375rem' }}
                         sizes="(max-width: 768px) 100vw, 48px"
                       />

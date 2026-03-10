@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useLayoutEffect, useEffect, useCallback, lazy } from "react";
 import NextImage from 'next/image';
+import { blurDataURL } from '@/src/utils/image';
 import { Box, Container, Flex, Grid, GridItem, Heading, Text, Highlight, Stack, Icon, useBreakpointValue, AspectRatio } from "@chakra-ui/react";
 import { useBackground } from '@/src/context/BackgroundContext';
 import gsap from "gsap";
@@ -454,7 +455,7 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 						</Box>
 						<Box flex={{ base: "1 1 100%", md: "2 1 50%" }}>
 							<Box width="100%" overflow="hidden">
-								<NextImage src="/AutomationSuite.svg" alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." width={1152} height={648} style={{ width: '100%', height: 'auto', borderRadius: '3rem' }} />
+								<NextImage src="/AutomationSuite.svg" alt="CreateTOTALLY Automation Suite UI showing tools for uploading, analysing, adapting, and exporting creative assets. Demonstrates end-to-end creative operations workflow built for scale." width={1152} height={648} placeholder="blur" blurDataURL={blurDataURL(1152, 648)} style={{ width: '100%', height: 'auto', borderRadius: '3rem' }} />
 							</Box>
 						</Box>
 					</Flex>
@@ -515,6 +516,8 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 													src={step.image}
 													alt={step.imageAlt}
 													fill
+													placeholder="blur"
+													blurDataURL={blurDataURL()}
 													style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
 													sizes="(max-width: 768px) 90vw, 50vw"
 												/>
@@ -599,6 +602,8 @@ export default function HomePageClient({ clientLogos, steps }: { clientLogos: Cl
 													alt={step.imageAlt}
 													width={576}
 													height={400}
+													placeholder="blur"
+													blurDataURL={blurDataURL(576, 400)}
 													style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }}
 													sizes="576px"
 												/>
