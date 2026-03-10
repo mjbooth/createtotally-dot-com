@@ -111,4 +111,4 @@ London-based, hybrid. Access to our Central London office in Soho. Some travel e
 
 ---
 
-*To apply, send your CV and a short note — tell us about a deal you're proud of and why — to [jobs@createtotally.com](mailto:jobs@createtotally.com)*
+*To apply, send your CV and a short note — tell us about a deal you're proud of and why — to [careers@createtotally.com](mailto:careers@createtotally.com)*
