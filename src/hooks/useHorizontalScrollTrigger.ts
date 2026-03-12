@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -76,9 +76,10 @@ export function useHorizontalScrollTrigger({
     }
   }, [cleanupGsap]);
 
-  // Initialize ScrollTrigger for desktop once page layout has settled
-  useEffect(() => {
-    log("useEffect fired — isMobile:", isMobile, "stepsCount:", stepsCount);
+  // Initialize ScrollTrigger for desktop synchronously before first paint.
+  // Card dimensions are fixed constants so measurements are reliable immediately.
+  useLayoutEffect(() => {
+    log("useLayoutEffect fired — isMobile:", isMobile, "stepsCount:", stepsCount);
 
     // Wait for useBreakpointValue to resolve (undefined during hydration)
     if (isMobile === undefined) {
@@ -99,158 +100,99 @@ export function useHorizontalScrollTrigger({
       return;
     }
 
-    let cancelled = false;
+    // Clean up previous context
+    cleanupGsap();
 
-    log("Waiting for layout to settle before initializing ScrollTrigger");
+    // Compute scroll distance deterministically from known card dimensions
+    const wrapperWidth = wrapper.offsetWidth;
+    const wrapperHeight = wrapper.clientHeight;
+    const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
 
-    const initScrollTrigger = () => {
-      if (cancelled) {
-        log("Init cancelled, aborting");
-        return;
+    log("Wrapper measurements:", {
+      wrapperWidth,
+      wrapperHeight,
+      wrapperTop,
+      viewportHeight: window.innerHeight,
+      documentHeight: document.documentElement.scrollHeight,
+      scrollY: window.scrollY,
+    });
+
+    if (wrapperWidth === 0) {
+      log("wrapperWidth is 0, aborting");
+      return;
+    }
+
+    const totalWidth = stepsCount * CARD_WIDTH + (stepsCount - 1) * CARD_GAP;
+    const paddingValue = Math.max(0, (wrapperWidth - CARD_WIDTH) / 2);
+    const scrollDistance = totalWidth + 2 * paddingValue - wrapperWidth;
+
+    log("Scroll distance calc:", {
+      stepsCount,
+      totalWidth,
+      paddingValue,
+      scrollDistance,
+      containerWidth: totalWidth + 2 * paddingValue,
+    });
+
+    if (scrollDistance <= 0) {
+      log("scrollDistance <= 0, aborting");
+      return;
+    }
+
+    // Set container width deterministically
+    container.style.width = `${totalWidth + 2 * paddingValue}px`;
+
+    const ctx = gsap.context(() => {
+      gsap.set(container, { x: 0 });
+
+      // Timeline: container scrolls across full 0–1 range,
+      // heading fades out in 0–0.15 range
+      const tl = gsap.timeline();
+      tl.to(container, { x: -scrollDistance, ease: "none", duration: 1 }, 0);
+
+      const heading = headingRef.current;
+      if (heading) {
+        tl.fromTo(
+          heading,
+          { y: 0, opacity: 1 },
+          { y: "-100%", opacity: 0, ease: "none", duration: 0.15 },
+          0
+        );
       }
 
-      // Clean up previous context
-      cleanupGsap();
-
-      // Compute scroll distance deterministically from known card dimensions
-      const wrapperWidth = wrapper.offsetWidth;
-      const wrapperHeight = wrapper.clientHeight;
-      const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
-
-      log("Wrapper measurements:", {
-        wrapperWidth,
-        wrapperHeight,
-        wrapperTop,
-        viewportHeight: window.innerHeight,
-        documentHeight: document.documentElement.scrollHeight,
-        scrollY: window.scrollY,
+      const st = ScrollTrigger.create({
+        id: "howItWorks",
+        trigger: wrapper,
+        start: "top top",
+        end: () => `+=${scrollDistance}px`,
+        pin: true,
+        anticipatePin: 1,
+        scrub: 0.5,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
+        animation: tl,
       });
 
-      if (wrapperWidth === 0) {
-        log("wrapperWidth is 0, aborting");
-        return;
-      }
-
-      const totalWidth = stepsCount * CARD_WIDTH + (stepsCount - 1) * CARD_GAP;
-      const paddingValue = Math.max(0, (wrapperWidth - CARD_WIDTH) / 2);
-      const scrollDistance = totalWidth + 2 * paddingValue - wrapperWidth;
-
-      log("Scroll distance calc:", {
-        stepsCount,
-        totalWidth,
-        paddingValue,
-        scrollDistance,
-        containerWidth: totalWidth + 2 * paddingValue,
+      log("ScrollTrigger created:", {
+        start: st.start,
+        end: st.end,
+        pinSpacerHeight: (st as unknown as Record<string, HTMLElement>).spacer?.offsetHeight,
       });
 
-      if (scrollDistance <= 0) {
-        log("scrollDistance <= 0, aborting");
-        return;
-      }
+      ScrollTrigger.refresh();
 
-      // Set container width deterministically
-      container.style.width = `${totalWidth + 2 * paddingValue}px`;
-
-      const ctx = gsap.context(() => {
-        gsap.set(container, { x: 0 });
-
-        // Timeline: container scrolls across full 0–1 range,
-        // heading fades out in 0–0.15 range
-        const tl = gsap.timeline();
-        tl.to(container, { x: -scrollDistance, ease: "none", duration: 1 }, 0);
-
-        const heading = headingRef.current;
-        if (heading) {
-          tl.fromTo(
-            heading,
-            { y: 0, opacity: 1 },
-            { y: "-100%", opacity: 0, ease: "none", duration: 0.15 },
-            0
-          );
-        }
-
-        const st = ScrollTrigger.create({
-          id: "howItWorks",
-          trigger: wrapper,
-          start: "top top",
-          end: () => `+=${scrollDistance}px`,
-          pin: true,
-          anticipatePin: 1,
-          scrub: 0.5,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true,
-          animation: tl,
-        });
-
-        log("ScrollTrigger created:", {
-          start: st.start,
-          end: st.end,
-          pinSpacerHeight: (st as unknown as Record<string, HTMLElement>).spacer?.offsetHeight,
-        });
-
-        ScrollTrigger.refresh();
-
-        log("ScrollTrigger refreshed, final positions:", {
-          start: st.start,
-          end: st.end,
-        });
-      }, wrapper);
-
-      gsapCtxRef.current = ctx;
-
-      log("ScrollTrigger init complete");
-      setIsReady(true);
-    };
-
-    // Wait for page layout to settle (fonts + visible images) before initializing.
-    // The desktop scroll container stays hidden until init completes, preventing
-    // absolutely-positioned cards from overlapping content below.
-    const waitForLayout = async () => {
-      const t0 = performance.now();
-      log("waitForLayout started");
-
-      if (document.fonts?.ready) {
-        await document.fonts.ready;
-        log(`Fonts ready after ${(performance.now() - t0).toFixed(0)}ms`);
-      }
-
-      // Wait for non-lazy images so content above settles to final height
-      const images = Array.from(document.querySelectorAll("img"));
-      const visibleImages = images.filter(
-        (img) => img.loading !== "lazy" || img.complete
-      );
-      const pendingImages = visibleImages.filter((img) => !img.complete);
-
-      log(`Images: ${images.length} total, ${visibleImages.length} visible, ${pendingImages.length} pending`);
-
-      await Promise.all(
-        visibleImages.map((img) => {
-          if (img.complete) return Promise.resolve();
-          return new Promise<void>((resolve) => {
-            img.onload = () => resolve();
-            img.onerror = () => resolve();
-            setTimeout(resolve, 3000);
-          });
-        })
-      );
-
-      log(`All images settled after ${(performance.now() - t0).toFixed(0)}ms`);
-
-      if (cancelled) {
-        log("Cancelled after image wait");
-        return;
-      }
-
-      requestAnimationFrame(() => {
-        log(`rAF fired after ${(performance.now() - t0).toFixed(0)}ms, calling initScrollTrigger`);
-        if (!cancelled) initScrollTrigger();
+      log("ScrollTrigger refreshed, final positions:", {
+        start: st.start,
+        end: st.end,
       });
-    };
+    }, wrapper);
 
-    waitForLayout();
+    gsapCtxRef.current = ctx;
+
+    log("ScrollTrigger init complete");
+    setIsReady(true);
 
     return () => {
-      cancelled = true;
       cleanupGsap();
     };
   }, [stepsCount, isMobile, cleanupGsap, resetLayoutForMobile]);
