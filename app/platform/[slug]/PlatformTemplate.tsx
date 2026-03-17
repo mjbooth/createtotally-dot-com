@@ -4,266 +4,26 @@ import { Container, Box, Text, Link, Heading, HStack, VStack, Button, Flex, Simp
 import NextImage from 'next/image';
 import { blurDataURL } from '@/src/utils/image';
 import { FeatureHeroSection } from '@/src/components/FeatureHeroSection';
-import { useRef, useLayoutEffect, useEffect, useState, useCallback, } from 'react';
 import React from 'react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlatformPageData } from "@/src/data/platform";
 import IconComponent, { iconMap, IconName } from '@/app/platform/IconComponent';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useHorizontalScrollTrigger } from '@/src/hooks/useHorizontalScrollTrigger';
 
 export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
     const isMobile = useBreakpointValue({ base: true, md: false });
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const howItWorksWrapperRef = useRef<HTMLDivElement>(null);
-    const headingRef = useRef<HTMLHeadingElement>(null);
 
-    const [currentStep, setCurrentStep] = useState(0);
-    const [touchStart, setTouchStart] = useState<number | null>(null);
-
-    const containerPadding = useBreakpointValue({ base: "0px", md: "calc(50% - 576px)" });
-
-    const [maxStepHeight, setMaxStepHeight] = useState(0);
-    const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-    useEffect(() => {
-        const calculateMaxHeight = () => {
-            const heights = stepRefs.current.map(ref => ref?.offsetHeight || 0);
-            const maxHeight = Math.max(...heights);
-            setMaxStepHeight(maxHeight);
-        };
-
-        calculateMaxHeight();
-        window.addEventListener('resize', calculateMaxHeight);
-
-        return () => {
-            window.removeEventListener('resize', calculateMaxHeight);
-        };
-    }, [data.HowItWorksSteps]);
-
-    // Heading scroll-out is now driven by GSAP ScrollTrigger onUpdate
-
-    useLayoutEffect(() => {
-
-        const runScrollTrigger = () => {
-
-            const wrapper = howItWorksWrapperRef.current;
-            const container = scrollContainerRef.current;
-            try {
-                if (isMobile) {
-                }
-                if (!wrapper || !container || isMobile) {
-                    return;
-                }
-
-                if (container.offsetWidth === 0 || wrapper.offsetWidth === 0) {
-                    return;
-                }
-
-                container.style.width = `${container.scrollWidth}px`;
-
-                const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
-
-                if (scrollDistance <= 0) {
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            runScrollTrigger();
-                        }, 50);
-                    });
-                    return;
-                }
-
-                const ctx = gsap.context(() => {
-                    const wrapperHeight = wrapper.clientHeight;
-                    if (wrapperHeight < 200) {
-                        return;
-                    }
-
-                    ScrollTrigger.getAll().forEach(trigger => {
-                        if (trigger.trigger === wrapper || trigger.vars.id === 'howItWorks') {
-                            trigger.kill();
-                        }
-                    });
-                    container.style.transform = "none";
-                    const pinSpacers = document.querySelectorAll('.pin-spacer');
-                    pinSpacers.forEach(pinSpacer => {
-                        const parent = pinSpacer.parentNode;
-                        while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
-                        parent?.removeChild(pinSpacer);
-                    });
-                    gsap.set(container, { x: 0 });
-
-                    ScrollTrigger.create({
-                        id: 'howItWorks',
-                        trigger: wrapper,
-                        scroller: window,
-                        start: "top top",
-                        end: () => `+=${scrollDistance}px`,
-                        pin: true,
-                        anticipatePin: 1,
-                        scrub: true,
-                        fastScrollEnd: true,
-                        invalidateOnRefresh: true,
-                        onUpdate: self => {
-                            gsap.to(container, {
-                                x: -scrollDistance * self.progress,
-                                duration: 0,
-                                overwrite: "auto",
-                            });
-                            // Scroll heading out during early progress
-                            const heading = headingRef.current;
-                            if (heading) {
-                                const headingProgress = Math.min(self.progress / 0.15, 1);
-                                heading.style.transform = `translateY(-${headingProgress * 100}%)`;
-                                heading.style.opacity = `${1 - headingProgress}`;
-                            }
-                        },
-                    });
-                    ScrollTrigger.refresh();
-                    setTimeout(() => ScrollTrigger.refresh(), 100);
-                }, wrapper);
-
-                return () => {
-                    ctx.revert();
-                };
-            } catch {
-            } finally {
-                document.body.style.overflow = '';
-            }
-        };
-
-        const whenLayoutIsReady = async () => {
-            document.body.style.overflow = 'hidden';
-
-            if (document.fonts?.ready) {
-                await document.fonts.ready;
-            }
-
-            // Wait for ALL page images (not just carousel) so full page height is settled
-            const images = Array.from(document.querySelectorAll("img"));
-            const visibleImages = images.filter(img => img.loading !== 'lazy' || img.complete);
-            await Promise.all(
-                visibleImages.map((img) => {
-                    if (img.complete) return Promise.resolve();
-                    return new Promise<void>((resolve) => {
-                        img.onload = () => resolve();
-                        img.onerror = () => resolve();
-                        setTimeout(resolve, 3000);
-                    });
-                })
-            );
-
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    runScrollTrigger();
-                    document.body.style.overflow = '';
-                }, 0);
-            });
-        };
-
-        whenLayoutIsReady();
-    }, [data.HowItWorksSteps.length, isMobile]);
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setTouchStart(e.touches[0].clientX);
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (touchStart === null) {
-            return;
-        }
-
-        const currentTouch = e.touches[0].clientX;
-        const diff = touchStart - currentTouch;
-
-        if (diff > 50) {
-            // Swipe left
-            setCurrentStep((prev) => Math.min(prev + 1, data.HowItWorksSteps.length - 1));
-        }
-
-        if (diff < -50) {
-            // Swipe right
-            setCurrentStep((prev) => Math.max(prev - 1, 0));
-        }
-
-        setTouchStart(null);
-    };
-
-    const setupGSAPForDesktop = useCallback(() => {
-        const wrapper = howItWorksWrapperRef.current;
-        const container = scrollContainerRef.current;
-        if (!wrapper || !container || isMobile) return;
-
-        const existingPinSpacer = document.querySelector('.pin-spacer');
-        if (existingPinSpacer) {
-            const parent = existingPinSpacer.parentNode;
-            while (existingPinSpacer.firstChild) parent?.insertBefore(existingPinSpacer.firstChild, existingPinSpacer);
-            parent?.removeChild(existingPinSpacer);
-        }
-
-        const scrollDistance = container.scrollWidth - wrapper.offsetWidth;
-        if (!isMobile) {
-            container.style.width = `${container.scrollWidth}px`;
-        }
-
-        gsap.set(container, { x: 0 });
-
-        ScrollTrigger.create({
-            trigger: wrapper,
-            start: "top top",
-            end: () => `+=${scrollDistance}px`,
-            pin: true,
-            anticipatePin: 1,
-            scrub: true,
-            invalidateOnRefresh: true,
-            onUpdate: self => {
-                gsap.to(container, {
-                    x: -scrollDistance * self.progress,
-                    duration: 0,
-                    overwrite: "auto",
-                });
-            },
-        });
-    }, [isMobile]);
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (isMobile) {
-                resetLayoutForMobile();
-            } else {
-                setupGSAPForDesktop();
-            }
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [data.HowItWorksSteps.length, isMobile, setupGSAPForDesktop]);
-
-    const resetLayoutForMobile = () => {
-        ScrollTrigger.killAll();
-
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.style.width = '100%';
-            scrollContainerRef.current.style.transform = 'none';
-        }
-        if (howItWorksWrapperRef.current) {
-            howItWorksWrapperRef.current.style.height = 'auto';
-            howItWorksWrapperRef.current.style.overflow = 'visible';
-            howItWorksWrapperRef.current.style.minHeight = 'auto';
-        }
-        const pinSpacer = document.querySelector('.pin-spacer');
-        if (pinSpacer) {
-            const parent = pinSpacer.parentNode;
-            while (pinSpacer.firstChild) parent?.insertBefore(pinSpacer.firstChild, pinSpacer);
-            parent?.removeChild(pinSpacer);
-        }
-        const pinnedChildren = document.querySelectorAll('.pin-spacer > *');
-        pinnedChildren.forEach(el => {
-            (el as HTMLElement).style.position = 'relative';
-        });
-    };
+    const {
+        scrollContainerRef,
+        howItWorksWrapperRef,
+        headingRef,
+        stepRefs,
+        currentStep,
+        setCurrentStep,
+        maxStepHeight,
+        handleTouchStart,
+        handleTouchMove,
+        containerPadding,
+    } = useHorizontalScrollTrigger({ stepsCount: data.HowItWorksSteps.length, isMobile });
 
     interface Feature {
         icon: string | { name: string };
@@ -364,6 +124,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
+                        css={{ contain: 'layout' }}
                     >
                         {/* Mobile view */}
                         <Box
@@ -394,7 +155,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                             borderRadius="xl"
                                             p="6"
                                             boxShadow="realistic"
-                                            height={maxStepHeight > 0 ? `${maxStepHeight}px` : 'auto'}
+                                            minHeight={maxStepHeight > 0 ? `${maxStepHeight}px` : undefined}
                                             overflowY="auto"
                                         >
                                             <Flex gap="6" direction="column">
@@ -444,6 +205,7 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                             px={containerPadding}
                             height="100%"
                             alignItems="center"
+                            css={{ willChange: 'transform', contain: 'layout style' }}
                         >
                             <Flex alignItems="center">
                                 {data.HowItWorksSteps.map((step, index) => (
@@ -479,8 +241,8 @@ export default function PlatformTemplate({ data }: { data: PlatformPageData }) {
                                                     </Text>
                                                 </Flex>
                                             </Flex>
-                                            <Flex width={{ base: "100%", md: "50%" }} >
-                                                <NextImage src={step.image} alt={step.imageAlt} width={576} height={400} placeholder="blur" blurDataURL={blurDataURL(576, 400)} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
+                                            <Flex width={{ base: "100%", md: "50%" }} css={{ aspectRatio: '1/1' }}>
+                                                <NextImage src={step.image} alt={step.imageAlt} width={576} height={576} placeholder="blur" blurDataURL={blurDataURL(576, 576)} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '3rem' }} sizes="576px" />
                                             </Flex>
                                         </Flex>
                                     </Flex>
