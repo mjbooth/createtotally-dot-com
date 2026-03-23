@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
-import Script from 'next/script';
 import { Provider } from "@/src/components/ui/provider"
 import { NavigationProvider } from "@/src/context/NavigationContext";
 import Footer from "@/src/components/Footer"
@@ -9,6 +8,8 @@ import { BackgroundProvider } from '@/src/context/BackgroundContext';
 import { GoogleTagManager } from '@next/third-parties/google'
 import { OrganizationStructuredData } from '@/src/components/StructuredData';
 import { getHomeCanonicalUrl } from "@/src/utils/canonical";
+import { getConsentInitScript } from "@/src/lib/consent";
+import CookieBanner from "@/src/components/CookieBanner";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -49,10 +50,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable} style={{ backgroundColor: '#FFFCFB' }}>
       <head>
-        <Script
-          id="termly-cmp"
-          strategy="afterInteractive"
-          src="https://app.termly.io/resource-blocker/bc0c7928-3a7f-4ccc-863b-b4cbbdf922a7?autoBlock=on"
+        {/* Consent Mode v2 defaults — MUST run synchronously before GTM */}
+        <script
+          id="consent-mode-init"
+          dangerouslySetInnerHTML={{ __html: getConsentInitScript() }}
         />
         <GoogleTagManager gtmId="GTM-KPHRZB4" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Footer />
             </BackgroundProvider>
           </NavigationProvider>
+          <CookieBanner />
         </Provider>
       </body>
     </html>

@@ -5,9 +5,9 @@ test.describe('Form Submission', () => {
     await page.goto('/get-started');
 
     // Dismiss cookie banner if present
-    const declineButton = page.locator('button[data-tid="banner-decline"]');
-    if (await declineButton.count() > 0) {
-      await declineButton.click();
+    const rejectButton = page.getByRole('button', { name: 'Reject All' });
+    if (await rejectButton.count() > 0) {
+      await rejectButton.click();
     }
 
     // Look for contact form

@@ -73,7 +73,6 @@ test.describe('Homepage', () => {
     const relevantErrors = consoleErrors.filter(error =>
       !error.includes('googletagmanager') &&
       !error.includes('gtm') &&
-      !error.includes('termly') &&
       !error.includes('Failed to load resource') &&
       !error.includes('net::ERR')
     );
