@@ -41,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 node_modules/
+
+# test artefacts
+/playwright-report
+/test-results

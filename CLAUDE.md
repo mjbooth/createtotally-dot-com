@@ -11,7 +11,7 @@ Marketing website for CreateTOTALLY, a creative automation platform for Figma & 
   - `app/[category]/[slug]/` — Dynamic blog/content pages
   - `app/features/[slug]/` — Feature pages with `FeaturesTemplate`
   - `app/platform/[slug]/` — Platform pages with `PlatformTemplate`
-  - `app/api/submit-form/` — Form submission API (proxies to Tray.io webhook)
+  - `app/api/submit-form/` — Demo request API (writes to Airtable, emails a summary)
   - `app/get-started/` — Lead capture / demo request page
   - `app/server-sitemap.xml/` — Dynamic sitemap route
 - `src/components/` — Shared React components (Footer, MainMenu, StructuredData, UI primitives)
@@ -31,7 +31,7 @@ Marketing website for CreateTOTALLY, a creative automation platform for Figma & 
 - **Language**: TypeScript (strict mode)
 - **UI**: Chakra UI v3, Framer Motion, GSAP
 - **CMS**: Hygraph (GraphQL via `graphql-request`)
-- **Forms**: React Hook Form → API route → Tray.io webhook
+- **Forms**: React Hook Form → API route → Airtable (record) + Resend (summary email)
 - **Analytics**: Google Tag Manager (GTM-KPHRZB4), React GA4
 - **Consent**: Termly CMP
 - **Testing**: Jest + Testing Library (unit), Playwright (e2e), Lighthouse CI (performance)
@@ -46,8 +46,10 @@ Marketing website for CreateTOTALLY, a creative automation platform for Figma & 
 npm install
 ```
 
-Requires environment variable:
-- `HYGRAPH_ENDPOINT` — Hygraph GraphQL API URL (stored in `.env`, gitignored)
+Requires environment variables (stored in `.env.local`, gitignored — pull with `vercel env pull`):
+- `HYGRAPH_ENDPOINT` — Hygraph GraphQL API URL
+- `AIRTABLE_TOKEN` — Airtable PAT with `data.records:write` on the "Website Submissions" base
+- `RESEND_API_KEY` — Resend API key (provisioned by the Vercel Marketplace Resend integration)
 
 ## Common commands
 
@@ -79,7 +81,7 @@ ANALYZE=true npm run build  # Build with bundle analyzer
 
 - **Hygraph**: Headless CMS providing blog/content via GraphQL. Client in `lib/hygraph/client.ts` requires `HYGRAPH_ENDPOINT` env var
 - **Dynamic routes**: `[category]/[slug]` for CMS content, `features/[slug]` and `platform/[slug]` for static data-driven pages
-- **Form submission flow**: React Hook Form → `/api/submit-form` → Tray.io webhook (with honeypot spam protection)
+- **Demo request flow**: React Hook Form → `/api/submit-form` → Airtable record, then a best-effort summary email via Resend. Airtable is the system of record: a failed write fails the submission, a failed email does not. Logic lives in `lib/demo-request/`; the Airtable base/table IDs and field names are constants there and must match the "Get Started Submissions" schema exactly
 - **SEO**: Structured data (JSON-LD) in `src/utils/jsonld.ts`, canonical URLs in `src/utils/canonical.ts`, next-sitemap for sitemap generation
 - **Caching strategy**: Configured in `next.config.js` headers — 1yr immutable for static assets, 1day browser + 30day CDN for images
 

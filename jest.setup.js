@@ -71,8 +71,9 @@ global.IntersectionObserver = jest.fn(() => ({
 process.env.HYGRAPH_ENDPOINT = 'https://test-endpoint.com/graphql';
 process.env.NODE_ENV = 'test';
 
-// Setup webhook URL for API tests
-process.env.TRAY_WEBHOOK_URL = 'https://test-webhook.example.com';
+// Credentials for the demo request API tests
+process.env.AIRTABLE_TOKEN = 'test-airtable-token';
+process.env.RESEND_API_KEY = 'test-resend-key';
 
 
 // Mock next/script to render a plain <script> tag in jsdom

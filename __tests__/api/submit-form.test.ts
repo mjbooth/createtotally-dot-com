@@ -2,10 +2,16 @@
  * @jest-environment node
  */
 import { POST } from '@/app/api/submit-form/route';
+import { saveDemoRequest, sendDemoRequestSummary } from '@/lib/demo-request';
 import { NextRequest } from 'next/server';
 
-// Mock fetch globally
-global.fetch = jest.fn();
+jest.mock('@/lib/demo-request', () => ({
+  saveDemoRequest: jest.fn(),
+  sendDemoRequestSummary: jest.fn(),
+}));
+
+const mockSave = saveDemoRequest as jest.MockedFunction<typeof saveDemoRequest>;
+const mockSendSummary = sendDemoRequestSummary as jest.MockedFunction<typeof sendDemoRequestSummary>;
 
 const validFormData = {
   firstName: 'John',
@@ -33,27 +39,29 @@ function createRequest(body: unknown) {
 describe('/api/submit-form', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockSave.mockResolvedValue(undefined);
+    mockSendSummary.mockResolvedValue(undefined);
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
-  it('should handle successful form submission', async () => {
-    const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      status: 200,
-    } as Response);
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
+  it('should save the request to Airtable and email a summary', async () => {
     const response = await POST(createRequest(validFormData));
     const data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data.message).toBe('Form submitted successfully');
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://test-webhook.example.com',
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      })
-    );
+    expect(mockSave).toHaveBeenCalledWith({ ...validFormData, details: '' });
+    expect(mockSendSummary).toHaveBeenCalledWith({ ...validFormData, details: '' });
+  });
+
+  it('should trim submitted values and pass through details', async () => {
+    await POST(createRequest({ ...validFormData, firstName: '  John  ', details: '  Hi  ' }));
+
+    expect(mockSave).toHaveBeenCalledWith({ ...validFormData, details: 'Hi' });
   });
 
   it('should detect and reject honeypot spam', async () => {
@@ -62,33 +70,29 @@ describe('/api/submit-form', () => {
 
     expect(response.status).toBe(400);
     expect(data.message).toBe('Spam detected');
-    expect(global.fetch).not.toHaveBeenCalled();
+    expect(mockSave).not.toHaveBeenCalled();
   });
 
-  it('should handle external service errors', async () => {
-    const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      status: 500,
-    } as Response);
-
-    const response = await POST(createRequest(validFormData));
-    const data = await response.json();
-
-    expect(response.status).toBe(500);
-    expect(data.message).toBe('Form submission failed');
-  });
-
-  it('should handle network errors', async () => {
-    const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-    mockFetch.mockRejectedValueOnce(new Error('Network error'));
+  it('should fail the submission when Airtable rejects the record', async () => {
+    mockSave.mockRejectedValueOnce(new Error('Airtable rejected the record (401)'));
 
     const response = await POST(createRequest(validFormData));
     const data = await response.json();
 
     expect(response.status).toBe(500);
     expect(data.message).toBe('Server error');
-    expect(data.error).toBe('Network error');
+    expect(data.error).toBeUndefined();
+    expect(mockSendSummary).not.toHaveBeenCalled();
+  });
+
+  it('should still succeed when the summary email fails', async () => {
+    mockSendSummary.mockRejectedValueOnce(new Error('Resend is down'));
+
+    const response = await POST(createRequest(validFormData));
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data.message).toBe('Form submitted successfully');
   });
 
   it('should handle invalid JSON', async () => {
@@ -108,18 +112,12 @@ describe('/api/submit-form', () => {
   });
 
   it('should handle empty honeypot (legitimate submission)', async () => {
-    const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>;
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      status: 200,
-    } as Response);
-
     const response = await POST(createRequest({ ...validFormData, honeypot: '' }));
     const data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data.message).toBe('Form submitted successfully');
-    expect(mockFetch).toHaveBeenCalled();
+    expect(mockSave).toHaveBeenCalled();
   });
 
   it('should reject missing required fields', async () => {

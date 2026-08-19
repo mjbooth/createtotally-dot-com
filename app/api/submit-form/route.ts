@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-
-const WEBHOOK_URL = process.env.TRAY_WEBHOOK_URL;
+import { saveDemoRequest, sendDemoRequestSummary } from '@/lib/demo-request';
 
 const ALLOWED_ORIGINS = [
   'https://www.createtotally.com',
@@ -59,10 +58,6 @@ function validateFormData(data: Record<string, unknown>): string | null {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!WEBHOOK_URL) {
-      return NextResponse.json({ message: 'Server configuration error' }, { status: 500 });
-    }
-
     // Rate limiting
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     if (isRateLimited(ip)) {
@@ -90,8 +85,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: validationError }, { status: 400 });
     }
 
-    // Only forward known fields
-    const sanitizedData = {
+    // Only keep known fields
+    const demoRequest = {
       firstName: (formData.firstName as string).trim(),
       lastName: (formData.lastName as string).trim(),
       email: (formData.email as string).trim(),
@@ -101,21 +96,19 @@ export async function POST(request: NextRequest) {
       details: formData.details ? (formData.details as string).trim() : '',
     };
 
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(sanitizedData),
-    });
+    await saveDemoRequest(demoRequest);
 
-    if (response.ok) {
-      return NextResponse.json({ message: 'Form submitted successfully' }, { status: 200 });
-    } else {
-      return NextResponse.json({ message: 'Form submission failed' }, { status: response.status });
+    // The lead is captured; a failed notification must not fail the submission.
+    try {
+      await sendDemoRequestSummary(demoRequest);
+    } catch (error: unknown) {
+      console.error('Demo request summary email failed', error);
     }
+
+    return NextResponse.json({ message: 'Form submitted successfully' }, { status: 200 });
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    return NextResponse.json({ message: 'Server error', error: errorMessage }, { status: 500 });
+    // Details stay server-side — they name our Airtable/Resend internals.
+    console.error('Demo request submission failed', error);
+    return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }
 }
