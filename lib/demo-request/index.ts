@@ -17,7 +17,7 @@ const AIRTABLE_BASE_ID = 'app8665VLvzHsc5rX';
 const AIRTABLE_TABLE_ID = 'tblPBNkotXrW3TBPY';
 
 const SUMMARY_FROM = 'CreateTOTALLY <notifications@createtotally.com>';
-const SUMMARY_TO = 'matt@createtotally.com';
+const SUMMARY_TO = ['matt@createtotally.com', 'jen@createtotally.com'];
 
 /**
  * Writes the demo request to Airtable. Throws if the record is not created —
