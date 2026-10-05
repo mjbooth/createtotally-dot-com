@@ -55,11 +55,11 @@ describe('sendDemoRequestSummary', () => {
     mockSend.mockResolvedValue({ error: null });
   });
 
-  it('emails a summary to matt@createtotally.com, replying to the submitter', async () => {
+  it('emails a summary to the distribution list, replying to the submitter', async () => {
     await sendDemoRequestSummary(demoRequest);
 
     const email = mockSend.mock.calls[0][0];
-    expect(email.to).toBe('matt@createtotally.com');
+    expect(email.to).toEqual(['matt@createtotally.com', 'jen@createtotally.com']);
     expect(email.from).toContain('notifications@createtotally.com');
     expect(email.replyTo).toBe('john@example.com');
     expect(email.subject).toBe('New demo request: John Doe, Acme Inc');
