@@ -10,6 +10,7 @@ const config = {
     '/_next/*',
     '/admin/*',
     '/server-sitemap.xml',
+    '/md/*',
   ],
   additionalPaths: async () => {
     const paths = [];

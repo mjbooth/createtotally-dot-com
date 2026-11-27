@@ -78,7 +78,9 @@ const nextConfig = {
   },
 
   async rewrites() {
-    return [];
+    return [
+      { source: '/:section(features|platform)/:slug.md', destination: '/md/:section/:slug' },
+    ];
   },
 
   async headers() {
