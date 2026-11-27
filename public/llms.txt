@@ -1,47 +1,55 @@
 # CreateTOTALLY
 
-> CreateTOTALLY is a creative automation platform for brand, marketing, and creative production teams. You turn Figma, Adobe InDesign, and Adobe After Effects files into templates, plan every version you need, and the platform produces them for you. Developers and AI assistants can work with it through a public API and an MCP server.
+> CreateTOTALLY is a creative automation platform for brand, marketing, and creative production teams. You turn Figma and Adobe design files into templates, plan every version you need, and the platform produces them for you. AI assistants and developers work with it through our MCP server, WebMCP in the web app, and a public API.
 
 ## What the platform does
 
-- Templates: upload Figma, InDesign, and After Effects files, then choose which text, images, video, and audio can change.
+- Design apps: Figma, Adobe InDesign, Adobe After Effects, Adobe Photoshop, and Adobe Illustrator.
+- Templates: upload your design files, then choose which text, images, video, and audio can change.
 - Content plans: plan versions by campaign, market, language, and format, in the app or from an Excel file.
-- Automation: the platform produces every version from your original design files, so the output stays true to the design.
+- Automation: every version is produced from your original design files, so the output stays true to the design.
+- Copy and translation: export a template's text to Excel for translation and import it back. AI can translate, rewrite, shorten, or change the tone of copy.
 - Review and approval: share proofs, collect comments, and approve versions in one place.
-- Libraries: keep approved assets and copy in shared libraries.
-- Performance insights: track how your creative performs across channels.
-
-## Public API
-
-The CreateTOTALLY API is a GraphQL API. It lets your own systems work with a CreateTOTALLY account.
-
-- Upload master template files and analyse them for automation.
-- Create automation jobs that change text, images, video, and audio, then track each job until it's complete.
-- Subscribe to webhooks: we call your URL when an upload, analysis, or automation job completes or fails.
-- Authenticate with an API key, sent in the `api-key` HTTP header or with HTTP Basic Auth.
-- Access is by invitation. Ask your CreateTOTALLY contact, or [get in touch](https://www.createtotally.com/get-started).
+- Libraries: keep approved images, video, audio, and copy in shared libraries.
+- Delivery: send finished files where they need to go.
+- Integrations: connect to tools such as Adobe Workfront and Monday.com.
 
 ## MCP server
 
-The CreateTOTALLY MCP server lets AI assistants, such as Claude, ChatGPT, and Cursor, work in CreateTOTALLY for a signed-in user. MCP (Model Context Protocol) is an open standard for connecting AI assistants to tools.
+AI assistants such as Claude, ChatGPT, and Cursor work in CreateTOTALLY through our MCP server.
 
 - MCP URL: https://mcp.app.prod.createtotally.io/mcp
-- Sign-in: each user signs in with their own CreateTOTALLY account in the browser. The assistant gets the same permissions as that user and never sees their password.
+- Each user signs in with their own CreateTOTALLY account, and the assistant works with that user's permissions.
+- Companies with their own dedicated CreateTOTALLY environment get its MCP URL from their CreateTOTALLY contact.
 
 An assistant connected to the MCP server can:
 
-- find templates and see which text and image layers can change, with their character limits
+- find templates and see which text, image, video, and audio layers can change, with their character limits
+- find images, video, and audio in the shared library and use them in adaptations
 - look up placements, formats, and languages
 - create content plans and add adaptations to them
 - read a content plan and its adaptations
 - submit adaptations for automation
+- propose new or changed placements and formats, which a person approves in CreateTOTALLY before anything is saved
 
-To connect:
+## WebMCP
 
-- Claude and Claude Desktop: open Settings, then Connectors, then Add custom connector, and enter the MCP URL.
-- Claude Code: run `claude mcp add --transport http createtotally https://mcp.app.prod.createtotally.io/mcp`.
-- Cursor: add the MCP URL as a `url` entry under `mcpServers` in `mcp.json`.
-- ChatGPT: turn on developer mode in the connectors settings, then add the MCP URL as a remote MCP server.
+The CreateTOTALLY web app supports WebMCP. An AI assistant in the browser can:
+
+- create content plans and import them from a spreadsheet
+- add, edit, and submit adaptations, and generate copy for them
+- review proofs, approve them, or request changes
+- manage shared assets, media plans, and integrations
+
+## Public API
+
+The CreateTOTALLY API is a GraphQL API for connecting your own systems to CreateTOTALLY.
+
+- Upload master template files and analyse them for automation.
+- Create automation jobs that change text, images, video, and audio, then track each job until it's complete.
+- Webhooks: we call your URL when an upload, analysis, or automation job completes or fails, and when files are delivered.
+- Authenticate with an API key, in the `api-key` HTTP header or with HTTP Basic Auth.
+- Access is by invitation. Ask your CreateTOTALLY contact, or [get in touch](https://www.createtotally.com/get-started).
 
 ## Features
 
@@ -49,7 +57,6 @@ To connect:
 - [Creative automation](https://www.createtotally.com/features/creative-automation.md): scale creative production without losing quality or brand consistency
 - [Workflow automation](https://www.createtotally.com/features/workflow-automation.md): automate creative operations from brief to final delivery
 - [Libraries and asset management](https://www.createtotally.com/features/libraries-and-asset-management.md): manage creative assets, their usage, and distribution from one place
-- [Performance insights](https://www.createtotally.com/features/performance-insights.md): track how your creative performs across channels
 
 ## Design tools
 
