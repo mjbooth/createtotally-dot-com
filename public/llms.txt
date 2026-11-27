@@ -1,0 +1,64 @@
+# CreateTOTALLY
+
+> CreateTOTALLY is a creative automation platform for brand, marketing, and creative production teams. You turn Figma, Adobe InDesign, and Adobe After Effects files into templates, plan every version you need, and the platform produces them for you. Developers and AI assistants can work with it through a public API and an MCP server.
+
+## What the platform does
+
+- Templates: upload Figma, InDesign, and After Effects files, then choose which text, images, video, and audio can change.
+- Content plans: plan versions by campaign, market, language, and format, in the app or from an Excel file.
+- Automation: the platform produces every version from your original design files, so the output stays true to the design.
+- Review and approval: share proofs, collect comments, and approve versions in one place.
+- Libraries: keep approved assets and copy in shared libraries.
+- Performance insights: track how your creative performs across channels.
+
+## Public API
+
+The CreateTOTALLY API is a GraphQL API. It lets your own systems work with a CreateTOTALLY account.
+
+- Upload master template files and analyse them for automation.
+- Create automation jobs that change text, images, video, and audio, then track each job until it's complete.
+- Subscribe to webhooks: we call your URL when an upload, analysis, or automation job completes or fails.
+- Authenticate with an API key, sent in the `api-key` HTTP header or with HTTP Basic Auth.
+- Access is by invitation. Ask your CreateTOTALLY contact, or [get in touch](https://www.createtotally.com/get-started).
+
+## MCP server
+
+The CreateTOTALLY MCP server lets AI assistants, such as Claude, ChatGPT, and Cursor, work in CreateTOTALLY for a signed-in user. MCP (Model Context Protocol) is an open standard for connecting AI assistants to tools.
+
+- MCP URL: https://mcp.app.prod.createtotally.io/mcp
+- Sign-in: each user signs in with their own CreateTOTALLY account in the browser. The assistant gets the same permissions as that user and never sees their password.
+
+An assistant connected to the MCP server can:
+
+- find templates and see which text and image layers can change, with their character limits
+- look up placements, formats, and languages
+- create content plans and add adaptations to them
+- read a content plan and its adaptations
+- submit adaptations for automation
+
+To connect:
+
+- Claude and Claude Desktop: open Settings, then Connectors, then Add custom connector, and enter the MCP URL.
+- Claude Code: run `claude mcp add --transport http createtotally https://mcp.app.prod.createtotally.io/mcp`.
+- Cursor: add the MCP URL as a `url` entry under `mcpServers` in `mcp.json`.
+- ChatGPT: turn on developer mode in the connectors settings, then add the MCP URL as a remote MCP server.
+
+## Features
+
+- [Easy templating](https://www.createtotally.com/features/easy-templating.md): turn existing Figma and Adobe designs into reusable templates, locked to your brand
+- [Creative automation](https://www.createtotally.com/features/creative-automation.md): scale creative production without losing quality or brand consistency
+- [Workflow automation](https://www.createtotally.com/features/workflow-automation.md): automate creative operations from brief to final delivery
+- [Libraries and asset management](https://www.createtotally.com/features/libraries-and-asset-management.md): manage creative assets, their usage, and distribution from one place
+- [Performance insights](https://www.createtotally.com/features/performance-insights.md): track how your creative performs across channels
+
+## Design tools
+
+- [Figma automation](https://www.createtotally.com/platform/figma-creative-automation.md)
+- [Adobe InDesign automation](https://www.createtotally.com/platform/adobe-indesign-automation.md)
+- [Adobe After Effects automation](https://www.createtotally.com/platform/adobe-after-effects-automation.md)
+
+## Optional
+
+- [Pricing](https://www.createtotally.com/pricing): flat pricing with unlimited users and every module included
+- [Integrations](https://www.createtotally.com/integrations)
+- [Book a demo](https://www.createtotally.com/get-started)
